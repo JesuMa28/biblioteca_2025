@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,6 +8,8 @@ import { toast } from "sonner";
 import { useTranslations } from "@/hooks/use-translations";
 import { useForm } from "@tanstack/react-form";
 import type { AnyFieldApi } from "@tanstack/react-form";
+import { User, Mail, Lock, Save, Eye, EyeClosed, X } from 'lucide-react';
+import { Separator } from "@/components/ui/separator";
 
 interface UserFormProps {
     initialData?: {
@@ -37,6 +40,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 export function UserForm({ initialData, page, perPage }: UserFormProps) {
     const { t } = useTranslations();
     const queryClient = useQueryClient();
+    const [showPassword, setShowPassword] = useState(false);
 
     // TanStack Form setup
     const form = useForm({
@@ -89,7 +93,7 @@ export function UserForm({ initialData, page, perPage }: UserFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-8" noValidate>
             {/* Name field */}
             <div>
                 <form.Field
@@ -107,7 +111,10 @@ export function UserForm({ initialData, page, perPage }: UserFormProps) {
                 >
                     {(field) => (
                         <>
-                            <Label htmlFor={field.name}>{t("ui.users.fields.name")}</Label>
+                            <Label htmlFor={field.name} className="flex items-center mb-2">
+                                <User className="mr-2" size={18} />
+                                {t("ui.users.fields.name")}
+                            </Label>
                             <Input
                                 id={field.name}
                                 name={field.name}
@@ -142,7 +149,10 @@ export function UserForm({ initialData, page, perPage }: UserFormProps) {
                 >
                     {(field) => (
                         <>
-                            <Label htmlFor={field.name}>{t("ui.users.fields.email")}</Label>
+                            <Label htmlFor={field.name} className="flex items-center mb-2">
+                                <Mail className="mr-2" size={18} />
+                                {t("ui.users.fields.email")}
+                            </Label>
                             <Input
                                 id={field.name}
                                 name={field.name}
@@ -180,32 +190,54 @@ export function UserForm({ initialData, page, perPage }: UserFormProps) {
                 >
                     {(field) => (
                         <>
-                            <Label htmlFor={field.name}>
+                            <Label htmlFor={field.name} className="flex items-center mb-2">
+                                <Lock className="mr-2" size={18}/>
                                 {initialData
                                     ? t("ui.users.fields.password_optional")
                                     : t("ui.users.fields.password")}
                             </Label>
-                            <Input
-                                id={field.name}
-                                name={field.name}
-                                type="password"
-                                value={field.state.value}
-                                onChange={(e) => field.handleChange(e.target.value)}
-                                onBlur={field.handleBlur}
-                                placeholder={t("ui.users.placeholders.password")}
-                                disabled={form.state.isSubmitting}
-                                autoComplete="off"
-                                required={false}
-                            />
+
+                            {/* Password Input + ShowFunction */}
+                            <div className="relative">
+                                <Input
+                                    id={field.name}
+                                    name={field.name}
+                                    type={showPassword ? "text" : "password"}
+                                    value={field.state.value}
+                                    onChange={(e) => field.handleChange(e.target.value)}
+                                    onBlur={field.handleBlur}
+                                    placeholder={t("ui.users.placeholders.password")}
+                                    disabled={form.state.isSubmitting}
+                                    autoComplete="off"
+                                    required={false}
+                                />
+
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    >
+                                    {showPassword ? <Eye className="h-5 w-5" /> : <EyeClosed className="h-5 w-5" />}
+                                </Button>
+
+                            </div>
+
+                            <p className="text-[14px] mt-2 text-[#737373]">{t('ui.settings.password.instruction_message')}</p>
+
                             <FieldInfo field={field} />
                         </>
                     )}
                 </form.Field>
             </div>
 
+            <Separator className="my-4" />
+
             {/* Form buttons */}
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-between">
                 <Button
+                    className="hover:bg-red-600 hover:text-white"
                     type="button"
                     variant="outline"
                     onClick={() => {
@@ -220,6 +252,7 @@ export function UserForm({ initialData, page, perPage }: UserFormProps) {
                     }}
                     disabled={form.state.isSubmitting}
                 >
+                    <X />
                     {t("ui.users.buttons.cancel")}
                 </Button>
 
@@ -227,7 +260,8 @@ export function UserForm({ initialData, page, perPage }: UserFormProps) {
                     selector={(state) => [state.canSubmit, state.isSubmitting]}
                 >
                     {([canSubmit, isSubmitting]) => (
-                        <Button type="submit" disabled={!canSubmit}>
+                        <Button type="submit" disabled={!canSubmit} className="flex items-center bg-blue-500 hover:bg-blue-900">
+                            <Save size={18} className="mr-2" />
                             {isSubmitting
                                 ? t("ui.users.buttons.saving")
                                 : initialData

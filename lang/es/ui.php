@@ -54,6 +54,7 @@ return [
             'confirm_password_placeholder' => 'Confirmar contraseña',
             'save_button' => 'Guardar contraseña',
             'saved_message' => 'Guardado',
+            'instruction_message' => 'La contraseña debe tener al menos 8 caracteres, incluyendo letras y números',
         ],
         'appearance' => [
             'title' => 'Configuración de apariencia',
@@ -161,5 +162,15 @@ return [
             'previous' => 'Anterior',
             'next' => 'Siguiente',
         ],
+    ],
+    'user_creation' => [
+
+        'title' => 'Crear Nuevo Usuario',
+        'description' => 'Ingresa la Información para crear un nuevo usuario en el sistema.',
+        'tab_list' => [
+            'user_info_tab' => 'Información básica',
+            'roles_permissions' => 'Roles y Permisos',
+        ],
+
     ],
 ];

@@ -53,6 +53,7 @@ return [
             'confirm_password_placeholder' => 'Confirm password',
             'save_button' => 'Save password',
             'saved_message' => 'Saved',
+            'instruction_message' => 'The password must be at least 8 characters, including letters and numbers',
         ],
         'appearance' => [
             'title' => 'Appearance settings',
@@ -160,5 +161,15 @@ return [
             'previous' => 'Previous',
             'next' => 'Next',
         ],
+    ],
+    'user_creation' => [
+
+        'title' => 'Create New User',
+        'description' => 'Join the information to create a new user in the system.',
+        'tab_list' => [
+            'user_info_tab' => 'Basic information',
+            'roles_permissions' => 'Roles and Permissions',
+        ],
+
     ],
 ];
