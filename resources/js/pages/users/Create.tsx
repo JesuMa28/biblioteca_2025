@@ -1,25 +1,14 @@
 import { UserForm } from "@/pages/users/components/UserForm";
+import { PermissionsForm } from "@/pages/users/components/PermissionsForm";
 import { UserLayout } from "@/layouts/users/UserLayout";
 import { useTranslations } from "@/hooks/use-translations";
 import { Button } from "@/components/ui/button"
 import { User } from 'lucide-react';
 import { Separator } from "@/components/ui/separator";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function CreateUser() {
   const { t } = useTranslations();
@@ -65,10 +54,7 @@ export default function CreateUser() {
                 {/* Roles-Permissions Section */}
                 <TabsContent value="roles&permissions">
 
-                    <CardContent className="">
-
-                    </CardContent>
-
+                  <PermissionsForm />
 
                 </TabsContent>
 
