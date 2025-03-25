@@ -57,39 +57,13 @@ export function PermissionsForm() {
         defaultValues: {
             selector: "",
             items: ["view"],
+            permissions:  {}
         },
         onSubmit: async ({ value }) => {
             console.log("Formulario enviado:", value);
             toast.success("Formulario enviado con éxito");
         },
     });
-
-    // useEffect(() =>{
-    //     // Getting the role
-    //     const role = form.getValues("selector");
-
-    //     // Choosing the checked boxes by default with each role
-    //     if (role == "admin") {
-    //         Object.keys(permissionsGroup).forEach((category) => {
-    //             permissionsGroup[category as keyof typeof permissionsGroup].forEach((perm) => {
-    //                 form.setValues(`permissions.${category}.${perm.id}`, true);
-    //             });
-    //         });
-    //     } else if (role === "user") {
-    //         // Checking only the first and second perms of each section
-    //         Object.keys(permissionsGroup).forEach((category) => {
-    //             permissionsGroup[category as keyof typeof permissionsGroup].forEach((perm, index) => {
-    //                 if (index === 0 || index === 1) {
-    //                     form.setValue(`permissions.${category}.${perm.id}`, true);
-    //                 } else {
-    //                     form.setValue(`permissions.${category}.${perm.id}`, false);
-    //                 }
-    //             });
-    //         });
-    //     }
-    // }, [form.getValues("selector")]); // Este efecto se ejecuta cuando cambia el valor de "selector"
-
-
 
     return (
 
@@ -104,8 +78,11 @@ export function PermissionsForm() {
                             Rol Principal
 
                         </Label>
-                        <Select
-                            onValueChange={(value) => field.handleChange(value)}
+                        <Select onValueChange={(value) => {
+                                field.handleChange(value);
+                                // Calling
+                                handleRoleChange(value);
+                            }}
                             value={field.state.value}
                         >
                             <SelectTrigger>
