@@ -24,7 +24,21 @@ class UserController extends Controller
 
     public function create()
     {
-        return Inertia::render('users/Create');
+
+        $allRolesInDatabase = Role::all();
+        $roles = $allRolesInDatabase->pluck('name');
+
+        $permisos = Permission::all()->pluck('name');
+
+        $permisosAgrupados = $permisos->groupBy(fn($p) => explode('.', $p)[0])->map->toArray();
+
+        $rolesConPermisos = Role::with('permissions')->get();
+
+        $relacionRolesPermisos = $rolesConPermisos->mapWithKeys(function ($role) {
+            return [$role->name => $role->permissions->pluck('name')];
+        });
+
+        return Inertia::render('users/Create', ['roles' => $roles, 'rolesConPermisos' => $relacionRolesPermisos, 'permisos' => $permisos, 'permisosAgrupados' => $permisosAgrupados]);
     }
 
     public function store(Request $request, UserStoreAction $action)
@@ -75,7 +89,7 @@ class UserController extends Controller
         $action($user, $validator->validated());
 
         $redirectUrl = route('users.index');
-        
+
         // Añadir parámetros de página a la redirección si existen
         if ($request->has('page')) {
             $redirectUrl .= "?page=" . $request->query('page');
