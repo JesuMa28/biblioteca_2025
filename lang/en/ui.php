@@ -53,7 +53,6 @@ return [
             'confirm_password_placeholder' => 'Confirm password',
             'save_button' => 'Save password',
             'saved_message' => 'Saved',
-            'instruction_message' => 'The password must be at least 8 characters, including letters and numbers',
         ],
         'appearance' => [
             'title' => 'Appearance settings',
@@ -115,6 +114,8 @@ return [
             'password_optional' => 'Password (optional)',
             'created_at' => 'Created at',
             'actions' => 'Actions',
+            'rolPpal' => 'Main Role',
+            'permisos' => 'Specific Permissions'
         ],
         'columns' => [
             'name' => 'Name',
@@ -122,16 +123,78 @@ return [
             'created_at' => 'Created at',
             'actions' => 'Actions',
         ],
+        'gridelements' => [
+            'users' => 'Usuarios',
+            'products' => 'Productos',
+            'reports' => 'Reportes',
+            'configurations' => 'Configuración',
+        ],
+        'permisos' => [
+            'Users' => [
+                'users' => [
+                    'view' => 'View users',
+                    'create' => 'Create users',
+                    'edit' => 'Edit users',
+                    'delete' => 'Delete users'
+                ],
+            ],
+            'Products' => [
+                'products' => [
+                    'view' => 'View products',
+                    'create' => 'Create products',
+                    'edit' => 'Edit products',
+                    'delete' => 'Delete products'
+                ],
+
+            ],
+            'Reports' => [
+                'reports' => [
+                    'view' => 'View reports',
+                    'export' => 'Export reports',
+                    'print' => 'Print reports'
+                ],
+
+            ],
+            'Config' => [
+                'config' => [
+                    'access' => 'Access configuration',
+                    'modify' => 'Modify configuration'
+                ],
+
+            ],
+        ],
+        'gridelements' => [
+            'users' => 'Users',
+            'products' => 'Products',
+            'reports' => 'Reports',
+            'configurations' => 'Configuration',
+
+        ],
+        'roles' => [
+            'default' => 'Select a Role',
+            'admin' => 'Administrator',
+            'advanced' => 'Advanced User',
+            'usuario' => 'Basic User'
+        ],
         'filters' => [
             'search' => 'Search',
             'name' => 'User name',
             'email' => 'User email',
         ],
         'placeholders' => [
-            'name' => 'User name',
-            'email' => 'User email',
-            'password' => 'User password',
+            'name' => 'Complete user name',
+            'email' => 'email@example.com',
+            'password' => 'Secure user password',
             'search' => 'Search users...',
+            'passRulings' => 'The password must be at least 8 characters long, including nubers and letters'
+        ],
+        'tabs' => [
+            'userForm' => 'Basic Information',
+            'permissionsForm' => 'Roles and Permissions'
+        ],
+        'cards' => [
+            'title' => 'Create New User',
+            'description' => 'Input the information to create a new user in the system.'
         ],
         'buttons' => [
             'new' => 'New User',
@@ -161,15 +224,5 @@ return [
             'previous' => 'Previous',
             'next' => 'Next',
         ],
-    ],
-    'user_creation' => [
-
-        'title' => 'Create New User',
-        'description' => 'Join the information to create a new user in the system.',
-        'tab_list' => [
-            'user_info_tab' => 'Basic information',
-            'roles_permissions' => 'Roles and Permissions',
-        ],
-
     ],
 ];

@@ -15,10 +15,7 @@ class PermissionSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Vaciar Tabla
-        Permission::truncate();
-
-        // Users Perms
+        // --- User Permissions --- //
 
         $user_permission = Permission::create(attributes: [
             'name' => 'users.view',
@@ -52,9 +49,9 @@ class PermissionSeeder extends Seeder
             'parent_id' => $user_permission->id,
         ]);
 
-        // Products Perms
+        // --- Product Permissions --- //
 
-        $products_permission = Permission::create(attributes: [
+        $product_permission = Permission::create(attributes: [
             'name' => 'products.view',
             'display_name' => 'Ver Productos',
             'description' => 'Ver lista de Productos de la aplicación',
@@ -67,7 +64,7 @@ class PermissionSeeder extends Seeder
             'display_name' => 'Crear Productos',
             'description' => 'Crear Productos de la aplicación',
             'guard_name' => 'web',
-            'parent_id' => $products_permission->id,
+            'parent_id' => $product_permission->id,
         ]);
 
         Permission::create(attributes: [
@@ -75,7 +72,7 @@ class PermissionSeeder extends Seeder
             'display_name' => 'Editar Productos',
             'description' => 'Editar Productos de la aplicación',
             'guard_name' => 'web',
-            'parent_id' => $products_permission->id,
+            'parent_id' => $product_permission->id,
         ]);
 
         Permission::create(attributes: [
@@ -83,51 +80,51 @@ class PermissionSeeder extends Seeder
             'display_name' => 'Eliminar Productos',
             'description' => 'Eliminar Productos de la aplicación',
             'guard_name' => 'web',
-            'parent_id' => $products_permission->id,
+            'parent_id' => $product_permission->id,
         ]);
 
-        // Reports Perms
+        // --- Report Permissions --- //
 
-        $reports_permission = Permission::create(attributes: [
+        $report_permission = Permission::create(attributes: [
             'name' => 'reports.view',
-            'display_name' => 'Ver Productos',
-            'description' => 'Ver lista de Productos de la aplicación',
+            'display_name' => 'Ver Reportes',
+            'description' => 'Ver lista de Reportes de la aplicación',
             'guard_name' => 'web',
             'parent_id' => null,
         ]);
 
         Permission::create(attributes: [
             'name' => 'reports.export',
-            'display_name' => 'Exportar Reports',
-            'description' => 'Exportar Reports de la aplicación',
+            'display_name' => 'Exportar Reportes',
+            'description' => 'Exportar Reportes de la aplicación',
             'guard_name' => 'web',
-            'parent_id' => $reports_permission->id,
+            'parent_id' => $report_permission->id,
         ]);
 
         Permission::create(attributes: [
-            'name' => 'reports.import',
-            'display_name' => 'Importar Reports',
-            'description' => 'Importar Reports de la aplicación',
+            'name' => 'reports.print',
+            'display_name' => 'Imprimir Reportes',
+            'description' => 'Imprimir Reportes de la aplicación',
             'guard_name' => 'web',
-            'parent_id' => $reports_permission->id,
+            'parent_id' => $report_permission->id,
         ]);
 
-        // Settings Perms
+        // --- Configuration Permissions --- //
 
-        $settings_permission = Permission::create(attributes: [
-            'name' => 'settings.access',
-            'display_name' => 'Acceder a configuración',
-            'description' => 'Acceder a la lista de configuración de la aplicación',
+        $config_permission = Permission::create(attributes: [
+            'name' => 'config.access',
+            'display_name' => 'Acceder a la configuración',
+            'description' => 'Acceder a la configuración de la aplicación',
             'guard_name' => 'web',
             'parent_id' => null,
         ]);
 
         Permission::create(attributes: [
-            'name' => 'settings.modify',
-            'display_name' => 'Modificar configuración',
+            'name' => 'config.modify',
+            'display_name' => 'Modificar la configuración',
             'description' => 'Modificar la configuración de la aplicación',
             'guard_name' => 'web',
-            'parent_id' => $settings_permission->id,
+            'parent_id' => $config_permission->id,
         ]);
 
         Cache::forever(key: 'permissions', value: Permission::whereNull('parent_id')->with('children')->get());

@@ -73,7 +73,7 @@ class UserController extends Controller
         $action($user, $validator->validated());
 
         $redirectUrl = route('users.index');
-        
+
         // Añadir parámetros de página a la redirección si existen
         if ($request->has('page')) {
             $redirectUrl .= "?page=" . $request->query('page');

@@ -10,20 +10,15 @@ class RoleSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
     public function run(): void
     {
-
-        // Cleaning Table
-        Role::truncate();
-
-        // Admin Perms
         Role::create([
             'name' => 'admin',
             'display_name' => 'Administrador',
             'description' => 'Administrador de la aplicación',
             'guard_name' => 'web',
             'system' => true,
-
         ])->givePermissionTo([
             'users.view',
             'users.create',
@@ -35,23 +30,40 @@ class RoleSeeder extends Seeder
             'products.delete',
             'reports.view',
             'reports.export',
-            'reports.import',
-            'settings.access',
-            'settings.modify',
+            'reports.print',
+            'config.access',
+            'config.modify',
         ]);
 
-        // Users Perms
         Role::create([
-            'name' => 'user',
-            'display_name' => 'Usuario',
-            'description' => 'Usuario predeterminado de la Aplicación',
+            'name' => 'usuario',
+            'display_name' => 'Usuario Básico',
+            'description' => 'Usuario de uso general',
             'guard_name' => 'web',
             'system' => true,
         ])->givePermissionTo([
             'users.view',
             'products.view',
-            'settings.access',
-            'settings.modify',
+            'config.access',
+            'config.modify',
         ]);
+
+        Role::create([
+            'name' => 'advanced',
+            'display_name' => 'Usuario Avanzado',
+            'description' => 'Usuario con permisos adicionales',
+            'guard_name' => 'web',
+            'system' => true,
+        ])->givePermissionTo([
+            'users.view',
+            'users.create',
+            'users.edit',
+            'products.view',
+            'products.create',
+            'products.edit',
+            'config.access',
+            'config.modify',
+        ]);
+
     }
 }

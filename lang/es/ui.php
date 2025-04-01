@@ -54,7 +54,6 @@ return [
             'confirm_password_placeholder' => 'Confirmar contraseña',
             'save_button' => 'Guardar contraseña',
             'saved_message' => 'Guardado',
-            'instruction_message' => 'La contraseña debe tener al menos 8 caracteres, incluyendo letras y números',
         ],
         'appearance' => [
             'title' => 'Configuración de apariencia',
@@ -116,6 +115,8 @@ return [
             'password_optional' => 'Contraseña (opcional)',
             'created_at' => 'Fecha de creación',
             'actions' => 'Acciones',
+            'rolPpal' => 'Rol Principal',
+            'permisos' => 'Permisos Específicos'
         ],
         'columns' => [
             'name' => 'Nombre',
@@ -123,16 +124,71 @@ return [
             'created_at' => 'Fecha de creación',
             'actions' => 'Acciones',
         ],
+        'gridelements' => [
+            'users' => 'Usuarios',
+            'products' => 'Productos',
+            'reports' => 'Reportes',
+            'configurations' => 'Configuración',
+        ],
+        'permisos' => [
+            'Users' => [
+                'users' => [
+                    'view' => 'Ver usuarios',
+                    'create' => 'Crear usuarios',
+                    'edit' => 'Editar usuarios',
+                    'delete' => 'Eliminar usuarios'
+                ],
+            ],
+            'Products' => [
+                'products' => [
+                    'view' => 'Ver productos',
+                    'create' => 'Crear productos',
+                    'edit' => 'Editar productos',
+                    'delete' => 'Eliminar productos'
+                ],
+
+            ],
+            'Reports' => [
+                'reports' => [
+                    'view' => 'Ver reportes',
+                    'export' => 'Exportar reportes',
+                    'print' => 'Imprimir reportes'
+                ],
+
+            ],
+            'Config' => [
+                'config' => [
+                    'access' => 'Acceso a configuración',
+                    'modify' => 'Modificar configuración'
+                ],
+
+            ],
+        ],
+        'roles' => [
+            'default' => 'Selecciona un Rol',
+            'admin' => 'Administrador',
+            'advanced' => 'Usuario Avanzado',
+            'usuario' => 'Usuario Básico'
+        ],
         'filters' => [
             'search' => 'Buscar',
             'name' => 'Nombre del usuario',
             'email' => 'Email del usuario',
         ],
         'placeholders' => [
-            'name' => 'Nombre del usuario',
-            'email' => 'Email del usuario',
-            'password' => 'Contraseña del usuario',
+            'name' => 'Nombre completo del usuario',
+            'email' => 'correo@ejemplo.com',
+            'password' => 'Contraseña segura',
             'search' => 'Buscar usuarios...',
+            'passRulings' => 'La contraseña debe tener al menos 8 caracteres, incluyendo letras y números'
+        ],
+        'tabs' => [
+            'userForm' => 'Información Básica',
+            'permissionsForm' => 'Roles y Permisos'
+        ],
+        'cards' => [
+            'title' => 'Crear Nuevo Usuario',
+            'description' => 'Ingresa la información para crear un nuevo usuario en el sistema'
         ],
         'buttons' => [
             'new' => 'Nuevo Usuario',
@@ -162,15 +218,5 @@ return [
             'previous' => 'Anterior',
             'next' => 'Siguiente',
         ],
-    ],
-    'user_creation' => [
-
-        'title' => 'Crear Nuevo Usuario',
-        'description' => 'Ingresa la Información para crear un nuevo usuario en el sistema.',
-        'tab_list' => [
-            'user_info_tab' => 'Información básica',
-            'roles_permissions' => 'Roles y Permisos',
-        ],
-
     ],
 ];

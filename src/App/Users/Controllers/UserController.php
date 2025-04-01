@@ -3,7 +3,8 @@
 namespace App\Users\Controllers;
 
 use App\Core\Controllers\Controller;
-
+use Domain\Permissions\Models\Permission;
+use Domain\Roles\Models\Role;
 use Domain\Users\Actions\UserDestroyAction;
 use Domain\Users\Actions\UserIndexAction;
 use Domain\Users\Actions\UserStoreAction;
@@ -24,7 +25,6 @@ class UserController extends Controller
 
     public function create()
     {
-
         $allRolesInDatabase = Role::all();
         $roles = $allRolesInDatabase->pluck('name');
 
@@ -47,6 +47,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
+            'permisos' => ['nullable'],
         ]);
 
         if ($validator->fails()) {
@@ -61,10 +62,31 @@ class UserController extends Controller
 
     public function edit(Request $request, User $user)
     {
+
+        $allRolesInDatabase = Role::all();
+        $roles = $allRolesInDatabase->pluck('name');
+
+        $permisos = Permission::all()->pluck('name');
+
+        $permisosAgrupados = $permisos->groupBy(fn($p) => explode('.', $p)[0])->map->toArray();
+
+        $rolesConPermisos = Role::with('permissions')->get();
+
+        $relacionRolesPermisos = $rolesConPermisos->mapWithKeys(function ($role) {
+            return [$role->name => $role->permissions->pluck('name')];
+        });
+
+        $permisosDelUsuario = $user->getPermissionNames();
+
         return Inertia::render('users/Edit', [
             'user' => $user,
             'page' => $request->query('page'),
             'perPage' => $request->query('perPage'),
+            'roles' => $roles,
+            'rolesConPermisos' => $relacionRolesPermisos,
+            'permisos' => $permisos,
+            'permisosAgrupados' => $permisosAgrupados,
+            'permisosDelUsuario' => $permisosDelUsuario,
         ]);
     }
 
@@ -80,6 +102,7 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($user->id),
             ],
             'password' => ['nullable', 'string', 'min:8'],
+            'permisos' => ['nullable']
         ]);
 
         if ($validator->fails()) {
