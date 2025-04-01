@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('floors', function (Blueprint $table) {
             $table->id();
+            $table->int('number');
             $table->timestamps();
         });
     }
