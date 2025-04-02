@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('author');
-            $table->foreignId('shelf_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->string('category_name');
+            $table->foreignId('shelf_id')->constrained('shelves')->onDelete('cascade');
             $table->timestamps();
         });
     }

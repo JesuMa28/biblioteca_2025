@@ -10,9 +10,9 @@ class ShelfResource extends Data
     public function __construct(
         public readonly string $id,
         public readonly string $code,
-        public readonly string $capacity,
+        public readonly integer $capacity,
+        public readonly string $category_name,
         public readonly string $zone_id,
-        public readonly string $category_id,
         public readonly string $created_at,
         public readonly string $updated_at,
     ) {

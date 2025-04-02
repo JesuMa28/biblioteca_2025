@@ -7,16 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Zone extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', capacity, 'floor_id', 'category_id'];
+    protected $fillable = ['name', capacity, 'category_name', 'floor_id'];
 
     public function floor()
     {
         return $this->belongsTo(Floor::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
     }
 
     public function shelves()

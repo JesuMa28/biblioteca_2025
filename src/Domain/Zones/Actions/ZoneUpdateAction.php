@@ -13,8 +13,8 @@ class ZoneUpdateAction
         $updateData = [
             'name' => $data['name'],
             'capacity' => $data['capacity'],
+            'category' => $data['category_name'],
             'floor' => $data['floor_id'],
-            'category' => $data['category_id'],
         ];
 
         $zone->update($updateData);

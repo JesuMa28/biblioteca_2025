@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace Domain\Categories\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use HasFactory;
+
     protected $fillable = ['name'];
 
     public function zones()

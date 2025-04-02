@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('capacity');
-            $table->foreignId('floor_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->string('category_name');
+            $table->foreignId('floor_id')->constrained('floors')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -7,15 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'author', 'shelf_id', 'category_id'];
+    protected $fillable = ['title', 'author', 'category_name', 'shelf_id'];
 
     public function shelf()
     {
         return $this->belongsTo(Shelf::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
     }
 }

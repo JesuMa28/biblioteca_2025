@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->integer('capacity');
-            $table->foreignId('zone_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->string('category_name');
+            $table->foreignId('zone_id')->constrained('zones')->onDelete('cascade');
             $table->timestamps();
         });
     }
