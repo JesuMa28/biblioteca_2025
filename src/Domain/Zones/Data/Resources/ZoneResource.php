@@ -22,8 +22,8 @@ class ZoneResource extends Data
         return new self(
             id: $zone->id,
             name: $zone->name,
-            email: $zone->floor_id,
-            email: $zone->category_id,
+            floor_id: $zone->floor_id,
+            category_id: $zone->category_id,
             created_at: $zone->created_at->format('Y-m-d H:i:s'),
             updated_at: $zone->updated_at->format('Y-m-d H:i:s'),
         );
