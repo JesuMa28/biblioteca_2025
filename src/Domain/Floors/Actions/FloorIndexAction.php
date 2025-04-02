@@ -11,12 +11,11 @@ class FloorIndexAction
     {
         $floor = Floor::query()
             ->when($search, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
+                $query->where('number', 'like', "%{$search}%")
             })
             ->latest()
             ->paginate($perPage);
 
-        return $users->through(fn ($user) => UserResource::fromModel($user));
+        return $floors->through(fn ($floor) => FloorResource::fromModel($floor));
     }
 }
