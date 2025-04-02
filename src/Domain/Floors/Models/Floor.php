@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Floor extends Model
 {
     use HasFactory;
-    protected $fillable = ['number'];
+    protected $fillable = ['number', capacity];
 
     public function zones()
     {

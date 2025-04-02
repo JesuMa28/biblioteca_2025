@@ -17,6 +17,6 @@ class ZoneIndexAction
             ->latest()
             ->paginate($perPage);
 
-        return $users->through(fn ($user) => UserResource::fromModel($user));
+        return $zones->through(fn ($zone) => ZoneResource::fromModel($zone));
     }
 }

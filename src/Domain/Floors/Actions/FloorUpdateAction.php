@@ -12,7 +12,7 @@ class FloorUpdateAction
     {
         $updateData = [
             'number' => $data['number'],
-        ];
+            'capacity' => $data['capacity'],        ];
 
         $floor->update($updateData);
 

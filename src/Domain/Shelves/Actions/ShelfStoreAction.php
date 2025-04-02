@@ -12,6 +12,7 @@ class ShelfStoreAction
     {
         $shelf = Shelf::create([
             'code' => $data['code'],
+            'capacity' => $data['capacity'],
             'zone' => $data['zone_id'],
             'category' => $data['category_id'],
         ]);

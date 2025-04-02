@@ -10,6 +10,7 @@ class FloorResource extends Data
     public function __construct(
         public readonly string $id,
         public readonly string $number,
+        public readonly string $capacity,
         public readonly string $created_at,
         public readonly string $updated_at,
     ) {
@@ -20,6 +21,7 @@ class FloorResource extends Data
         return new self(
             id: $floor->id,
             number: $floor->number,
+            capacity: $floor->capacity,
             created_at: $floor->created_at->format('Y-m-d H:i:s'),
             updated_at: $floor->updated_at->format('Y-m-d H:i:s'),
         );

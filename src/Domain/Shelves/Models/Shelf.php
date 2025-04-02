@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Shelf extends Model
 {
     use HasFactory;
-    protected $fillable = ['code', 'zone_id', 'category_id'];
+    protected $fillable = ['code', capacity, 'zone_id', 'category_id'];
 
     public function zone()
     {

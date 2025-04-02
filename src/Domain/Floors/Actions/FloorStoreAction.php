@@ -13,6 +13,7 @@ class FloorStoreAction
     {
         $floor = Floor::create([
             'number' => $data['number'],
+            'capacity' => $data['capacity'],
         ]);
 
         return FloorResource::fromModel($floor);

@@ -10,6 +10,7 @@ class ZoneResource extends Data
     public function __construct(
         public readonly string $id,
         public readonly string $name,
+        public readonly string $capacity,
         public readonly string $floor_id,
         public readonly string $category_id,
         public readonly string $created_at,
@@ -22,6 +23,7 @@ class ZoneResource extends Data
         return new self(
             id: $zone->id,
             name: $zone->name,
+            capacity: $zone->capacity,
             floor_id: $zone->floor_id,
             category_id: $zone->category_id,
             created_at: $zone->created_at->format('Y-m-d H:i:s'),

@@ -12,12 +12,11 @@ class ZoneStoreAction
     {
         $zone = Zone::create([
             'name' => $data['name'],
+            'capacity' => $data['capacity'],
             'floor' => $data['floor_id'],
             'category' => $data['category_id'],
         ]);
 
-        $user->syncPermissions($data['permisos']);
-
-        return UserResource::fromModel($user);
+        return ZoneResource::fromModel($zone);
     }
 }

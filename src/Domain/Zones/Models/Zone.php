@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Zone extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'floor_id', 'category_id'];
+    protected $fillable = ['name', capacity, 'floor_id', 'category_id'];
 
     public function floor()
     {
