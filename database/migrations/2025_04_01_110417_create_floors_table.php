@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('floors', function (Blueprint $table) {
-            $table->id();
-            $table->integer('number');
+            $table->uuid('id')->primary()->unique();
+            $table->integer('number')->unique();
             $table->integer('capacity');
             $table->timestamps();
         });
