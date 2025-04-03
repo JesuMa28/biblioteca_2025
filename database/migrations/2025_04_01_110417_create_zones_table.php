@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('capacity');
             $table->string('category_name');
+            $table->uuid('floor_id');
             $table->foreign('floor_id')->references('id')->on('floors')->onDelete('cascade');
             $table->timestamps();
         });
