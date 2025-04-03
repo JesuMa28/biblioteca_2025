@@ -1,16 +1,31 @@
 <?php
 
-namespace App;
+namespace Domain\Floors\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Database\Factories\FloorFactory;
+use Domain\Zones\Models\Zone;
+
 
 class Floor extends Model
-{
-    use HasFactory;
-    protected $fillable = ['number', capacity];
 
-    public function zones()
+{
+    use HasUuids, HasFactory;
+    protected $fillable = [
+        'id',
+        'number',
+        'capacity',
+        'n_zones'
+    ];
+    protected static function newFactory()
     {
-        return $this->hasMany(Zone::class);
+        return FloorFactory::new();
+    }
+
+    function zones()
+    {
+        return $this->hasMany('Domain\Zones\Models\Zone');
     }
 }
