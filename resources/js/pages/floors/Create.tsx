@@ -27,10 +27,10 @@ export default function CreateFloor() {
                         <CardTitle>
                             <div className="flex items-center gap-1">
                                 <User color="#2762c2" />
-                                {t('ui.users.cards.title')}
+                                {t('ui.floors.cards.title')}
                             </div>
                         </CardTitle>
-                        <CardDescription>{t('ui.users.cards.description')}</CardDescription>
+                        <CardDescription>{t('ui.floors.cards.description')}</CardDescription>
                     </CardHeader>
                     <Separator />
                     <CardContent>

@@ -18,16 +18,11 @@ import { toast } from 'sonner';
 interface UserFormProps {
     initialData?: {
         id: string;
-        name: string;
-        email: string;
+        number: number;
+        capacity: number;
     };
     page?: string;
     perPage?: string;
-    roles?: string[];
-    rolesConPermisos: Record<string, string[]>;
-    permisos?: string[];
-    permisosAgrupados: Record<string, string[]>;
-    permisosDelUsuario?: string[];
 }
 
 // Field error display component
@@ -42,48 +37,20 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
     );
 }
 
-const iconComponents = {
-    Users: Users,
-    Products: PackageOpen,
-    Reports: FileText,
-    Config: Bolt,
-};
-
-const categorias = [
-    { id: 1, icon: 'Users', label: 'users', perms: 'users' },
-    { id: 2, icon: 'Products', label: 'products', perms: 'products' },
-    { id: 3, icon: 'Reports', label: 'reports', perms: 'reports' },
-    { id: 4, icon: 'Config', label: 'configurations', perms: 'config' },
-];
-
-var permisosUsuarioFinal: string[] = [];
-
-export function UserForm({ initialData, page, perPage, roles, rolesConPermisos, permisosAgrupados, permisosDelUsuario }: UserFormProps) {
+export function UserForm({ initialData, page, perPage }: UserFormProps) {
     const { t } = useTranslations();
     const queryClient = useQueryClient();
-    const [arrayPermisosState, setArrayPermisosState] = useState(permisosUsuarioFinal);
-
-    useEffect(() => {
-        if (permisosDelUsuario && initialData) {
-            permisosUsuarioFinal = permisosDelUsuario;
-            setArrayPermisosState(permisosDelUsuario);
-        } else {
-            permisosUsuarioFinal = [];
-            setArrayPermisosState(permisosUsuarioFinal);
-        }
-    }, [permisosDelUsuario]);
 
     // TanStack Form setup
     const form = useForm({
         defaultValues: {
-            name: initialData?.name ?? '',
-            email: initialData?.email ?? '',
+            name: initialData?.number ?? '',
+            email: initialData?.capacity ?? '',
             password: '',
         },
         onSubmit: async ({ value }) => {
-            const userData = {
+            const floorData = {
                 ...value,
-                permisos: arrayPermisosState,
             };
 
             const options = {
@@ -113,9 +80,9 @@ export function UserForm({ initialData, page, perPage, roles, rolesConPermisos, 
 
             // Submit with Inertia
             if (initialData) {
-                router.put(`/users/${initialData.id}`, userData, options);
+                router.put(`/users/${initialData.id}`, floorData, options);
             } else {
-                router.post('/users', userData, options);
+                router.post('/users', floorData, options);
             }
         },
     });

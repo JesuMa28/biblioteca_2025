@@ -6,6 +6,7 @@ return [
         'items' => [
             'dashboard' => 'Dashboard',
             'users' => 'Users',
+            'floors' => 'Floors',
             'repository' => 'Repository',
             'documentation' => 'Documentation',
         ],
