@@ -5,7 +5,12 @@ export interface Book {
   id: string;
   title: string;
   author: string;
+  editorial: string;
+  language: string;
   category_name: string;
+  published_year: number;
+  isbn: string;
+  pages: number;
   shelf_id: string;
   created_at: string;
 }
@@ -84,7 +89,18 @@ export function useBooks({ search, page = 1, perPage = 10 }: UseBooksParams = {}
 
 export function useCreateBook() {
   return useMutation({
-    mutationFn: async (data: { title: string; author: string; category_name: string; shelf_id: string }) => {
+    mutationFn: async (data: {
+        id: string;
+        title: string;
+        author: string;
+        editorial: string;
+        language: string;
+        category_name: string;
+        published_year: number;
+        isbn: string;
+        pages: number;
+        shelf_id: string;
+      }) => {
       const response = await axios.post("/api/books", data, {
         headers: {
           'Accept': 'application/json',
@@ -98,7 +114,18 @@ export function useCreateBook() {
 
 export function useUpdateBook(bookId: string) {
   return useMutation({
-    mutationFn: async (data: { title: string; author: string; category_name: string; shelf_id: string }) => {
+    mutationFn: async (data: {
+      id: string;
+      title: string;
+      author: string;
+      editorial: string;
+      language: string;
+      category_name: string;
+      published_year: number;
+      isbn: string;
+      pages: number;
+      shelf_id: string;
+     }) => {
       const response = await axios.put(`/api/books/${bookId}`, data, {
         headers: {
           'Accept': 'application/json',

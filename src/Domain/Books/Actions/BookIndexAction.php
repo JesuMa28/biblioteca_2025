@@ -13,8 +13,12 @@ class BookIndexAction
             ->when($search, function ($query, $search) {
                 $query->where('title', 'like', "%{$search}%")
                     ->orWhere('author', 'like', "%{$search}%")
+                    ->orWhere('editorial', 'like', "%{$search}%")
+                    ->orWhere('language', 'like', "%{$search}%")
+                    ->orWhere('isbn', 'like', "%{$search}%")
                     ->orWhere('category_name', 'like', "%{$search}%")
-            })
+                    ->orWhere('published_year', 'like', "%{$search}%")
+                })
             ->latest()
             ->paginate($perPage);
 

@@ -9,13 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    // editorial e idioma
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary()->unique();
             $table->string('title');
             $table->string('author');
+            $table->string('editorial');
+            $table->string('language');
             $table->string('category_name');
+            $table->year('published_year');
+            $table->string('isbn')->unique();
+            $table->integer('pages')->unsigned();
             $table->foreignId('shelf_id')->constrained('shelves')->onDelete('cascade');
             $table->timestamps();
         });
