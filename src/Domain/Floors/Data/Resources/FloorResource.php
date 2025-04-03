@@ -9,8 +9,8 @@ class FloorResource extends Data
 {
     public function __construct(
         public readonly string $id,
-        public readonly integer $number,
-        public readonly integer $capacity,
+        public readonly int $number,
+        public readonly int $capacity,
         public readonly string $created_at,
         public readonly string $updated_at,
     ) {
