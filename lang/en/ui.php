@@ -299,5 +299,5 @@ return [
         'biography' => 'Biography',
         'romantic' => 'Romantic',
         'adventure' => 'Adventure',
-    ]
+    ],
 ];

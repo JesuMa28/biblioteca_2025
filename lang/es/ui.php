@@ -219,4 +219,79 @@ return [
             'next' => 'Siguiente',
         ],
     ],
+    'floors' => [
+        'title' => 'Pisos',
+        'create' => 'Crear Piso',
+        'edit' => 'Editar Piso',
+        'fields' => [
+            'number' => 'Número',
+            'capacity' => 'Capacidad',
+            'create_at' => 'Fecha de creación',
+            'actions' => 'Acciones',
+        ],
+        'columns' => [
+            'number' => 'Número',
+            'capacity' => 'Capacidad',
+            'created_at' => 'Fecha de creació',
+            'actions' => 'Acciones',
+        ],
+        'filters' => [
+            'search' => 'Buscar',
+            'number' => 'Número de piso',
+            'capacity' => 'Capacidad del piso',
+        ],
+        'placeholders' => [
+            'number' => 'Número de piso',
+            'capacity' => 'Capacidad',
+            'search' => 'Buscar pisos...',
+        ],
+        'tabs' => [
+            'floorForm' => 'Información Básica',
+        ],
+        'cards' => [
+            'title' => 'Crear Nuevo Piso',
+            'description' => 'Ingrese la información para crear un nuevo piso en el sistema.'
+        ],
+        'buttons' => [
+            'new' => 'Nuevo Piso',
+            'edit' => 'Editar',
+            'save' => 'Guardar',
+            'update' => 'Actualizar',
+            'cancel' => 'Cancelar',
+            'delete' => 'Eliminar',
+            'deleting' => 'Eliminando...',
+            'saving' => 'Guardando...',
+            'retry' => 'Reintentar',
+        ],
+        'delete' => [
+            'title' => '¿Estás seguro?',
+            'description' => 'Esta acción no se puede deshacer. El piso será eliminado permanentemente del sistema.',
+        ],
+        'delete_dialog' => [
+            'title' => '¿Estás seguro?',
+            'description' => 'Esta acción no se puede deshacer. El piso será eliminado permanentemente del sistema.',
+            'success' => 'Eliminado con éxito ;)',
+        ],
+        'deleted_error' => 'Error al eliminar el usuario',
+        'no_results' => 'No hay resultados.',
+        'error_loading' => 'Error al cargar los pisos. Por favor, inténtalo de nuevo.',
+        'showing_results' => 'Mostrando :from a :to de :total resultados',
+        'pagination' => [
+            'previous' => 'Anterior',
+            'next' => 'Siguiente',
+        ],
+    ],
+
+    'categories' => [
+        'fiction' => 'Ficción',
+        'non_fiction' => 'No Ficción',
+        'science' => 'Ciencia',
+        'history' => 'Historia',
+        'fantasy' => 'Fantasía',
+        'horror' => 'Terror',
+        'mystery' => 'Misterio',
+        'biography' => 'Biografía',
+        'romantic' => 'Romántico',
+        'adventure' => 'Aventura',
+    ],
 ];
