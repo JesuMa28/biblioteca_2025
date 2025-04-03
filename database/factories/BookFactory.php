@@ -29,6 +29,8 @@ class BookFactory extends Factory
         return [
             'title' => fake()->sentence(3),
             'author' => fake()->name(),
+            'editorial' => $this->faker->company(), // Simula una editorial
+            'language' => $this->faker->randomElement(['English', 'Spanish', 'French', 'German', 'Italian']),
             'published_year' => fake()->year(),
             'isbn' => fake()->isbn13(),
             'pages' => fake()->numberBetween(100, 1000),
