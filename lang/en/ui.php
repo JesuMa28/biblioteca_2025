@@ -225,4 +225,78 @@ return [
             'next' => 'Next',
         ],
     ],
+    'floors' => [
+        'title' => 'Floors',
+        'create' => 'Create Floor',
+        'edit' => 'Edit Floor',
+        'fields' => [
+            'number' => 'Number',
+            'capacity' => 'capacity',
+            'create_at' => 'Create at',
+            'actions' => 'Actions',
+        ],
+        'columns' => [
+            'number' => 'Number',
+            'capacity' => 'Capacity',
+            'created_at' => 'Created at',
+            'actions' => 'Actions',
+        ],
+        'filters' => [
+            'search' => 'Search',
+            'number' => 'Floor number',
+            'capacity' => 'Floor capacity',
+        ],
+        'placeholders' => [
+            'number' => 'Floor number',
+            'capacity' => 'Capacity',
+            'search' => 'Search floors...',
+        ],
+        'tabs' => [
+            'floorForm' => 'Basic Information',
+        ],
+        'cards' => [
+            'title' => 'Create New Floor',
+            'description' => 'Input the information to create a new floor in the system.'
+        ],
+        'buttons' => [
+            'new' => 'New Floor',
+            'edit' => 'Edit',
+            'save' => 'Save',
+            'update' => 'Update',
+            'cancel' => 'Cancel',
+            'delete' => 'Delete',
+            'deleting' => 'Deleting...',
+            'saving' => 'Saving...',
+            'retry' => 'Retry',
+        ],
+        'delete' => [
+            'title' => 'Are you sure?',
+            'description' => 'This action cannot be undone. The floor will be permanently deleted from the system.',
+        ],
+        'delete_dialog' => [
+            'title' => 'Are you sure?',
+            'description' => 'This action cannot be undone. The floor will be permanently deleted from the system.',
+            'success' => 'Successfully deleted ;)',
+        ],
+        'deleted_error' => 'Error deleting user',
+        'no_results' => 'No results.',
+        'error_loading' => 'Error loading floors. Please try again.',
+        'showing_results' => 'Showing :from to :to of :total results',
+        'pagination' => [
+            'previous' => 'Previous',
+            'next' => 'Next',
+        ],
+    ],
+    'categories' => [
+        'fiction' => 'Fiction',
+        'non_fiction' => 'Non Fiction',
+        'science' => 'Science',
+        'history' => 'History',
+        'fantasy' => 'Fantasy',
+        'horror' => 'Horror',
+        'mystery' => 'Mystery',
+        'biography' => 'Biography',
+        'romantic' => 'Romantic',
+        'adventure' => 'Adventure',
+    ]
 ];
