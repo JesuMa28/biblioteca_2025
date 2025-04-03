@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Domain\Categories\Models\Category;
 
 class CategorySeeder extends Seeder
 {
@@ -12,24 +13,24 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // Default categories list
+
+        Category::truncate();
+
         $categories = [
-            ['name' => 'Ficción'],
-            ['name' => 'No Ficción'],
-            ['name' => 'Ciencia'],
-            ['name' => 'Historia'],
-            ['name' => 'Fantasía'],
-            ['name' => 'Terror'],
-            ['name' => 'Misterio'],
-            ['name' => 'Biografía'],
+            __('ui.categories.fiction'),
+            __('ui.categories.non_fiction'),
+            __('ui.categories.science'),
+            __('ui.categories.history'),
+            __('ui.categories.fantasy'),
+            __('ui.categories.horror'),
+            __('ui.categories.mystery'),
+            __('ui.categories.biography'),
+            __('ui.categories.romantic'),
+            __('ui.categories.adventure'),
         ];
 
-        foreach ($categories as $category) {
-            DB::table('categories')->insert([
-                'name' => $category['name'],
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        foreach ($categories as $categoryName) {
+            Category::create(['name' => $categoryName]);
         }
     }
 }
