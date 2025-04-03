@@ -9,12 +9,12 @@ class FloorIndexAction
 {
     public function __invoke(?string $search = null, int $perPage = 10)
     {
-        $floor = Floor::query()
+        $floors = Floor::query()
             ->when($search, function ($query, $search) {
-                $query->where('number', 'like', "%{$search}%")
+                $query->where('number', 'like', "%{$search}%");
             })
-            ->latest()
-            ->paginate($perPage);
+                ->latest()
+                ->paginate($perPage);
 
         return $floors->through(fn ($floor) => FloorResource::fromModel($floor));
     }
