@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('capacity');
             $table->string('category_name');
-            $table->foreignId('floor_id')->constrained('floors')->onDelete('cascade');
+            $table->foreign('floor_id')->references('id')->on('floors')->onDelete('cascade');
             $table->timestamps();
         });
     }

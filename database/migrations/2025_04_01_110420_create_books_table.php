@@ -22,7 +22,7 @@ return new class extends Migration
             $table->year('published_year');
             $table->string('isbn')->unique();
             $table->integer('pages')->unsigned();
-            $table->foreignId('shelf_id')->constrained('shelves')->onDelete('cascade');
+            $table->foreign('shelf_id')->references('id')->on('shelves')->onDelete('cascade');
             $table->timestamps();
         });
     }
