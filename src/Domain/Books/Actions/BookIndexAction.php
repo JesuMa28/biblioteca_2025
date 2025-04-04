@@ -16,8 +16,11 @@ class BookIndexAction
                     ->orWhere('editorial', 'like', "%{$search}%")
                     ->orWhere('language', 'like', "%{$search}%")
                     ->orWhere('isbn', 'like', "%{$search}%")
-                    ->orWhere('category_name', 'like', "%{$search}%")
                     ->orWhere('published_year', 'like', "%{$search}%")
+                    ->orWhereHas('categories', function ($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%");
+                    });
+
                 })
             ->latest()
             ->paginate($perPage);

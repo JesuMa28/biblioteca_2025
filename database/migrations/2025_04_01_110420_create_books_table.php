@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('author');
             $table->string('editorial');
             $table->string('language');
-            $table->string('category_name');
             $table->year('published_year');
             $table->string('isbn')->unique();
             $table->integer('pages')->unsigned();

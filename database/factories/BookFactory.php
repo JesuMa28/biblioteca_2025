@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Domain\Books\Models\Book;
+use Domain\Shelves\Models\Shelf;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -34,8 +35,7 @@ class BookFactory extends Factory
             'published_year' => fake()->year(),
             'isbn' => fake()->isbn13(),
             'pages' => fake()->numberBetween(100, 1000),
-            'category_name' => \Domain\Categories\Models\Category::inRandomOrder()->value('name') ?? \Domain\Categories\Models\Category::factory()->create()->name,
-            'shelf_id' => \Domain\Shelves\Models\Shelf::inRandomOrder()->first()->id ?? \Domain\Shelves\Models\Shelf::factory(),
+            'shelf_id' => Shelf::factory(),
         ];
     }
 }

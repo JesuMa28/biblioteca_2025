@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Database\Factories\BookFactory;
 use Domain\Books\Models\Book;
+use Domain\Categories\Models\Category;
 
 class Book extends Model
 {
@@ -17,11 +18,10 @@ class Book extends Model
         'author',
         'editorial',
         'language',
-        'category_name',
         'published_year',
         'isbn',
         'pages',
-        'shelf_id'
+        'shelf_id',
     ];
 
     protected static function newFactory()
@@ -32,5 +32,9 @@ class Book extends Model
     public function shelf()
     {
         return $this->belongsTo(Shelf::class);
+    }
+
+    public function categories() {
+        return $this->morphToMany(Category::class, 'categorizable');
     }
 }
