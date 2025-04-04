@@ -14,7 +14,6 @@ class Floor extends Model
 {
     use HasUuids, HasFactory;
     protected $fillable = [
-        'id',
         'number',
         'capacity',
         'n_zones'
@@ -24,8 +23,7 @@ class Floor extends Model
         return FloorFactory::new();
     }
 
-    function zones()
-    {
-        return $this->hasMany('Domain\Zones\Models\Zone');
+    public function zones() {
+        return $this->hasMany(Zone::class);
     }
 }

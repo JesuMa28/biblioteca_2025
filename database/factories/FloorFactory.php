@@ -26,9 +26,10 @@ class FloorFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
-            'number' => fake()->unique()->numberBetween(1, 10),
-            'capacity' => fake()->numberBetween(1, 10),
+            'number' => $this->faker->unique()->numberBetween(1, 100),
+            'capacity' => fake()->numberBetween(0, 10),
         ];
     }
 
