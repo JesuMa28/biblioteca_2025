@@ -12,7 +12,9 @@ class ShelfIndexAction
         $shelves = Shelf::query()
             ->when($search, function ($query, $search) {
                 $query->where('code', 'like', "%{$search}%")
-                    ->orWhere('category_name', 'like', "%{$search}%");
+                ->orWhereHas('categories', function ($query) use ($search) {
+                   $query->where('name', 'like', "%{$search}%");
+                });
             })
             ->latest()
             ->paginate($perPage);

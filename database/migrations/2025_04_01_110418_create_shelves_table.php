@@ -15,7 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary()->unique();
             $table->string('code');
             $table->integer('capacity');
-            $table->string('category_name');
             $table->uuid('zone_id');
             $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
             $table->timestamps();

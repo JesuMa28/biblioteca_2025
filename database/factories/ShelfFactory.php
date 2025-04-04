@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Domain\Shelves\Models\Shelf;
+use Domain\Zones\Models\Zone;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -29,8 +30,7 @@ class ShelfFactory extends Factory
         return [
             'code' => fake()->bothify('FLR-###??'),
             'capacity' => fake()->numberBetween(1, 10),
-            'category_name' => \Domain\Categories\Models\Category::inRandomOrder()->value('name') ?? \Domain\Categories\Models\Category::factory()->create()->name,
-            'zone_id' => \Domain\Zones\Models\Zone::inRandomOrder()->first()->id ?? \Domain\Zones\Models\Zone::factory(),
+            'zone_id' => Zone::factory(),
         ];
     }
 }

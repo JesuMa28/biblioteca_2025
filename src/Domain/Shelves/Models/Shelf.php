@@ -7,16 +7,17 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Database\Factories\ShelfFactory;
 use Domain\Shelves\Models\Shelf;
+use Domain\Categories\Models\Category;
 
 class Shelf extends Model
 {
     use HasUuids, HasFactory;
     protected $fillable = [
-        'id',
         'code',
         'capacity',
         'category_name',
         'zone_id',
+        'n_books',
     ];
 
 
@@ -33,5 +34,9 @@ class Shelf extends Model
     public function books()
     {
         return $this->hasMany(Book::class);
+    }
+
+    public function categories() {
+        return $this->morphToMany(Category::class, 'categorizable');
     }
 }
