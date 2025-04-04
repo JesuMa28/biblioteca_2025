@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Database\Factories\ZoneFactory;
 use Domain\Zones\Models\Zone;
+use Domain\Categories\Models\Category;
 
 class Zone extends Model
 {
@@ -14,7 +15,6 @@ class Zone extends Model
     protected $fillable = [
         'name',
         'capacity',
-        'category_name',
         'floor_id',
         'n_shelves'
     ];
@@ -32,6 +32,10 @@ class Zone extends Model
     public function shelves()
     {
         return $this->hasMany(Shelf::class);
+    }
+
+    public function categories() {
+        return $this->morphToMany(Category::class, 'categorizable');
     }
 
 }
