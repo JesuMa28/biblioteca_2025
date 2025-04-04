@@ -29,8 +29,7 @@ class ZoneFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'capacity' => $this->faker->numberBetween(1, 10),
-            'category_name' => Category::inRandomOrder()->first()->name ?? Category::factory()->create()->name,
-            'floor_id' => \Domain\Floors\Models\Floor::inRandomOrder()->first()?->id ?? \Domain\Floors\Models\Floor::factory()->create()->id,
+            'floor_id' => Floor::factory(),
 
         ];
     }

@@ -12,7 +12,9 @@ class ZoneIndexAction
         $zones = Zone::query()
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('category_name', 'like', "%{$search}%");
+                ->orWhereHas('categories', function ($query) use ($search) {
+                        $query->where('name', 'like', "%{$search}%");
+                });
             })
             ->latest()
             ->paginate($perPage);
