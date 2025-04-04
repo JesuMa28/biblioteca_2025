@@ -27,9 +27,27 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+
+        static $names = [
+
+            __('ui.categories.fiction'),
+            __('ui.categories.non_fiction'),
+            __('ui.categories.science'),
+            __('ui.categories.history'),
+            __('ui.categories.fantasy'),
+            __('ui.categories.horror'),
+            __('ui.categories.mystery'),
+            __('ui.categories.biography'),
+            __('ui.categories.romantic'),
+            __('ui.categories.adventure'),
+
+        ];
+
+        static $index = 0;
+
         return [
-            'name' => $this->faker->word(),
-            'updated_at' => now(),
+            'id' => (string) Str::uuid(),
+            'name' => $names[$index++ % count($names)]
         ];
     }
 }

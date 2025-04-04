@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
 
-        Category::truncate();
+
 
         $categories = [
             __('ui.categories.fiction'),
@@ -29,8 +29,8 @@ class CategorySeeder extends Seeder
             __('ui.categories.adventure'),
         ];
 
-        foreach ($categories as $categoryName) {
-            Category::create(['name' => $categoryName]);
+        foreach ($categories as $name) {
+            Category::create(['name' => $name]);
         }
     }
 }

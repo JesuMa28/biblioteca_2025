@@ -22,18 +22,21 @@ class Category extends Model
         return CategoryFactory::new();
     }
 
-    public function zones()
-    {
-        return $this->hasMany(Zone::class);
+    // Polimorphic Relations
+    public function books() {
+        return $this->morphedByMany(Book::class, 'categorizable');
     }
 
-    public function shelves()
-    {
-        return $this->hasMany(Shelf::class);
+    public function zones() {
+        return $this->morphedByMany(Zone::class, 'categorizable');
     }
 
-    public function books()
-    {
-        return $this->hasMany(Book::class);
+    public function shelves() {
+        return $this->morphedByMany(Shelf::class, 'categorizable');
+    }
+
+    // En Book.php, Zone.php, Shelf.php
+    public function categories() {
+        return $this->morphToMany(Category::class, 'categorizable');
     }
 }
