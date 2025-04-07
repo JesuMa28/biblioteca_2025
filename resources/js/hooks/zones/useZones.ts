@@ -5,7 +5,6 @@ export interface Zone {
   id: string;
   name: string;
   capacity: number;
-  category_name: string;
   floor_id: string;
   created_at: string;
 }

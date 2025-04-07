@@ -13,14 +13,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('users', \App\Users\Controllers\UserController::class);
-});
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
-
     Route::resource('floors', \App\Floors\Controllers\FloorController::class);
+    Route::resource('zones', \App\Zones\Controllers\ZoneController::class);
+    Route::resource('shelves', \App\Shelves\Controllers\ShelfController::class);
+    Route::resource('books', \App\Books\Controllers\BookController::class);
 });
 
 require __DIR__.'/settings.php';

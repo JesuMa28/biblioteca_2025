@@ -1,9 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Users\Controllers\Api\UserApiController;
 use App\Floors\Controllers\Api\FloorApiController;
-use Illuminate\Support\Facades\Route;
+use App\Zones\Controllers\Api\ZoneApiController;
+use App\Shelves\Controllers\Api\ShelfApiController;
+use App\Books\Controllers\Api\BookApiController;
 use App\Floors\Models\Floor;
+use App\Zones\Models\Zone;
+use App\Shelves\Models\Shelf;
+use App\Books\Models\Book;
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/users', [UserApiController::class, 'index']);
@@ -20,5 +26,28 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::put('/floors/{floor}', [FloorApiController::class, 'update']);
     Route::delete('/floors/{floor}', [FloorApiController::class, 'destroy']);
     Route::get('/floors/check-number/{number}', [FloorApiController::class, 'checkNumber']);
+});
 
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/zones', [ZoneApiController::class, 'index']);
+    Route::get('/zones/{zone}', [ZoneApiController::class, 'show']);
+    Route::post('/zones', [ZoneApiController::class, 'store']);
+    Route::put('/zones/{zone}', [ZoneApiController::class, 'update']);
+    Route::delete('/zones/{zone}', [ZoneApiController::class, 'destroy']);
+});
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/shelves', [ShelfApiController::class, 'index']);
+    Route::get('/shelves/{shelf}', [ShelfApiController::class, 'show']);
+    Route::post('/shelves', [ShelfApiController::class, 'store']);
+    Route::put('/shelves/{shelf}', [ShelfApiController::class, 'update']);
+    Route::delete('/shelves/{shelf}', [ShelfApiController::class, 'destroy']);
+});
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/books', [BookApiController::class, 'index']);
+    Route::get('/books/{book}', [BookApiController::class, 'show']);
+    Route::post('/books', [BookApiController::class, 'store']);
+    Route::put('/books/{book}', [BookApiController::class, 'update']);
+    Route::delete('/books/{book}', [BookApiController::class, 'destroy']);
 });

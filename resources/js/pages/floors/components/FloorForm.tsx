@@ -234,7 +234,7 @@ export function FloorForm({ initialData, page, perPage }: FloorFormProps) {
                                 {isSubmitting
                                     ? t('ui.floors.buttons.saving')
                                     : initialData
-                                      ? t('ui.floos.buttons.update')
+                                      ? t('ui.floors.buttons.update')
                                       : t('ui.floors.buttons.save')}
                             </Button>
                         )}

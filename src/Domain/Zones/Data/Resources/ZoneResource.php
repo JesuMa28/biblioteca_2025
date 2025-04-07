@@ -10,7 +10,7 @@ class ZoneResource extends Data
     public function __construct(
         public readonly string $id,
         public readonly string $name,
-        public readonly integer $capacity,
+        public readonly int $capacity,
         public readonly string $floor_id,
         public readonly string $created_at,
         public readonly string $updated_at,
