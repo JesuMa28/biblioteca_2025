@@ -8,6 +8,7 @@ use Domain\Zones\Actions\ZoneIndexAction;
 use Domain\Zones\Actions\ZoneStoreAction;
 use Domain\Zones\Actions\ZoneUpdateAction;
 use Domain\Zones\Models\Zone;
+use Domain\Floors\Models\Floor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -28,12 +29,20 @@ class ZoneController extends Controller
     }
 
 
-    public function create()
+    public function create(Request $request)
     {
 
+        // $floors = Floor::all()->pluck('id', 'number');
+        $floors = Floor::all(['id', 'number']);
         $zone_list = Zone::all()->pluck('name');
 
-        return Inertia::render('zones/Create', ['zones' => $zone_list]);
+        // dd($floors);
+        return Inertia::render('zones/Create', [
+            'floors' => $floors,
+            'zones' => $zone_list,
+            'page' => $request->query('page'),
+            'perPage' => $request->query('perPage'),
+        ]);
     }
 
     public function store(Request $request, ZoneStoreAction $action)

@@ -14,8 +14,8 @@ interface ZoneFormProps {
     };
     page?: string;
     perPage?: string;
-}
 
+}
 export default function CreateZone() {
     const { t } = useTranslations();
 
@@ -35,7 +35,7 @@ export default function CreateZone() {
                     <Separator />
                     <CardContent>
 
-                        <ZoneForm></ZoneForm>
+                        <ZoneForm ></ZoneForm>
 
                     </CardContent>
                 </Card>
