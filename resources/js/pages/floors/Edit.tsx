@@ -1,16 +1,16 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useTranslations } from '@/hooks/use-translations';
-import { UserLayout } from '@/layouts/users/UserLayout';
-import { UserForm } from '@/pages/users/components/UserForm';
+import { FloorLayout } from '@/layouts/floors/FloorLayout';
+import { FloorForm } from '@/pages/floors/components/FloorForm';
 import { PageProps } from '@inertiajs/core';
-import { User } from 'lucide-react';
+import { Building } from 'lucide-react';
 
-interface EditUserProps extends PageProps {
-    user: {
+interface EditFloorProps extends PageProps {
+    floor: {
         id: string;
-        name: string;
-        email: string;
+        number: number;
+        capacity: number;
     };
     page?: string;
     perPage?: string;
@@ -21,37 +21,32 @@ interface EditUserProps extends PageProps {
     permisosDelUsuario?: string[];
 }
 
-export default function EditUser({ user, page, perPage, roles, rolesConPermisos, permisos, permisosAgrupados, permisosDelUsuario }: EditUserProps) {
+export default function EditFloor({ floor, page, perPage }: EditFloorProps) {
     const { t } = useTranslations();
 
     return (
-        <UserLayout title={t('ui.users.edit')}>
+        <FloorLayout title={t('ui.floors.edit')}>
             <div className="flex max-w-screen items-center self-center">
                 <Card className="w-100% m-4 p-4 shadow-lg dark:shadow-xs dark:shadow-white">
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-1">
-                                <User color="#2762c2" />
-                                {t('ui.users.cards.title')}
+                                <Building color="#2762c2" />
+                                {t('ui.floors.cards.title_edit')}
                             </div>
                         </CardTitle>
-                        <CardDescription>{t('ui.users.cards.description')}</CardDescription>
+                        <CardDescription>{t('ui.floors.cards.description_edit')}</CardDescription>
                     </CardHeader>
                     <Separator />
                     <CardContent>
-                        <UserForm
-                            initialData={user}
+                        <FloorForm
+                            initialData={floor}
                             page={page}
                             perPage={perPage}
-                            roles={roles}
-                            rolesConPermisos={rolesConPermisos}
-                            permisos={permisos}
-                            permisosAgrupados={permisosAgrupados}
-                            permisosDelUsuario={permisosDelUsuario}
                         />
                     </CardContent>
                 </Card>
             </div>
-        </UserLayout>
+        </FloorLayout>
     );
 }

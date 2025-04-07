@@ -70,7 +70,7 @@ return [
         ],
     ],
     'validation' => [
-            'required' => 'El campo :attribute es obligatorio.',
+            'required' => 'El campo ":attribute" es obligatorio.',
             'email' => 'El campo :attribute debe ser una dirección de correo válida.',
             'min' => [
                 'string' => 'El campo :attribute debe tener al menos :min caracteres.',
@@ -80,6 +80,8 @@ return [
             ],
             'unique' => 'El campo :attribute ya ha sido tomado.',
             'confirmed' => 'El campo :attribute no coincide.',
+            "used_floor" => "El :attribute ya está en uso.",
+            "max_zones" => "Un piso no puede tener mas de 10 zonas.",
     ],
     'common' => [
         'buttons' => [
@@ -224,6 +226,8 @@ return [
         'create' => 'Crear Piso',
         'edit' => 'Editar Piso',
         'fields' => [
+            'floor' => 'Número de Piso',
+            'max-zones' => 'Máximo de Zonas',
             'number' => 'Número',
             'capacity' => 'Capacidad',
             'create_at' => 'Fecha de creación',
@@ -232,7 +236,7 @@ return [
         'columns' => [
             'number' => 'Número',
             'capacity' => 'Capacidad',
-            'created_at' => 'Fecha de creació',
+            'created_at' => 'Fecha de creación',
             'actions' => 'Acciones',
         ],
         'filters' => [
@@ -241,7 +245,8 @@ return [
             'capacity' => 'Capacidad del piso',
         ],
         'placeholders' => [
-            'number' => 'Número de piso',
+            'number' => 'Número Piso...',
+            'max-zones' => 'Máximo Zones...',
             'capacity' => 'Capacidad',
             'search' => 'Buscar pisos...',
         ],
@@ -249,8 +254,10 @@ return [
             'floorForm' => 'Información Básica',
         ],
         'cards' => [
-            'title' => 'Crear Nuevo Piso',
-            'description' => 'Ingrese la información para crear un nuevo piso en el sistema.'
+            'title_create' => 'Crear Nuevo Piso',
+            'title_edit' => 'Editar Piso',
+            'description_create' => 'Ingrese la información para crear un nuevo piso en el sistema.',
+            'description_edit' => 'Ingrese la información para editar el piso seleccionado.',
         ],
         'buttons' => [
             'new' => 'Nuevo Piso',

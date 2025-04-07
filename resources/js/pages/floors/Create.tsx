@@ -2,9 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator';
 import { useTranslations } from '@/hooks/use-translations';
 import { FloorLayout } from '@/layouts/floors/FloorLayout';
-import { UserLayout } from '@/layouts/users/UserLayout';
-import { UserForm } from '@/pages/users/components/UserForm';
-import { User } from 'lucide-react';
+import { FloorForm } from '@/pages/floors/components/FloorForm';
+import { Building } from 'lucide-react';
 
 interface FloorFormProps {
     initialData?: {
@@ -25,15 +24,17 @@ export default function CreateFloor() {
                 <Card className="w-100% m-4 p-4 shadow-lg dark:shadow-xs dark:shadow-white">
                     <CardHeader>
                         <CardTitle>
-                            <div className="flex items-center gap-1">
-                                <User color="#2762c2" />
-                                {t('ui.floors.cards.title')}
+                            <div className="flex items-center gap-1 mt-4">
+                                <Building color="#2762c2" />
+                                {t('ui.floors.cards.title_create')}
                             </div>
                         </CardTitle>
-                        <CardDescription>{t('ui.floors.cards.description')}</CardDescription>
+                        <CardDescription>{t('ui.floors.cards.description_create')}</CardDescription>
                     </CardHeader>
                     <Separator />
                     <CardContent>
+
+                        <FloorForm></FloorForm>
 
                     </CardContent>
                 </Card>

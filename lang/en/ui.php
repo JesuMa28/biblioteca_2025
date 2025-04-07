@@ -80,6 +80,11 @@ return [
             ],
             'unique' => 'The :attribute has already been taken.',
             'confirmed' => 'The :attribute confirmation does not match.',
+            "required" => "The ':attribute' field is required.",
+            "numeric" => "El campo :attribute debe ser un número.",
+            "duplicate" => "El número de :attribute ya está en uso.",
+            "used_floor" => "The :attribute is already in use.",
+            "max_zones" => "A floor cannot have more than 10 areas.",
     ],
     'common' => [
         'buttons' => [
@@ -226,11 +231,25 @@ return [
             'next' => 'Next',
         ],
     ],
+    'categories' => [
+        'fiction' => 'Fiction',
+        'non_fiction' => 'Non Fiction',
+        'science' => 'Science',
+        'history' => 'History',
+        'fantasy' => 'Fantasy',
+        'horror' => 'Horror',
+        'mystery' => 'Mystery',
+        'biography' => 'Biography',
+        'romantic' => 'Romantic',
+        'adventure' => 'Adventure',
+    ],
     'floors' => [
         'title' => 'Floors',
         'create' => 'Create Floor',
         'edit' => 'Edit Floor',
         'fields' => [
+            'floor' => 'Floor Number',
+            'max-zones' => 'Max Zones',
             'number' => 'Number',
             'capacity' => 'capacity',
             'create_at' => 'Create at',
@@ -248,7 +267,8 @@ return [
             'capacity' => 'Floor capacity',
         ],
         'placeholders' => [
-            'number' => 'Floor number',
+            'number' => 'Floor Number...',
+            'max-zones' => 'Max Zones...',
             'capacity' => 'Capacity',
             'search' => 'Search floors...',
         ],
@@ -256,8 +276,10 @@ return [
             'floorForm' => 'Basic Information',
         ],
         'cards' => [
-            'title' => 'Create New Floor',
-            'description' => 'Input the information to create a new floor in the system.'
+            'title_create' => 'Create New Floor',
+            'title_edit' => 'Edit Floor',
+            'description_create' => 'Input the information to create a new floor in the system.',
+            'description_edit' => 'Input the information to update the current floor.',
         ],
         'buttons' => [
             'new' => 'New Floor',
@@ -288,16 +310,64 @@ return [
             'next' => 'Next',
         ],
     ],
-    'categories' => [
-        'fiction' => 'Fiction',
-        'non_fiction' => 'Non Fiction',
-        'science' => 'Science',
-        'history' => 'History',
-        'fantasy' => 'Fantasy',
-        'horror' => 'Horror',
-        'mystery' => 'Mystery',
-        'biography' => 'Biography',
-        'romantic' => 'Romantic',
-        'adventure' => 'Adventure',
-    ],
+    // 'zones' => [
+    //     'title' => 'Zones',
+    //     'create' => 'Create Zone',
+    //     'edit' => 'Edit Zone',
+    //     'fields' => [
+
+    //     ],
+    //     'columns' => [
+    //         'number' => 'Number',
+    //         'capacity' => 'Capacity',
+    //         'created_at' => 'Created at',
+    //         'actions' => 'Actions',
+    //     ],
+    //     'filters' => [
+    //         'search' => 'Search',
+    //         'number' => 'Floor number',
+    //         'capacity' => 'Floor capacity',
+    //     ],
+    //     'placeholders' => [
+    //         'number' => 'Floor number...',
+    //         'max-zones' => 'Max Zones...',
+    //         'capacity' => 'Capacity',
+    //         'search' => 'Search floors...',
+    //     ],
+    //     'tabs' => [
+    //         'floorForm' => 'Basic Information',
+    //     ],
+    //     'cards' => [
+    //         'title' => 'Create New Floor',
+    //         'description' => 'Input the information to create a new floor in the system.'
+    //     ],
+    //     'buttons' => [
+    //         'new' => 'New Floor',
+    //         'edit' => 'Edit',
+    //         'save' => 'Save',
+    //         'update' => 'Update',
+    //         'cancel' => 'Cancel',
+    //         'delete' => 'Delete',
+    //         'deleting' => 'Deleting...',
+    //         'saving' => 'Saving...',
+    //         'retry' => 'Retry',
+    //     ],
+    //     'delete' => [
+    //         'title' => 'Are you sure?',
+    //         'description' => 'This action cannot be undone. The floor will be permanently deleted from the system.',
+    //     ],
+    //     'delete_dialog' => [
+    //         'title' => 'Are you sure?',
+    //         'description' => 'This action cannot be undone. The floor will be permanently deleted from the system.',
+    //         'success' => 'Successfully deleted ;)',
+    //     ],
+    //     'deleted_error' => 'Error deleting user',
+    //     'no_results' => 'No results.',
+    //     'error_loading' => 'Error loading floors. Please try again.',
+    //     'showing_results' => 'Showing :from to :to of :total results',
+    //     'pagination' => [
+    //         'previous' => 'Previous',
+    //         'next' => 'Next',
+    //     ],
+    // ],
 ];

@@ -3,6 +3,7 @@
 use App\Users\Controllers\Api\UserApiController;
 use App\Floors\Controllers\Api\FloorApiController;
 use Illuminate\Support\Facades\Route;
+use App\Floors\Models\Floor;
 
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/users', [UserApiController::class, 'index']);
@@ -18,4 +19,6 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/floors', [FloorApiController::class, 'store']);
     Route::put('/floors/{floor}', [FloorApiController::class, 'update']);
     Route::delete('/floors/{floor}', [FloorApiController::class, 'destroy']);
+    Route::get('/floors/check-number/{number}', [FloorApiController::class, 'checkNumber']);
+
 });

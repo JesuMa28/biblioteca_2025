@@ -70,4 +70,11 @@ class FloorApiController extends Controller
             'message' => __('messages.floors.deleted')
         ]);
     }
+
+    public function checkNumber($number)
+    {
+        $exists = Floor::where('number', $number)->exists();
+
+        return response()->json(['exists' => $exists]);
+    }
 }

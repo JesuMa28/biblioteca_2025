@@ -21,15 +21,12 @@ class FloorController extends Controller
         $floors = Floor::withCount('zones')
             ->orderBy('number')
             ->get()
-            ->map(fn (Floor $floor) => [
-                'id' => $floor->id,
-                'number' => $floor->number,
-                'capacity' => $floor->capacity,
-                'count' => $floor->zones_count,
-            ])->toArray();
+            ->toArray();
 
-        return Inertia::render('floors/Index');
+        // dd($floors);
+        return Inertia::render('floors/Index', ['floors_count' => $floors]);
     }
+
 
     public function create()
     {
