@@ -92,7 +92,7 @@ export function FloorForm({ initialData, page, perPage }: FloorFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="" noValidate>
+        <form onSubmit={handleSubmit} noValidate>
             <div>
                 <Tabs defaultValue="floorForm">
 
@@ -113,7 +113,7 @@ export function FloorForm({ initialData, page, perPage }: FloorFormProps) {
                                         const res = await fetch(`/api/floors/check-number/${value}`);
                                         const data = await res.json();
 
-                                        if (data.exists) {
+                                        if (!initialData && data.exists) {
                                             return t('ui.validation.used_floor', { attribute: t('ui.floors.fields.floor')});
                                         }
 

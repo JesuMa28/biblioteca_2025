@@ -258,8 +258,8 @@ return [
         ],
         'columns' => [
             'number' => 'Number',
-            'current_shelves' => 'Current Shelves',
-            'capacity' => 'Capacity',
+            'current_shelves' => 'Current Zones',
+            'capacity' => 'Zones Capacity',
             'created_at' => 'Created at',
             'actions' => 'Actions',
         ],
