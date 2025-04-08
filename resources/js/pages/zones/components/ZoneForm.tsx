@@ -4,7 +4,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { useTranslations } from '@/hooks/use-translations';
@@ -14,6 +13,16 @@ import { useForm } from '@tanstack/react-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { LandPlot, Save, Building, X, LibraryBig } from 'lucide-react';
 import { toast } from 'sonner';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Value } from "@radix-ui/react-select";
 
 
 
@@ -26,6 +35,10 @@ interface ZoneFormProps {
     };
     page?: string;
     perPage?: string;
+    floors: {
+        id: string;
+        number: number;
+    } [];
 }
 
 // Field error display component
@@ -40,11 +53,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
     );
 }
 
-const tags = Array.from({ length: 20 }).map(
-  (_, i) => `Piso ${1 + i}`
-)
-
-export function ZoneForm({ initialData, page, perPage }: ZoneFormProps) {
+export function ZoneForm({ initialData, page, perPage, floors }: ZoneFormProps) {
     const { t } = useTranslations();
     const queryClient = useQueryClient();
 
@@ -117,19 +126,11 @@ export function ZoneForm({ initialData, page, perPage }: ZoneFormProps) {
                                         onChangeAsync: async ({ value }) => {
                                             await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                            // Si no hay valor, devolver error
-                                            if (!value) {
-                                                return t('ui.validation.required', { attribute: t('ui.zones.fields.name')});
-                                            }
-
-                                            const res = await fetch(`/api/zones/check-number/${value}`);
-                                            const data = await res.json();
-
-                                            if (data.exists) {
-                                                return t('ui.validation.used_zone', { attribute: t('ui.zones.fields.name')});
-                                            }
-
-                                            return undefined;
+                                            return !value
+                                                ? t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')})
+                                                : value.length < 3
+                                                ? t('ui.validation.min.string', { attribute: t('ui.floors.fields.name').toLowerCase(), min: '3' })
+                                                : undefined;
                                         },
                                     }}
 
@@ -223,19 +224,10 @@ export function ZoneForm({ initialData, page, perPage }: ZoneFormProps) {
                                     onChangeAsync: async ({ value }) => {
                                         await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                        const stringValue = String(value);
-                                        const number = parseInt(stringValue, 10);
 
-                                        if (!stringValue) {
-                                            return t('ui.validation.required', { attribute: t('ui.zones.fields.max-shelves')});
-                                        }
 
-                                        if (isNaN(number)) {
-                                            return t('ui.validation.max_shelves');
-                                        }
-
-                                        if (number > 10) {
-                                            return t('ui.validation.max_shelves');
+                                        if (!value) {
+                                            return t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')});
                                         }
 
                                         return undefined;
@@ -244,24 +236,33 @@ export function ZoneForm({ initialData, page, perPage }: ZoneFormProps) {
                             >
                                 {(field) => (
                                     <>
+
                                         <Label htmlFor={field.name}>
                                             <div className="mb-4 flex items-center gap-1">
                                                 <Building color="grey" size={18} />
                                                 {t('ui.floors.title')}
                                             </div>
                                         </Label>
-                                        <ScrollArea className="h-60 w-48 rounded-md border mb-6">
-                                            <div className="p-4">
-                                                {tags.map((tag) => (
-                                                <>
-                                                    <div key={tag} className="text-sm">
-                                                    {tag}
-                                                    </div>
-                                                    <Separator className="my-2" />
-                                                </>
+                                        <Select
+                                            value={field.state.value}
+                                            onValueChange={(value: string) => {
+                                                field.handleChange(value);
+                                            }}
+                                        >
+                                            <SelectTrigger className=" w-48 rounded-md border mb-6">
+                                                <SelectValue placeholder="Select a Floor" />
+                                            </SelectTrigger>
+                                            <SelectContent className="h-30">
+                                                {floors.map((floor) => (
+                                                    <SelectItem key={floor.id} value={floor.id} className="w-full">
+                                                        <div className="text-sm">
+                                                        Piso: {floor.number}
+                                                        </div>
+                                                    </SelectItem>
                                                 ))}
-                                            </div>
-                                        </ScrollArea>
+                                            </SelectContent>
+
+                                        </Select>
                                         <FieldInfo field={field} />
                                     </>
                                 )}

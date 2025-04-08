@@ -12,8 +12,10 @@ import { createTextColumn, createDateColumn, createActionsColumn } from "@/compo
 import { DeleteDialog } from "@/components/stack-table/DeleteDialog";
 import { FiltersTable, FilterConfig } from "@/components/stack-table/FiltersTable";
 import { toast } from "sonner";
-import { ColumnDef, Row } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper, Row } from "@tanstack/react-table";
 import { ZoneLayout } from "@/layouts/zones/ZoneLayout";
+import { floor } from "lodash";
+import FloorsIndex from "../floors/Index";
 
 export default function ZonesIndex() {
   const { t } = useTranslations();
@@ -61,6 +63,8 @@ export default function ZonesIndex() {
     }
   };
 
+  const columnHelper = createColumnHelper<Zone>();
+
   const columns = useMemo(() => ([
     createTextColumn<Zone>({
       id: "name",
@@ -73,10 +77,11 @@ export default function ZonesIndex() {
       accessorKey: "capacity",
     }),
     createTextColumn<Zone>({
-      id: "floor_id",
-      header: t("ui.zones.columns.floor_id") || "Floor ID",
-      accessorKey: "floor_id",
+      id: "floor_number",
+      header: t("ui.zones.columns.floor_number") || "Floor ID",
+      accessorKey: "floor_number",
     }),
+
     createDateColumn<Zone>({
       id: "created_at",
       header: t("ui.zones.columns.created_at") || "Created At",

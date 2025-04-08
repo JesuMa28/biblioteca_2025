@@ -4,6 +4,7 @@ import { useTranslations } from '@/hooks/use-translations';
 import { ZoneLayout } from '@/layouts/zones/ZoneLayout';
 import { ZoneForm } from '@/pages/zones/components/ZoneForm';
 import { Building } from 'lucide-react';
+import { number } from 'zod';
 
 interface ZoneFormProps {
     initialData?: {
@@ -14,9 +15,13 @@ interface ZoneFormProps {
     };
     page?: string;
     perPage?: string;
+    floors: {
+        id: string;
+        number: number;
+    } [];
 
 }
-export default function CreateZone() {
+export default function CreateZone({floors}:ZoneFormProps) {
     const { t } = useTranslations();
 
     return (
@@ -35,7 +40,7 @@ export default function CreateZone() {
                     <Separator />
                     <CardContent>
 
-                        <ZoneForm ></ZoneForm>
+                        <ZoneForm floors={floors} ></ZoneForm>
 
                     </CardContent>
                 </Card>

@@ -28,7 +28,7 @@ class FloorFactory extends Factory
     {
 
         return [
-            'number' => $this->faker->unique()->numberBetween(1, 100),
+            'number' => $this->faker->unique()->numberBetween(1, 20),
             'capacity' => fake()->numberBetween(0, 10),
         ];
     }

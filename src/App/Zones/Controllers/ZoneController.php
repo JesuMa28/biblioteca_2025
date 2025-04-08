@@ -24,8 +24,10 @@ class ZoneController extends Controller
             ->get()
             ->toArray();
 
+        $floors = Floor::all('id', 'number');
+
         // dd($zones);
-        return Inertia::render('zones/Index', ['zones_count' => $zones]);
+        return Inertia::render('zones/Index', ['zones_count' => $zones], ['floors' => $floors]);
     }
 
 
@@ -47,9 +49,10 @@ class ZoneController extends Controller
 
     public function store(Request $request, ZoneStoreAction $action)
     {
+
         $validator = Validator::make($request->all(), [
-            'number' => ['required', 'string'],
-            'capacity' => ['required', 'integer'],
+            'name' => ['required', 'string'],
+            'capacity' => ['required', 'int'],
             'floor_id' => ['required', 'string'],
         ]);
 
@@ -76,8 +79,8 @@ class ZoneController extends Controller
     public function update(Request $request, Zone $zone, ZoneUpdateAction $action)
     {
         $validator = Validator::make($request->all(), [
-            'number' => ['required', 'string'],
-            'capacity' => ['required', 'integer'],
+            'name' => ['required', 'string'],
+            'capacity' => ['required', 'int'],
             'floor_id' => ['required', 'string'],
         ]);
 

@@ -7,6 +7,7 @@ export interface Zone {
   capacity: number;
   floor_id: string;
   created_at: string;
+  floor_number: number;
 }
 
 // Interface representing the actual API response structure
@@ -83,7 +84,7 @@ export function useZones({ search, page = 1, perPage = 10 }: UseZonesParams = {}
 
 export function useCreateZone() {
   return useMutation({
-    mutationFn: async (data: { name: string; capacity: number; category_name: string; floor_id: string }) => {
+    mutationFn: async (data: { name: string; capacity: number; category_name: string; floor_id: string, floor_number: number }) => {
       const response = await axios.post("/api/zones", data, {
         headers: {
           'Accept': 'application/json',
@@ -97,7 +98,7 @@ export function useCreateZone() {
 
 export function useUpdateZone(zoneId: string) {
   return useMutation({
-    mutationFn: async (data: { name: string; capacity: number; category_name: string; floor_id: string }) => {
+    mutationFn: async (data: { name: string; capacity: number; category_name: string; floor_id: string, floor_number: number }) => {
       const response = await axios.put(`/api/zones/${zoneId}`, data, {
         headers: {
           'Accept': 'application/json',
