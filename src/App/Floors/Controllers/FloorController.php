@@ -18,10 +18,7 @@ class FloorController extends Controller
 {
     public function index()
     {
-        $floors = Floor::withCount('zones')
-            ->orderBy('number')
-            ->get()
-            ->toArray();
+        $floors = Floor::withCount('zones')->orderBy('number')->get()->toArray();
 
         // dd($floors);
         return Inertia::render('floors/Index', ['floors_count' => $floors]);

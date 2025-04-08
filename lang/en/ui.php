@@ -258,6 +258,7 @@ return [
         ],
         'columns' => [
             'number' => 'Number',
+            'current_shelves' => 'Current Shelves',
             'capacity' => 'Capacity',
             'created_at' => 'Created at',
             'actions' => 'Actions',

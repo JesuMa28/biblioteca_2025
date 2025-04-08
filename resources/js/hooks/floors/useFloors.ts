@@ -5,6 +5,7 @@ export interface Floor {
   id: string;
   number: number;
   capacity: number;
+  floors_count: number;
   created_at: string;
 }
 

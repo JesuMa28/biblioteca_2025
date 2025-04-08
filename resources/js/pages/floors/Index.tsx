@@ -68,6 +68,11 @@ export default function FloorsIndex() {
       accessorKey: "number",
     }),
     createTextColumn<Floor>({
+      id: "floors_count",
+      header: t("ui.floors.columns.current_shelves") || "Occuped",
+      accessorKey: "floors_count",
+    }),
+    createTextColumn<Floor>({
       id: "capacity",
       header: t("ui.floors.columns.capacity") || "Capacity",
       accessorKey: "capacity",
