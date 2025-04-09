@@ -17,7 +17,8 @@ class Zone extends Model
         'name',
         'capacity',
         'floor_id',
-        'n_shelves'
+        'category_id',
+        'n_shelves',
     ];
 
     protected static function newFactory()
@@ -30,13 +31,14 @@ class Zone extends Model
         return $this->belongsTo(Floor::class);
     }
 
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
+
     public function shelves()
     {
         return $this->hasMany(Shelf::class);
     }
 
-    public function categories() {
-        return $this->morphToMany(Category::class, 'categorizable');
-    }
 
 }

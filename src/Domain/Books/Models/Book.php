@@ -35,6 +35,6 @@ class Book extends Model
     }
 
     public function categories() {
-        return $this->morphToMany(Category::class, 'categorizable');
+        return $this->belongsToMany(Category::class);
     }
 }

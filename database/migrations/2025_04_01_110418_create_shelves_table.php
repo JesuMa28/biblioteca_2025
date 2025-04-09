@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('capacity');
             $table->uuid('zone_id');
             $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
+            $table->uuid('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

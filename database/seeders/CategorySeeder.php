@@ -15,7 +15,7 @@ class CategorySeeder extends Seeder
     {
 
 
-
+        Category::truncate();
         $categories = [
             __('ui.categories.fiction'),
             __('ui.categories.non_fiction'),
@@ -30,7 +30,7 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($categories as $name) {
-            Category::create(['name' => $name]);
+            Category::firstOrCreate(['name' => $name]);
         }
     }
 }

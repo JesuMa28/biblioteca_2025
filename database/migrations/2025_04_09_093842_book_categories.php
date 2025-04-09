@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categorizables', function (Blueprint $table) {
+        Schema::create('book_category', function (Blueprint $table) {
             $table->id();
+            $table->uuid('book_id');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->uuid('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-
-            // Polimorphyc: relateing any categorizable model
-            $table->uuid('categorizable_id');
-            $table->string('categorizable_type');
-
             $table->timestamps();
         });
     }
@@ -29,6 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorizables');
+        Schema::dropIfExists('categories');
+        //
     }
 };

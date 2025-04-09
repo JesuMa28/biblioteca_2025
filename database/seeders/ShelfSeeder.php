@@ -13,11 +13,7 @@ class ShelfSeeder extends Seeder {
     public function run(){
 
         Shelf::truncate();
-        Shelf::factory()->count(8)->create()->each(function ($shelf) {
-            $shelf->categories()->attach(
-                Category::inRandomOrder()->take(rand(1, 2))->pluck('id')
-            );
-        });
+        Shelf::factory()->count(10)->create();
 
     }
 

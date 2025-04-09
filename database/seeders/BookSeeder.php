@@ -12,11 +12,7 @@ class BookSeeder extends Seeder {
     public function run(){
 
         Book::truncate();
-        Book::factory()->count(9)->create()->each(function ($book) {
-            $book->categories()->attach(
-                Category::inRandomOrder()->take(rand(1, 3))->pluck('id')
-            );
-        });
+        Book::factory()->count(10)->create();
 
     }
 

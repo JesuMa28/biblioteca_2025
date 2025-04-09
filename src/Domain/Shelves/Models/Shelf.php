@@ -15,7 +15,7 @@ class Shelf extends Model
     protected $fillable = [
         'code',
         'capacity',
-        'category_name',
+        'category_id',
         'zone_id',
         'n_books',
     ];
@@ -26,6 +26,9 @@ class Shelf extends Model
         return ShelfFactory::new();
     }
 
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
     public function zone()
     {
         return $this->belongsTo(Zone::class);
@@ -36,7 +39,4 @@ class Shelf extends Model
         return $this->hasMany(Book::class);
     }
 
-    public function categories() {
-        return $this->morphToMany(Category::class, 'categorizable');
-    }
 }

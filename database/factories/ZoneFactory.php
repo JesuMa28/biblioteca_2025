@@ -30,6 +30,7 @@ class ZoneFactory extends Factory
             'name' => $this->faker->word(),
             'capacity' => $this->faker->numberBetween(1, 10),
             'floor_id' => Floor::factory(),
+            'category_id' => Category::factory(),
 
         ];
     }

@@ -13,11 +13,7 @@ class ZoneSeeder extends Seeder {
     public function run(){
 
         Zone::truncate();
-        Zone::factory()->count(8)->create()->each(function ($zone) {
-            $zone->categories()->attach(
-                Category::inRandomOrder()->take(rand(1, 2))->pluck('id')
-            );
-        });
+        Zone::factory()->count(8)->create();
 
     }
 
