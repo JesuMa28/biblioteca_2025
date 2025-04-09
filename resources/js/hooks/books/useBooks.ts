@@ -7,7 +7,7 @@ export interface Book {
   author: string;
   editorial: string;
   language: string;
-  category_name: string;
+  category_id: string;
   published_year: number;
   isbn: string;
   pages: number;
@@ -95,7 +95,7 @@ export function useCreateBook() {
         author: string;
         editorial: string;
         language: string;
-        category_name: string;
+        category_id: string;
         published_year: number;
         isbn: string;
         pages: number;
@@ -120,7 +120,7 @@ export function useUpdateBook(bookId: string) {
       author: string;
       editorial: string;
       language: string;
-      category_name: string;
+      category_id: string;
       published_year: number;
       isbn: string;
       pages: number;

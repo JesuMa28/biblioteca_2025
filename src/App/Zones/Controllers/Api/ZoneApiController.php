@@ -30,6 +30,7 @@ class ZoneApiController extends Controller
             'number' => ['required', 'string'],
             'capacity' => ['required', 'integer'],
             'floor_id' => ['required', 'string'],
+            'category_id' => ['required', 'string'],
         ]);
 
         if ($validator->fails()) {
@@ -50,6 +51,7 @@ class ZoneApiController extends Controller
             'number' => ['required', 'string'],
             'capacity' => ['required', 'integer'],
             'floor_id' => ['required', 'string'],
+            'category_id' => ['required', 'string'],
         ]);
 
         if ($validator->fails()) {

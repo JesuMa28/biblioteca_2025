@@ -11,7 +11,7 @@ import { router } from '@inertiajs/react';
 import type { AnyFieldApi } from '@tanstack/react-form';
 import { useForm } from '@tanstack/react-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { LandPlot, Save, Building, X, LibraryBig } from 'lucide-react';
+import { LandPlot, Save, Building, X, LibraryBig, Drama } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   Select,
@@ -32,6 +32,7 @@ interface ZoneFormProps {
         name: string;
         capacity: number;
         floor_id: string;
+        category_id: string;
     };
     page?: string;
     perPage?: string;
@@ -39,6 +40,10 @@ interface ZoneFormProps {
         id: string;
         number: number;
     } [];
+    categories: {
+        id: string;
+        name: string;
+    }[];
 }
 
 // Field error display component
@@ -53,9 +58,12 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
     );
 }
 
-export function ZoneForm({ initialData, page, perPage, floors }: ZoneFormProps) {
+export function ZoneForm({ initialData, page, perPage, floors, categories }: ZoneFormProps) {
     const { t } = useTranslations();
     const queryClient = useQueryClient();
+    const uniqueCategories = categories.filter(
+        (cat, index, self) => index === self.findIndex((c) => c.name === cat.name)
+    );
 
     // TanStack Form setup
     const form = useForm({
@@ -63,6 +71,7 @@ export function ZoneForm({ initialData, page, perPage, floors }: ZoneFormProps) 
             name: initialData?.name ?? '',
             capacity: initialData?.capacity ?? '',
             floor_id: initialData?.floor_id ?? '',
+            category_id: initialData?.category_id ?? '',
 
         },
         onSubmit: async ({ value }) => {
@@ -129,7 +138,7 @@ export function ZoneForm({ initialData, page, perPage, floors }: ZoneFormProps) 
                                             return !value
                                                 ? t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')})
                                                 : value.length < 3
-                                                ? t('ui.validation.min.string', { attribute: t('ui.floors.fields.name').toLowerCase(), min: '3' })
+                                                ? t('ui.validation.min.string', { attribute: t('ui.zones.fields.name').toLowerCase(), min: '3' })
                                                 : undefined;
                                         },
                                     }}
@@ -147,7 +156,7 @@ export function ZoneForm({ initialData, page, perPage, floors }: ZoneFormProps) 
                                                 id={field.name}
                                                 name={field.name}
                                                 type="text"
-                                                value={field.state.value}
+                                                value={field.state.value?.toString()}
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 onBlur={field.handleBlur}
                                                 placeholder={t('ui.zones.placeholders.name')}
@@ -162,7 +171,7 @@ export function ZoneForm({ initialData, page, perPage, floors }: ZoneFormProps) 
                                 </form.Field>
                             </div>
                             {/* Capacity field */}
-                            <div>
+                            <div className="mb-8">
                                 <form.Field
                                     name="capacity"
                                     validators={{
@@ -200,7 +209,7 @@ export function ZoneForm({ initialData, page, perPage, floors }: ZoneFormProps) 
                                                 id={field.name}
                                                 name={field.name}
                                                 type="number"
-                                                value={field.state.value}
+                                                value={field.state.value ? String(field.state.value) : undefined}
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 onBlur={field.handleBlur}
                                                 placeholder={t('ui.zones.placeholders.max-shelves')}
@@ -216,58 +225,115 @@ export function ZoneForm({ initialData, page, perPage, floors }: ZoneFormProps) 
                             </div>
                         </div>
 
-                        {/* Capacity field */}
-                        <div className='w-[45%]'>
-                            <form.Field
-                                name="floor_id"
-                                validators={{
-                                    onChangeAsync: async ({ value }) => {
-                                        await new Promise((resolve) => setTimeout(resolve, 300));
+                        <div className="h-full">
+
+                            {/* Floor field */}
+                            <div className='w-[45%] mb-8'>
+                                <form.Field
+                                    name="floor_id"
+                                    validators={{
+                                        onChangeAsync: async ({ value }) => {
+                                            await new Promise((resolve) => setTimeout(resolve, 300));
 
 
 
-                                        if (!value) {
-                                            return t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')});
-                                        }
+                                            if (!value) {
+                                                return t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')});
+                                            }
 
-                                        return undefined;
-                                    },
-                                }}
-                            >
-                                {(field) => (
-                                    <>
+                                            return undefined;
+                                        },
+                                    }}
+                                >
+                                    {(field) => (
+                                        <>
 
-                                        <Label htmlFor={field.name}>
-                                            <div className="mb-4 flex items-center gap-1">
-                                                <Building color="grey" size={18} />
-                                                {t('ui.floors.title')}
-                                            </div>
-                                        </Label>
-                                        <Select
-                                            value={field.state.value}
-                                            onValueChange={(value: string) => {
-                                                field.handleChange(value);
-                                            }}
-                                        >
-                                            <SelectTrigger className=" w-48 rounded-md border mb-6">
-                                                <SelectValue placeholder="Select a Floor" />
-                                            </SelectTrigger>
-                                            <SelectContent className="h-30">
-                                                {floors.map((floor) => (
-                                                    <SelectItem key={floor.id} value={floor.id} className="w-full">
-                                                        <div className="text-sm">
-                                                        Piso: {floor.number}
-                                                        </div>
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
+                                            <Label htmlFor={field.name}>
+                                                <div className="mb-4 flex items-center gap-1">
+                                                    <Building color="grey" size={18} />
+                                                    {t('ui.zones.fields.zone_floor')}
+                                                </div>
+                                            </Label>
+                                            <Select
+                                                value={field.state.value}
+                                                onValueChange={(value: string) => {
+                                                    field.handleChange(value);
+                                                }}
+                                            >
+                                                <SelectTrigger className=" w-48 rounded-md border mb-6">
+                                                    <SelectValue placeholder={t('ui.zones.placeholders.zone_floor')} />
+                                                </SelectTrigger>
+                                                <SelectContent className="h-30">
+                                                    {floors.map((floor) => (
+                                                        <SelectItem key={floor.id} value={floor.id} className="w-full">
+                                                            <div className="text-sm">
+                                                                Piso: {floor.number}
+                                                            </div>
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
 
-                                        </Select>
-                                        <FieldInfo field={field} />
-                                    </>
-                                )}
-                            </form.Field>
+                                            </Select>
+                                            <FieldInfo field={field} />
+                                        </>
+                                    )}
+                                </form.Field>
+                            </div>
+                            {/* Floor field */}
+                            <div className='w-[45%] mb-8'>
+                                <form.Field
+                                    name="category_id"
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
+
+
+
+                                    //         if (!value) {
+                                    //             return t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')});
+                                    //         }
+
+                                    //         return undefined;
+                                    //     },
+                                    // }}
+                                >
+                                    {(field) => (
+                                        <>
+
+                                            <Label htmlFor={field.name}>
+                                                <div className="mb-4 flex items-center gap-1">
+                                                    <Drama color="grey" size={18} />
+                                                    {t('ui.zones.fields.category')}
+                                                </div>
+                                            </Label>
+                                            <Select
+                                                value={field.state.value}
+                                                onValueChange={(value: string) => {
+                                                    field.handleChange(value);
+                                                }}
+                                            >
+                                                <SelectTrigger className=" w-48 rounded-md border mb-6">
+                                                    <SelectValue placeholder={t('ui.zones.placeholders.category')} />
+                                                </SelectTrigger>
+                                                <SelectContent className="h-30">
+                                                    {uniqueCategories.map((category) => (
+                                                        <SelectItem key={category.id} value={category.id} className="w-full">
+                                                            <div className="text-sm">
+                                                                {category.name}
+                                                            </div>
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+
+                                            </Select>
+                                            <FieldInfo field={field} />
+                                        </>
+                                    )}
+                                </form.Field>
+                            </div>
+
                         </div>
+
 
                     </TabsContent>
 

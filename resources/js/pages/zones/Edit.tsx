@@ -12,14 +12,23 @@ interface EditZoneProps extends PageProps {
         name: string;
         capacity: number;
         floor_id: string;
+        category_id: string;
     };
     page?: string;
     perPage?: string;
+    floors: {
+        id: string;
+        number: number;
+    } [];
+    categories: {
+        id: string;
+        name: string;
+    }[];
 }
 
-export default function EditZone({ zone, page, perPage }: EditZoneProps) {
+export default function EditZone({ zone, page, perPage, floors, categories }: EditZoneProps) {
     const { t } = useTranslations();
-
+    console.log("floors", floors);
     return (
         <ZoneLayout title={t('ui.zones.edit')}>
             <div className="flex max-w-screen items-center self-center">
@@ -39,6 +48,8 @@ export default function EditZone({ zone, page, perPage }: EditZoneProps) {
                             initialData={zone}
                             page={page}
                             perPage={perPage}
+                            floors={floors}
+                            categories={categories}
                         />
                     </CardContent>
                 </Card>

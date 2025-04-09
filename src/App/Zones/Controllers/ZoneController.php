@@ -9,6 +9,7 @@ use Domain\Zones\Actions\ZoneStoreAction;
 use Domain\Zones\Actions\ZoneUpdateAction;
 use Domain\Zones\Models\Zone;
 use Domain\Floors\Models\Floor;
+use Domain\Categories\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -19,28 +20,30 @@ class ZoneController extends Controller
 {
     public function index()
     {
-        $zones = Zone::withCount('shelves')
-            ->orderBy('name')
-            ->get()
-            ->toArray();
+        $zones = Zone::withCount('shelves')->orderBy('name')->get()->toArray();
 
         $floors = Floor::all('id', 'number');
+        $categories = Category::all('id', 'name');
 
-        // dd($zones);
-        return Inertia::render('zones/Index', ['zones_count' => $zones], ['floors' => $floors]);
+        return Inertia::render(
+            'zones/Index',
+            ['zones_count' => $zones],
+            ['floors' => $floors],
+            ['categories' => $categories],
+        );
     }
 
 
     public function create(Request $request)
     {
 
-        // $floors = Floor::all()->pluck('id', 'number');
-        $floors = Floor::all(['id', 'number']);
+        $floors = Floor::orderBy('number')->get(['id', 'number']);
+        $categories = Category::orderBy('name')->get(['id', 'name']);
         $zone_list = Zone::all()->pluck('name');
 
-        // dd($floors);
         return Inertia::render('zones/Create', [
             'floors' => $floors,
+            'categories' => $categories,
             'zones' => $zone_list,
             'page' => $request->query('page'),
             'perPage' => $request->query('perPage'),
@@ -54,13 +57,14 @@ class ZoneController extends Controller
             'name' => ['required', 'string'],
             'capacity' => ['required', 'int'],
             'floor_id' => ['required', 'string'],
+            'category_id' => ['required', 'string'],
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
 
-        $action($validator->validated());
+        $zone = $action($validator->validated());
 
         return redirect()->route('zones.index')
             ->with('success', __('messages.zones.created'));
@@ -68,9 +72,12 @@ class ZoneController extends Controller
 
     public function edit(Request $request, Zone $zone)
     {
-
+        $floors = Floor::orderBy('number')->get(['id', 'number']);
+        $categories = Category::orderBy('name')->get(['id', 'name']);
         return Inertia::render('zones/Edit', [
             'zone' => $zone,
+            'floors' => $floors,
+            'categories' => $categories,
             'page' => $request->query('page'),
             'perPage' => $request->query('perPage'),
         ]);
@@ -82,6 +89,7 @@ class ZoneController extends Controller
             'name' => ['required', 'string'],
             'capacity' => ['required', 'int'],
             'floor_id' => ['required', 'string'],
+            'category_id' => ['required', 'string'],
         ]);
 
         if ($validator->fails()) {

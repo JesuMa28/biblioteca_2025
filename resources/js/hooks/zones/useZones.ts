@@ -1,13 +1,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "../../lib/axios";
+import { arrayOutputType } from "zod";
 
 export interface Zone {
   id: string;
   name: string;
   capacity: number;
   floor_id: string;
+  category_id: string;
   created_at: string;
   floor_number: number;
+  category_name: string;
+  zones_count: number;
 }
 
 // Interface representing the actual API response structure
@@ -84,7 +88,7 @@ export function useZones({ search, page = 1, perPage = 10 }: UseZonesParams = {}
 
 export function useCreateZone() {
   return useMutation({
-    mutationFn: async (data: { name: string; capacity: number; category_name: string; floor_id: string, floor_number: number }) => {
+    mutationFn: async (data: { name: string; capacity: number; floor_id: string, floor_number: number, category_id: string, category_name: string }) => {
       const response = await axios.post("/api/zones", data, {
         headers: {
           'Accept': 'application/json',
@@ -98,7 +102,7 @@ export function useCreateZone() {
 
 export function useUpdateZone(zoneId: string) {
   return useMutation({
-    mutationFn: async (data: { name: string; capacity: number; category_name: string; floor_id: string, floor_number: number }) => {
+    mutationFn: async (data: { name: string; capacity: number; floor_id: string, floor_number: number, category_id: string, category_name: string }) => {
       const response = await axios.put(`/api/zones/${zoneId}`, data, {
         headers: {
           'Accept': 'application/json',

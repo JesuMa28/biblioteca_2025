@@ -5,7 +5,7 @@ export interface Shelf {
   id: string;
   code: string;
   capacity: number;
-  category_name: string;
+  category_id: string;
   zone_id: string;
   created_at: string;
 }
@@ -84,7 +84,7 @@ export function useShelves({ search, page = 1, perPage = 10 }: UseShelvesParams 
 
 export function useCreateShelf() {
   return useMutation({
-    mutationFn: async (data: { code: string; capacity: number; category_name: string; zone_id: string }) => {
+    mutationFn: async (data: { code: string; capacity: number; category_id: string; zone_id: string }) => {
       const response = await axios.post("/api/shelves", data, {
         headers: {
           'Accept': 'application/json',
@@ -98,7 +98,7 @@ export function useCreateShelf() {
 
 export function useUpdateShelf(shelfId: string) {
   return useMutation({
-    mutationFn: async (data: { name: string; capacity: number; category_name: string; zone_id: string }) => {
+    mutationFn: async (data: { name: string; capacity: number; category_id: string; zone_id: string }) => {
       const response = await axios.put(`/api/shelves/${shelfId}`, data, {
         headers: {
           'Accept': 'application/json',

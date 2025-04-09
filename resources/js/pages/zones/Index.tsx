@@ -72,16 +72,25 @@ export default function ZonesIndex() {
       accessorKey: "name",
     }),
     createTextColumn<Zone>({
-      id: "capacity",
-      header: t("ui.zones.columns.capacity") || "Capacity",
-      accessorKey: "capacity",
+      id: "category_name",
+      header: t("ui.zones.columns.category") || "Category",
+      accessorKey: "category_name",
     }),
     createTextColumn<Zone>({
       id: "floor_number",
       header: t("ui.zones.columns.floor_number") || "Floor ID",
       accessorKey: "floor_number",
     }),
-
+    createTextColumn<Zone>({
+      id: "zones_count",
+      header: t("ui.zones.columns.current_shelves") || "Shelves Count",
+      accessorKey: "zones_count",
+    }),
+    createTextColumn<Zone>({
+      id: "capacity",
+      header: t("ui.zones.columns.capacity") || "Capacity",
+      accessorKey: "capacity",
+    }),
     createDateColumn<Zone>({
       id: "created_at",
       header: t("ui.zones.columns.created_at") || "Created At",
@@ -145,10 +154,10 @@ export default function ZonesIndex() {
                                       placeholder: t('ui.zones.placeholders.name') || 'Nombre...',
                                   },
                                   {
-                                      id: 'capacity',
-                                      label: t('ui.zones.filters.capacity') || 'Capacity',
-                                      type: 'number',
-                                      placeholder: t('ui.zones.placeholders.capacity') || 'Capacity...',
+                                      id: 'categories',
+                                      label: t('ui.zones.filters.category') || 'Category',
+                                      type: 'text',
+                                      placeholder: t('ui.zones.placeholders.capacity') || 'Category...',
                                   },
                               ] as FilterConfig[]
                           }

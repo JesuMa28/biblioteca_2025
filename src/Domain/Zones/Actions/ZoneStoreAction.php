@@ -14,6 +14,7 @@ class ZoneStoreAction
             'name' => $data['name'],
             'capacity' => $data['capacity'],
             'floor_id' => $data['floor_id'],
+            'category_id' => $data['category_id'],
         ]);
 
         return ZoneResource::fromModel($zone);
