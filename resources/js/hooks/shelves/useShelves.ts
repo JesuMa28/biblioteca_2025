@@ -5,9 +5,10 @@ export interface Shelf {
   id: string;
   code: string;
   capacity: number;
-  category_id: string;
-  zone_id: string;
+  category_name: string;
+  zone_name: string;
   created_at: string;
+  shelves_count: number;
 }
 
 // Interface representing the actual API response structure

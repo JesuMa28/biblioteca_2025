@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Database\Factories\ShelfFactory;
 use Domain\Shelves\Models\Shelf;
+use Domain\Zones\Models\Zone;
+use Domain\Books\Models\Book;
 use Domain\Categories\Models\Category;
 
 class Shelf extends Model
@@ -15,8 +17,8 @@ class Shelf extends Model
     protected $fillable = [
         'code',
         'capacity',
-        'category_id',
         'zone_id',
+        'category_id',
         'n_books',
     ];
 

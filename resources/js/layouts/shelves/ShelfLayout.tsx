@@ -36,7 +36,7 @@ export function ShelfLayout({ title, children }: ShelfLayoutProps) {
       href: "/dashboard",
     },
     {
-      title: "Usuarios",
+      title: "Shelves",
       href: "/shelves",
     },
   ];

@@ -1,24 +1,24 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useTranslations } from '@/hooks/use-translations';
-import { ZoneLayout } from '@/layouts/zones/ZoneLayout';
-import { ZoneForm } from '@/pages/zones/components/ZoneForm';
-import { Building, LandPlot } from 'lucide-react';
+import { LibraryBig } from 'lucide-react';
 import { number } from 'zod';
+import { ShelfForm } from './components/ShelfForm';
+import { ShelfLayout } from '@/layouts/shelves/ShelfLayout';
 
-interface ZoneFormProps {
+interface ShelfFormProps {
     initialData?: {
         id: string;
-        name: string;
+        code: string;
         capacity: number;
-        floor_id: string;
+        zone_id: string;
         category_id: string;
     };
     page?: string;
     perPage?: string;
-    floors: {
+    zones: {
         id: string;
-        number: number;
+        name: string;
     } [];
     categories: {
         id: string;
@@ -26,30 +26,30 @@ interface ZoneFormProps {
     }[];
 
 }
-export default function CreateZone({floors, categories}:ZoneFormProps) {
+export default function CreateZone({zones, categories}:ShelfFormProps) {
     const { t } = useTranslations();
 
     return (
-        <ZoneLayout title={t('ui.zones.create')}>
+        <ShelfLayout title={t('ui.shelves.create')}>
             <div className="flex max-w-screen items-center self-center">
                 <Card className="w-100% m-4 p-4 shadow-lg dark:shadow-xs dark:shadow-white">
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-1 mt-4">
-                                <LandPlot color="#2762c2" />
-                                {t('ui.zones.cards.title_create')}
+                                <LibraryBig color="#2762c2" />
+                                {t('ui.shelves.cards.title_create')}
                             </div>
                         </CardTitle>
-                        <CardDescription>{t('ui.zones.cards.description_create')}</CardDescription>
+                        <CardDescription>{t('ui.shelves.cards.description_create')}</CardDescription>
                     </CardHeader>
                     <Separator />
                     <CardContent>
 
-                        <ZoneForm floors={floors} categories={categories}></ZoneForm>
+                        <ShelfForm zones={zones} categories={categories}></ShelfForm>
 
                     </CardContent>
                 </Card>
             </div>
-        </ZoneLayout>
+        </ShelfLayout>
     );
 }

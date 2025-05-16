@@ -13,7 +13,8 @@ class ShelfUpdateAction
         $updateData = [
             'code' => $data['code'],
             'capacity' => $data['capacity'],
-            'zone' => $data['zone_id'],
+            'zone_id' => $data['zone_id'],
+            'category_id' => $data['category_id'],
         ];
 
         $shelf->update($updateData);
