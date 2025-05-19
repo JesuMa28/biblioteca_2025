@@ -496,11 +496,9 @@ return [
             'category' => 'Shelf Category',
         ],
         'placeholders' => [
-            'code' => 'Shelf Code...',
+            'title' => 'Book Title...',
+            'author' => 'Book Author...',
             'capacity' => 'Shelf Capacity...',
-            'max-books' => 'Max Books...',
-            'shelf_zone' => 'Select a Zone...',
-            'category' => 'Select a Category...',
             'search' => 'Search shelves...',
         ],
         'tabs' => [
