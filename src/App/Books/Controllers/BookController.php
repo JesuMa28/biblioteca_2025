@@ -20,11 +20,11 @@ class BookController extends Controller
     public function index()
     {
 
-        $shelves = Shelf::all('id', 'code');
+        $books = Book::all('id', 'title');
 
         return Inertia::render(
-            'shelves/Index',
-            ['shelves' => $shelves],
+            'books/Index',
+            ['books' => $books],
         );
     }
 
