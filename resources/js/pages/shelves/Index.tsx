@@ -81,11 +81,11 @@ export default function ShelvesIndex() {
       header: t("ui.shelves.columns.zone_name") || "Zone Name",
       accessorKey: "zone_name",
     }),
-    createTextColumn<Shelf>({
-      id: "shelves_count",
-      header: t("ui.shelves.columns.current_shelves") || "Shelves Count",
-      accessorKey: "shelves_count",
-    }),
+    // createTextColumn<Shelf>({
+    //   id: "shelves_count",
+    //   header: t("ui.shelves.columns.current_shelves") || "Shelves Count",
+    //   accessorKey: "shelves_count",
+    // }),
     createTextColumn<Shelf>({
       id: "capacity",
       header: t("ui.shelves.columns.capacity") || "Capacity",
