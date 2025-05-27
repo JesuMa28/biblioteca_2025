@@ -1,59 +1,61 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useTranslations } from '@/hooks/use-translations';
-import { ZoneLayout } from '@/layouts/zones/ZoneLayout';
-import { ZoneForm } from '@/pages/zones/components/ZoneForm';
+import { LoanLayout } from '@/layouts/loans/LoanLayout';
+import { LoanForm } from '@/pages/loans/components/LoanForm';
 import { PageProps } from '@inertiajs/core';
 import { Building } from 'lucide-react';
 
-interface EditZoneProps extends PageProps {
-    zone: {
+interface EditLoanProps extends PageProps {
+    loan: {
         id: string;
-        name: string;
-        capacity: number;
-        floor_id: string;
-        category_id: string;
+        code: string;
+        book_id: string;
+        user_id: string;
+        loan_date: string;
+        return_date: string;
+        status: string;
     };
     page?: string;
     perPage?: string;
-    floors: {
+    books: {
         id: string;
-        number: number;
+        title: string;
     } [];
-    categories: {
+    users: {
         id: string;
-        name: string;
+        email: string;
     }[];
 }
 
-export default function EditZone({ zone, page, perPage, floors, categories }: EditZoneProps) {
+export default function EditLoan({ loan, page, perPage, books, users }: EditLoanProps) {
     const { t } = useTranslations();
-    console.log("floors", floors);
+    console.log("books", books);
     return (
-        <ZoneLayout title={t('ui.zones.edit')}>
+        <LoanLayout title={t('ui.loans.edit')}>
             <div className="flex max-w-screen items-center self-center">
                 <Card className="w-100% m-4 p-4 shadow-lg dark:shadow-xs dark:shadow-white">
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-1">
                                 <Building color="#2762c2" />
-                                {t('ui.zones.cards.title_edit')}
+                                {t('ui.loans.cards.title_edit')}
                             </div>
                         </CardTitle>
-                        <CardDescription>{t('ui.zones.cards.description_edit')}</CardDescription>
+                        <CardDescription>{t('ui.loans.cards.description_edit')}</CardDescription>
                     </CardHeader>
                     <Separator />
                     <CardContent>
-                        <ZoneForm
-                            initialData={zone}
+                        <LoanForm
+                            initialData={loan}
                             page={page}
                             perPage={perPage}
-                            floors={floors}
-                            categories={categories}
+                            books={books}
+                            users={users}
                         />
                     </CardContent>
                 </Card>
             </div>
-        </ZoneLayout>
+        </LoanLayout>
     );
 }

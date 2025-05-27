@@ -1,55 +1,58 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useTranslations } from '@/hooks/use-translations';
-import { ZoneLayout } from '@/layouts/zones/ZoneLayout';
-import { ZoneForm } from '@/pages/zones/components/ZoneForm';
-import { Building, LandPlot } from 'lucide-react';
+import { LoanLayout } from '@/layouts/loans/LoanLayout';
+import { LoanForm } from '@/pages/loans/components/LoanForm';
+import { Handshake, LandPlot } from 'lucide-react';
 import { number } from 'zod';
 
-interface ZoneFormProps {
+interface LoanFormProps {
     initialData?: {
         id: string;
-        name: string;
-        capacity: number;
-        floor_id: string;
-        category_id: string;
+        code: string;
+        book_id: string;
+        user_id: string;
+        loan_date: string;
+        return_date: string;
+        status: string;
+
     };
     page?: string;
     perPage?: string;
-    floors: {
+    books: {
         id: string;
-        number: number;
+        title: string;
     } [];
-    categories: {
+    users: {
         id: string;
-        name: string;
+        email: string;
     }[];
 
 }
-export default function CreateZone({floors, categories}:ZoneFormProps) {
+export default function CreateLoan({books, users}:LoanFormProps) {
     const { t } = useTranslations();
 
     return (
-        <ZoneLayout title={t('ui.zones.create')}>
+        <LoanLayout title={t('ui.loans.create')}>
             <div className="flex max-w-screen items-center self-center">
                 <Card className="w-100% m-4 p-4 shadow-lg dark:shadow-xs dark:shadow-white">
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-1 mt-4">
-                                <LandPlot color="#2762c2" />
-                                {t('ui.zones.cards.title_create')}
+                                <Handshake color="#2762c2" />
+                                {t('ui.loans.cards.title_create')}
                             </div>
                         </CardTitle>
-                        <CardDescription>{t('ui.zones.cards.description_create')}</CardDescription>
+                        <CardDescription>{t('ui.loans.cards.description_create')}</CardDescription>
                     </CardHeader>
                     <Separator />
                     <CardContent>
 
-                        <ZoneForm floors={floors} categories={categories}></ZoneForm>
+                        <LoanForm books={books} users={users}></LoanForm>
 
                     </CardContent>
                 </Card>
             </div>
-        </ZoneLayout>
+        </LoanLayout>
     );
 }

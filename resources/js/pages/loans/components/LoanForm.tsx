@@ -11,7 +11,7 @@ import { router } from '@inertiajs/react';
 import type { AnyFieldApi } from '@tanstack/react-form';
 import { useForm } from '@tanstack/react-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { LandPlot, Save, Building, X, LibraryBig, Drama } from 'lucide-react';
+import { LandPlot, Save, X, LibraryBig, Drama, Handshake, Book, Mail } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   Select,
@@ -32,20 +32,20 @@ interface LoanFormProps {
         code: string;
         book_id: string;
         user_id: string;
-        start_date: string;
-        end_date: string;
+        loan_date: string;
+        return_date: string;
         status: string;
 
     };
     page?: string;
     perPage?: string;
-    floors: {
+    books: {
         id: string;
-        number: number;
+        title: string;
     } [];
-    categories: {
+    users: {
         id: string;
-        name: string;
+        email: string;
     }[];
 }
 
@@ -61,36 +61,38 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
     );
 }
 
-export function ZoneForm({ initialData, page, perPage, floors, categories }: ZoneFormProps) {
+export function LoanForm({ initialData, page, perPage, books, users }: LoanFormProps) {
     const { t } = useTranslations();
     const queryClient = useQueryClient();
-    const uniqueCategories = categories.filter(
-        (cat, index, self) => index === self.findIndex((c) => c.name === cat.name)
+    const uniqueUser = users.filter(
+        (cat, index, self) => index === self.findIndex((c) => c.email === cat.email)
     );
 
     // TanStack Form setup
     const form = useForm({
         defaultValues: {
-            name: initialData?.name ?? '',
-            capacity: initialData?.capacity ?? '',
-            floor_id: initialData?.floor_id ?? '',
-            category_id: initialData?.category_id ?? '',
+            code: initialData?.code ?? '',
+            book_id: initialData?.book_id ?? '',
+            user_id: initialData?.user_id ?? '',
+            loan_date: initialData?.loan_date ?? '',
+            return_date: initialData?.return_date ?? '',
+            status: initialData?.status ?? '',
 
         },
         onSubmit: async ({ value }) => {
-            const zoneData = {
+            const loanData = {
                 ...value,
             };
 
             const options = {
 
                 onSuccess: () => {
-                    console.log('Zona creada con éxito.');
+                    console.log('Prestamo creada con éxito.');
 
-                    queryClient.invalidateQueries({ queryKey: ['zones'] });
+                    queryClient.invalidateQueries({ queryKey: ['loans'] });
 
                     // Construct URL with page parameters
-                    let url = '/zones';
+                    let url = '/loans';
                     if (page) {
                         url += `?page=${page}`;
                         if (perPage) {
@@ -102,16 +104,16 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                 },
                 onError: (errors: Record<string, string>) => {
                     if (Object.keys(errors).length === 0) {
-                        toast.error(initialData ? t('messages.zones.error.update') : t('messages.zones.error.create'));
+                        toast.error(initialData ? t('messages.loans.error.update') : t('messages.loans.error.create'));
                     }
                 },
             };
 
             // Submit with Inertia
             if (initialData) {
-                router.put(`/zones/${initialData.id}`, zoneData, options);
+                router.put(`/loans/${initialData.id}`, loanData, options);
             } else {
-                router.post('/zones', zoneData, options);
+                router.post('/loans', loanData, options);
             }
         },
     });
@@ -126,22 +128,22 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
     return (
         <form onSubmit={handleSubmit} className="" noValidate>
             <div>
-                <Tabs defaultValue="zoneForm">
+                <Tabs defaultValue="loanForm">
 
-                    <TabsContent value="zoneForm" className="w-full flex justify-center gap-20">
+                    <TabsContent value="loanForm" className="w-full flex justify-center gap-20">
                         <div className="h-full">
                             {/* Name field */}
                             <div className="mb-8">
                                 <form.Field
-                                    name="name"
+                                    name="code"
                                     validators={{
                                         onChangeAsync: async ({ value }) => {
                                             await new Promise((resolve) => setTimeout(resolve, 300));
 
                                             return !value
-                                                ? t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')})
+                                                ? t('ui.validation.required', { attribute: t('ui.loans.fields.code')})
                                                 : value.length < 3
-                                                ? t('ui.validation.min.string', { attribute: t('ui.zones.fields.name').toLowerCase(), min: '3' })
+                                                ? t('ui.validation.min.string', { attribute: t('ui.loans.fields.name').toLowerCase(), min: '3' })
                                                 : undefined;
                                         },
                                     }}
@@ -151,8 +153,8 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                                         <>
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-1 flex items-center gap-1">
-                                                    <LandPlot color="grey" size={18} />
-                                                    {t('ui.zones.fields.name')}
+                                                    <Handshake color="grey" size={18} />
+                                                    {t('ui.loans.fields.code')}
                                                 </div>
                                             </Label>
                                             <Input
@@ -162,7 +164,7 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                                                 value={field.state.value?.toString()}
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 onBlur={field.handleBlur}
-                                                placeholder={t('ui.zones.placeholders.name')}
+                                                placeholder={t('ui.loans.placeholders.code')}
                                                 disabled={form.state.isSubmitting}
                                                 required={false}
                                                 autoComplete="off"
@@ -173,67 +175,10 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                                     )}
                                 </form.Field>
                             </div>
-                            {/* Capacity field */}
-                            <div className="mb-8">
-                                <form.Field
-                                    name="capacity"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
-
-                                            const stringValue = String(value);
-                                            const number = parseInt(stringValue, 10);
-
-                                            if (!stringValue) {
-                                                return t('ui.validation.required', { attribute: t('ui.zones.fields.max-shelves')});
-                                            }
-
-                                            if (isNaN(number)) {
-                                                return t('ui.validation.max_shelves');
-                                            }
-
-                                            if (number > 10) {
-                                                return t('ui.validation.max_shelves');
-                                            }
-
-                                            return undefined;
-                                        },
-                                    }}
-                                >
-                                    {(field) => (
-                                        <>
-                                            <Label htmlFor={field.name}>
-                                                <div className="mb-1 flex items-center gap-1">
-                                                    <LibraryBig color="grey" size={18} />
-                                                    {t('ui.zones.fields.max-shelves')}
-                                                </div>
-                                            </Label>
-                                            <Input
-                                                id={field.name}
-                                                name={field.name}
-                                                type="number"
-                                                value={field.state.value ? String(field.state.value) : undefined}
-                                                onChange={(e) => field.handleChange(e.target.value)}
-                                                onBlur={field.handleBlur}
-                                                placeholder={t('ui.zones.placeholders.max-shelves')}
-                                                disabled={form.state.isSubmitting}
-                                                required={false}
-                                                autoComplete="off"
-                                                className='my-4 no-spinner border rounded px-2 py-1'
-                                            />
-                                            <FieldInfo field={field} />
-                                        </>
-                                    )}
-                                </form.Field>
-                            </div>
-                        </div>
-
-                        <div className="h-full">
-
-                            {/* Floor field */}
+                            {/* Books field */}
                             <div className='w-[45%] mb-8'>
                                 <form.Field
-                                    name="floor_id"
+                                    name="book_id"
                                     validators={{
                                         onChangeAsync: async ({ value }) => {
                                             await new Promise((resolve) => setTimeout(resolve, 300));
@@ -241,7 +186,7 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
 
 
                                             if (!value) {
-                                                return t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')});
+                                                return t('ui.validation.required', { attribute: t('ui.loans.fields.book_title')});
                                             }
 
                                             return undefined;
@@ -253,8 +198,8 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
 
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-4 flex items-center gap-1">
-                                                    <Building color="grey" size={18} />
-                                                    {t('ui.zones.fields.zone_floor')}
+                                                    <Book color="grey" size={18} />
+                                                    {t('ui.loans.fields.book_title')}
                                                 </div>
                                             </Label>
                                             <Select
@@ -264,13 +209,13 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                                                 }}
                                             >
                                                 <SelectTrigger className=" w-48 rounded-md border mb-6">
-                                                    <SelectValue placeholder={t('ui.zones.placeholders.zone_floor')} />
+                                                    <SelectValue placeholder={t('ui.loans.placeholders.book_title')} />
                                                 </SelectTrigger>
                                                 <SelectContent className="h-30">
-                                                    {floors.map((floor) => (
-                                                        <SelectItem key={floor.id} value={floor.id} className="w-full">
+                                                    {books.map((book) => (
+                                                        <SelectItem key={book.id} value={book.id} className="w-full">
                                                             <div className="text-sm">
-                                                                Piso: {floor.number}
+                                                                {book.title}
                                                             </div>
                                                         </SelectItem>
                                                     ))}
@@ -282,31 +227,36 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                                     )}
                                 </form.Field>
                             </div>
-                            {/* Floor field */}
+
+                        </div>
+
+                        <div className="h-full">
+
+                            {/* Users field */}
                             <div className='w-[45%] mb-8'>
                                 <form.Field
-                                    name="category_id"
-                                    // validators={{
-                                    //     onChangeAsync: async ({ value }) => {
-                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
+                                    name="user_id"
+                                    validators={{
+                                        onChangeAsync: async ({ value }) => {
+                                            await new Promise((resolve) => setTimeout(resolve, 300));
 
 
 
-                                    //         if (!value) {
-                                    //             return t('ui.validation.required', { attribute: t('ui.zones.fields.zone_floor')});
-                                    //         }
+                                            if (!value) {
+                                                return t('ui.validation.required', { attribute: t('ui.loans.fields.user_email')});
+                                            }
 
-                                    //         return undefined;
-                                    //     },
-                                    // }}
+                                            return undefined;
+                                        },
+                                    }}
                                 >
                                     {(field) => (
                                         <>
 
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-4 flex items-center gap-1">
-                                                    <Drama color="grey" size={18} />
-                                                    {t('ui.zones.fields.category')}
+                                                    <Mail color="grey" size={18}/>
+                                                    {t('ui.loans.fields.user_email')}
                                                 </div>
                                             </Label>
                                             <Select
@@ -316,13 +266,13 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                                                 }}
                                             >
                                                 <SelectTrigger className=" w-48 rounded-md border mb-6">
-                                                    <SelectValue placeholder={t('ui.zones.placeholders.category')} />
+                                                    <SelectValue placeholder={t('ui.loans.placeholders.user_email')} />
                                                 </SelectTrigger>
                                                 <SelectContent className="h-30">
-                                                    {uniqueCategories.map((category) => (
-                                                        <SelectItem key={category.id} value={category.id} className="w-full">
+                                                    {users.map((user) => (
+                                                        <SelectItem key={user.id} value={user.id} className="w-full">
                                                             <div className="text-sm">
-                                                                {category.name}
+                                                                {user.email}
                                                             </div>
                                                         </SelectItem>
                                                     ))}
@@ -334,7 +284,6 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                                     )}
                                 </form.Field>
                             </div>
-
                         </div>
 
 
@@ -348,7 +297,7 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                         type="button"
                         variant="outline"
                         onClick={() => {
-                            let url = '/zones';
+                            let url = '/loans';
                             if (page) {
                                 url += `?page=${page}`;
                                 if (perPage) {
@@ -360,7 +309,7 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                         disabled={form.state.isSubmitting}
                     >
                         <X />
-                        {t('ui.zones.buttons.cancel')}
+                        {t('ui.loans.buttons.cancel')}
                     </Button>
 
                     <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
@@ -368,10 +317,10 @@ export function ZoneForm({ initialData, page, perPage, floors, categories }: Zon
                             <Button type="submit" disabled={!canSubmit}>
                                 <Save />
                                 {isSubmitting
-                                    ? t('ui.zones.buttons.saving')
+                                    ? t('ui.loans.buttons.saving')
                                     : initialData
-                                      ? t('ui.zones.buttons.update')
-                                      : t('ui.zones.buttons.save')}
+                                      ? t('ui.loans.buttons.update')
+                                      : t('ui.loans.buttons.save')}
                             </Button>
                         )}
                     </form.Subscribe>
