@@ -1,5 +1,5 @@
 import { DashboardCard } from '@/components/dashboard/DashboardCard';
-import { Users, User } from 'lucide-react';
+import { Users, User, Building, LandPlot, LibraryBig, Book, Handshake, Ticket } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
@@ -20,13 +20,49 @@ export default function Dashboard() {
             <Head title="Dashboard" />
             <div className="grid gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
                 <DashboardCard
-                    title="Usuarios"
+                    title="Users"
                     description="Gestiona los usuarios del sistema"
                     href="/users"
                     icon={Users}
                 />
+                <DashboardCard
+                    title="Floors"
+                    description="Gestiona los usuarios del sistema"
+                    href="/floors"
+                    icon={Building}
+                />
+                <DashboardCard
+                    title="Zones"
+                    description="Gestiona los usuarios del sistema"
+                    href="/zones"
+                    icon={LandPlot}
+                />
+                <DashboardCard
+                    title="Shelves"
+                    description="Gestiona los usuarios del sistema"
+                    href="/shelves"
+                    icon={LibraryBig}
+                />
+                <DashboardCard
+                    title="Books"
+                    description="Gestiona los usuarios del sistema"
+                    href="/books"
+                    icon={Book}
+                />
+                <DashboardCard
+                    title="Loans"
+                    description="Gestiona los usuarios del sistema"
+                    href="/loans"
+                    icon={Handshake}
+                />
+                <DashboardCard
+                    title="Reservations"
+                    description="Gestiona los usuarios del sistema"
+                    href="/reservations"
+                    icon={Ticket}
+                />
 
-                <CardFlip
+                {/* <CardFlip
                     contentFront={
                         <div className="flex items-center gap-4">
                             <div className="rounded-lg bg-primary/10 p-2">
@@ -50,7 +86,7 @@ export default function Dashboard() {
                             </div>
                         </div>
                     }
-                />
+                /> */}
 
             </div>
         </AppLayout>

@@ -14,11 +14,11 @@ interface PageProps {
   [key: string]: unknown;
 }
 
-interface LoanLayoutProps extends PropsWithChildren {
+interface ReservationLayoutProps extends PropsWithChildren {
   title: string;
 }
 
-export function LoanLayout({ title, children }: LoanLayoutProps) {
+export function ReservationLayout({ title, children }: ReservationLayoutProps) {
   const { flash } = usePage<PageProps>().props;
 
   useEffect(() => {
@@ -36,12 +36,12 @@ export function LoanLayout({ title, children }: LoanLayoutProps) {
       href: "/dashboard",
     },
     {
-      title: "Loans",
-      href: "/loans",
+      title: "Reservations",
+      href: "/reservations",
     },
   ];
 
-  if (title !== "Prestamos") {
+  if (title !== "Reservas") {
     breadcrumbs.push({
       title,
       href: "#",

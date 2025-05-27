@@ -36,7 +36,7 @@ export function BookLayout({ title, children }: BookLayoutProps) {
       href: "/dashboard",
     },
     {
-      title: "Libros",
+      title: "Books",
       href: "/books",
     },
   ];

@@ -36,7 +36,7 @@ export function FloorLayout({ title, children }: FloorLayoutProps) {
       href: "/dashboard",
     },
     {
-      title: "Usuarios",
+      title: "Floors",
       href: "/floors",
     },
   ];

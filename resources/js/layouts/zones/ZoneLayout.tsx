@@ -36,7 +36,7 @@ export function ZoneLayout({ title, children }: ZoneLayoutProps) {
       href: "/dashboard",
     },
     {
-      title: "Usuarios",
+      title: "Zones",
       href: "/zones",
     },
   ];

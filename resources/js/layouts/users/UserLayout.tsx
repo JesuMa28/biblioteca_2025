@@ -36,7 +36,7 @@ export function UserLayout({ title, children }: UserLayoutProps) {
       href: "/dashboard",
     },
     {
-      title: "Usuarios",
+      title: "Users",
       href: "/users",
     },
   ];
