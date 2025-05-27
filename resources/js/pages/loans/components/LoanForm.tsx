@@ -147,17 +147,17 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                             <div className="mb-8">
                                 <form.Field
                                     name="code"
-                                    // validators={{
-                                    //     onChangeAsync: async ({ value }) => {
-                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
+                                    validators={{
+                                        onChangeAsync: async ({ value }) => {
+                                            await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                    //         return !value
-                                    //             ? t('ui.validation.required', { attribute: t('ui.loans.fields.code')})
-                                    //             : value.length < 3
-                                    //             ? t('ui.validation.min.string', { attribute: t('ui.loans.fields.name').toLowerCase(), min: '3' })
-                                    //             : undefined;
-                                    //     },
-                                    // }}
+                                            return !value
+                                                ? t('ui.validation.required', { attribute: t('ui.loans.fields.code')})
+                                                : value.length < 3
+                                                ? t('ui.validation.min.string', { attribute: t('ui.loans.fields.name').toLowerCase(), min: '3' })
+                                                : undefined;
+                                        },
+                                    }}
 
                                 >
                                     {(field) => (
@@ -190,19 +190,25 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                             <div className='w-[45%] mb-8'>
                                 <form.Field
                                     name="book_id"
-                                    // validators={{
-                                    //     onChangeAsync: async ({ value }) => {
-                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
+                                    validators={{
+                                        onChangeAsync: async ({ value }) => {
+                                            await new Promise((resolve) => setTimeout(resolve, 300));
 
+                                            // Si no hay valor, devolver error
+                                            if (!value) {
+                                                return t('ui.validation.required', { attribute: t('ui.floors.fields.floor')});
+                                            }
 
+                                            const res = await fetch(`/api/books/check-isbn/${value}`);
+                                            const data = await res.json();
 
-                                    //         if (!value) {
-                                    //             return t('ui.validation.required', { attribute: t('ui.loans.fields.book_title')});
-                                    //         }
+                                            if (!initialData && data.exists) {
+                                                return t('ui.validation.used_book', { attribute: t('ui.loans.fields.book_id')});
+                                            }
 
-                                    //         return undefined;
-                                    //     },
-                                    // }}
+                                            return undefined;
+                                        },
+                                    }}
                                 >
                                     {(field) => (
                                         <>

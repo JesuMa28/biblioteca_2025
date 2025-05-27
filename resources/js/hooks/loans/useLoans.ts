@@ -5,13 +5,13 @@ export interface Loan {
   id: string;
   code: string;
   book_id: string;
-  // book_title: string;
+  book_title: string;
   user_id: string;
-  // user_email: string;
+  user_email: string;
   loan_date: string;
   return_date: string;
   status: string;
-
+  created_at: string;
 }
 
 // Interface representing the actual API response structure
@@ -114,9 +114,9 @@ export function useUpdateLoan(loanId: string) {
     mutationFn: async (data: {
       code: string;
       book_id: string;
-      // book_title: string;
+      book_title: string;
       user_id: string;
-      // user_email: string;
+      user_email: string;
       loan_date: string;
       return_date: string;
       status: string;

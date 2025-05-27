@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TableSkeleton } from "@/components/stack-table/TableSkeleton";
 import { Book, useDeleteBook, useBooks } from "@/hooks/books/useBooks";
-import { PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { PencilIcon, PlusIcon, TicketPlus, TrashIcon } from "lucide-react";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useState, useMemo } from "react";
 import { Link, usePage } from "@inertiajs/react";
@@ -111,6 +111,11 @@ export default function BooksIndex() {
       header: t("ui.books.columns.actions") || "Actions",
       renderActions: (book) => (
         <>
+          <Link href={`/books/${book.id}/edit?page=${currentPage}&perPage=${perPage}`}>
+            <Button variant="outline" size="icon" title={t("ui.books.buttons.edit") || "Edit book"}>
+              <TicketPlus color="#ff7300" className="h-4 w-4" />
+            </Button>
+          </Link>
           <Link href={`/books/${book.id}/edit?page=${currentPage}&perPage=${perPage}`}>
             <Button variant="outline" size="icon" title={t("ui.books.buttons.edit") || "Edit book"}>
               <PencilIcon className="h-4 w-4" />
