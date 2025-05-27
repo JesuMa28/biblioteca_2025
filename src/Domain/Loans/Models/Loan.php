@@ -23,6 +23,13 @@ class Loan extends Model
         'status',
     ];
 
+    protected $casts = [
+        'loan_date' => 'datetime',
+        'return_date' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     protected static function newFactory()
     {
         return LoanFactory::new();

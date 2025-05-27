@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->date('loan_date');
-            $table->date('return_date');
+            $table->timestamp('loan_date');
+            $table->timestamp('return_date');
             $table->enum('status', ['pending', 'returned', 'overdue'])->default('pending');
             $table->timestamps();
         });

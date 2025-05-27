@@ -10,6 +10,7 @@ class LoanStoreAction
 {
     public function __invoke(array $data): LoanResource
     {
+
         $loan = Loan::create([
             'code' => $data['code'],
             'book_id' => $data['book_id'],

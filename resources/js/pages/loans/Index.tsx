@@ -154,15 +154,15 @@ export default function LoansIndex() {
                                   },
                                   {
                                       id: 'title',
-                                      label: t('ui.loans.filters.title') || 'Title',
+                                      label: t('ui.loans.filters.title') || 'Book Title',
                                       type: 'text',
-                                      placeholder: t('ui.loans.placeholders.title') || 'Title...',
+                                      placeholder: t('ui.loans.placeholders.book_title') || 'Title...',
                                   },
                                   {
                                       id: 'author',
-                                      label: t('ui.loans.filters.author') || 'Author',
+                                      label: t('ui.loans.filters.author') || 'User Email',
                                       type: 'text',
-                                      placeholder: t('ui.loans.placeholders.author') || 'Author...',
+                                      placeholder: t('ui.loans.placeholders.user_email') || 'Email...',
                                   },
                               ] as FilterConfig[]
                           }

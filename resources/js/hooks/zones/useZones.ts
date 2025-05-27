@@ -88,7 +88,13 @@ export function useZones({ search, page = 1, perPage = 10 }: UseZonesParams = {}
 
 export function useCreateZone() {
   return useMutation({
-    mutationFn: async (data: { name: string; capacity: number; floor_id: string, floor_number: number, category_id: string, category_name: string }) => {
+    mutationFn: async (data: {
+      name: string;
+      capacity: number;
+      floor_id: string,
+      floor_number: number,
+      category_id: string,
+      category_name: string }) => {
       const response = await axios.post("/api/zones", data, {
         headers: {
           'Accept': 'application/json',

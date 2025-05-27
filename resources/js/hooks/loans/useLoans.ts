@@ -5,13 +5,13 @@ export interface Loan {
   id: string;
   code: string;
   book_id: string;
-  book_title: string;
+  // book_title: string;
   user_id: string;
-  user_email: string;
+  // user_email: string;
   loan_date: string;
   return_date: string;
   status: string;
-  created_at: string;
+
 }
 
 // Interface representing the actual API response structure
@@ -89,12 +89,11 @@ export function useLoans({ search, page = 1, perPage = 10 }: UseLoansParams = {}
 export function useCreateLoan() {
   return useMutation({
     mutationFn: async (data: {
-        id: string;
         code: string;
         book_id: string;
-        book_title: string;
+        // book_title: string;
         user_id: string;
-        user_email: string;
+        // user_email: string;
         loan_date: string;
         return_date: string;
         status: string;
@@ -113,12 +112,11 @@ export function useCreateLoan() {
 export function useUpdateLoan(loanId: string) {
   return useMutation({
     mutationFn: async (data: {
-      id: string;
       code: string;
       book_id: string;
-      book_title: string;
+      // book_title: string;
       user_id: string;
-      user_email: string;
+      // user_email: string;
       loan_date: string;
       return_date: string;
       status: string;

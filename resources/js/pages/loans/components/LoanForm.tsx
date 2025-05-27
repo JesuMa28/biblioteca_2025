@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { useState } from "react";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,15 +14,24 @@ import { useQueryClient } from '@tanstack/react-query';
 import { LandPlot, Save, X, LibraryBig, Drama, Handshake, Book, Mail } from 'lucide-react';
 import { toast } from 'sonner';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Value } from "@radix-ui/react-select";
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Calendar } from "@/components/ui/calendar"
+
 
 
 
@@ -83,6 +92,7 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
             const loanData = {
                 ...value,
             };
+            console.log('Submit data:', loanData);
 
             const options = {
 
@@ -124,29 +134,30 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
         e.stopPropagation();
         form.handleSubmit();
     };
+    const [open, setOpen] = useState(false);
 
     return (
-        <form onSubmit={handleSubmit} className="" noValidate>
+        <form onSubmit={handleSubmit} noValidate>
             <div>
                 <Tabs defaultValue="loanForm">
 
-                    <TabsContent value="loanForm" className="w-full flex justify-center gap-20">
-                        <div className="h-full">
+                    <TabsContent value="loanForm" className="w-full flex justify-center  gap-20">
+                        <div className="h-full w-[45%]">
                             {/* Name field */}
                             <div className="mb-8">
                                 <form.Field
                                     name="code"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                            return !value
-                                                ? t('ui.validation.required', { attribute: t('ui.loans.fields.code')})
-                                                : value.length < 3
-                                                ? t('ui.validation.min.string', { attribute: t('ui.loans.fields.name').toLowerCase(), min: '3' })
-                                                : undefined;
-                                        },
-                                    }}
+                                    //         return !value
+                                    //             ? t('ui.validation.required', { attribute: t('ui.loans.fields.code')})
+                                    //             : value.length < 3
+                                    //             ? t('ui.validation.min.string', { attribute: t('ui.loans.fields.name').toLowerCase(), min: '3' })
+                                    //             : undefined;
+                                    //     },
+                                    // }}
 
                                 >
                                     {(field) => (
@@ -179,19 +190,19 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                             <div className='w-[45%] mb-8'>
                                 <form.Field
                                     name="book_id"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
 
 
-                                            if (!value) {
-                                                return t('ui.validation.required', { attribute: t('ui.loans.fields.book_title')});
-                                            }
+                                    //         if (!value) {
+                                    //             return t('ui.validation.required', { attribute: t('ui.loans.fields.book_title')});
+                                    //         }
 
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
@@ -202,53 +213,58 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                                                     {t('ui.loans.fields.book_title')}
                                                 </div>
                                             </Label>
-                                            <Select
-                                                value={field.state.value}
-                                                onValueChange={(value: string) => {
-                                                    field.handleChange(value);
-                                                }}
-                                            >
-                                                <SelectTrigger className=" w-48 rounded-md border mb-6">
-                                                    <SelectValue placeholder={t('ui.loans.placeholders.book_title')} />
-                                                </SelectTrigger>
-                                                <SelectContent className="h-30">
-                                                    {books.map((book) => (
-                                                        <SelectItem key={book.id} value={book.id} className="w-full">
-                                                            <div className="text-sm">
-                                                                {book.title}
-                                                            </div>
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-
-                                            </Select>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                    variant="outline"
+                                                    role="combobox"
+                                                    className="w-48 justify-between"
+                                                    >
+                                                    {field.state.value
+                                                        ? books.find((book) => book.id === field.state.value)?.title
+                                                        : t('ui.loans.placeholders.book_title')}
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-48 p-0">
+                                                    <Command>
+                                                    <CommandInput placeholder={t('ui.loans.placeholders.book_title')} />
+                                                    <CommandEmpty>{t('ui.loans.combo_no_result')}</CommandEmpty>
+                                                    <CommandGroup>
+                                                        {books.map((book) => (
+                                                        <CommandItem
+                                                            key={book.id}
+                                                            value={book.title}
+                                                            onSelect={() => field.handleChange(book.id)}
+                                                        >
+                                                            {book.title}
+                                                        </CommandItem>
+                                                        ))}
+                                                    </CommandGroup>
+                                                    </Command>
+                                                </PopoverContent>
+                                            </Popover>
                                             <FieldInfo field={field} />
                                         </>
                                     )}
                                 </form.Field>
                             </div>
-
-                        </div>
-
-                        <div className="h-full">
-
                             {/* Users field */}
                             <div className='w-[45%] mb-8'>
                                 <form.Field
                                     name="user_id"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
 
 
-                                            if (!value) {
-                                                return t('ui.validation.required', { attribute: t('ui.loans.fields.user_email')});
-                                            }
+                                    //         if (!value) {
+                                    //             return t('ui.validation.required', { attribute: t('ui.loans.fields.user_email')});
+                                    //         }
 
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
@@ -259,29 +275,203 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                                                     {t('ui.loans.fields.user_email')}
                                                 </div>
                                             </Label>
-                                            <Select
-                                                value={field.state.value}
-                                                onValueChange={(value: string) => {
-                                                    field.handleChange(value);
-                                                }}
-                                            >
-                                                <SelectTrigger className=" w-48 rounded-md border mb-6">
-                                                    <SelectValue placeholder={t('ui.loans.placeholders.user_email')} />
-                                                </SelectTrigger>
-                                                <SelectContent className="h-30">
-                                                    {users.map((user) => (
-                                                        <SelectItem key={user.id} value={user.id} className="w-full">
-                                                            <div className="text-sm">
-                                                                {user.email}
-                                                            </div>
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                    variant="outline"
+                                                    role="combobox"
+                                                    className="w-48 justify-between"
+                                                    >
+                                                    {field.state.value
+                                                        ? users.find((user) => user.id === field.state.value)?.email
+                                                        : t('ui.loans.placeholders.user_email')}
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-48 p-0">
+                                                    <Command>
+                                                    <CommandInput placeholder={t('ui.loans.placeholders.user_email')} />
+                                                    <CommandEmpty>{t('ui.loans.combo_no_result')}</CommandEmpty>
+                                                    <CommandGroup>
+                                                        {users.map((user) => (
+                                                        <CommandItem
+                                                            key={user.id}
+                                                            value={user.email}
+                                                            onSelect={() => field.handleChange(user.id)}
+                                                        >
+                                                            {user.email}
+                                                        </CommandItem>
+                                                        ))}
+                                                    </CommandGroup>
+                                                    </Command>
+                                                </PopoverContent>
+                                            </Popover>
 
-                                            </Select>
                                             <FieldInfo field={field} />
                                         </>
                                     )}
+                                </form.Field>
+                            </div>
+
+                        </div>
+
+                        <div className="h-full w-[45%]">
+
+
+                            {/* Loan Date Field */}
+                            <div className='mb-8'>
+                                <form.Field name="loan_date">
+                                    {(field) => (
+                                    <>
+                                        <Label htmlFor={field.name}>
+                                        <div className="mb-4 flex items-center gap-1">
+                                            <CalendarIcon size={18} />
+                                            {t('ui.loans.fields.loan_date')}
+                                        </div>
+                                        </Label>
+                                        <Popover>
+                                        <PopoverTrigger asChild className="w-full">
+                                            <Button
+                                            variant={"outline"}
+                                            className={cn(
+                                                "w-full justify-start text-left font-normal",
+                                                !field.state.value && "text-muted-foreground"
+                                            )}
+                                            >
+                                            {field.state.value
+                                                ? format(new Date(field.state.value), "yyyy-MM-dd HH:mm")
+                                                : t('ui.dates.placeholders.loan_date')}
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-full p-0" align="start">
+                                            <Calendar
+                                            mode="single"
+                                            selected={new Date(field.state.value)}
+                                            onSelect={(date) => {
+                                                if (!date) return; // ✅ Protección contra undefined
+
+                                                const now = new Date();
+                                                date.setHours(now.getHours());
+                                                date.setMinutes(now.getMinutes());
+
+                                                field.handleChange(date.toISOString().slice(0, 19).replace('T', ' '));
+                                            }}
+                                            initialFocus
+                                            />
+                                        </PopoverContent>
+                                        </Popover>
+                                        <FieldInfo field={field} />
+                                    </>
+                                    )}
+                                </form.Field>
+                            </div>
+                            {/* Return Date Field */}
+                            <div className='mb-8'>
+                                <form.Field name="return_date">
+                                    {(field) => (
+                                    <>
+                                        <Label htmlFor={field.name}>
+                                        <div className="mb-4 flex items-center gap-1">
+                                            <CalendarIcon size={18} />
+                                            {t('ui.loans.fields.return_date')}
+                                        </div>
+                                        </Label>
+                                        <Popover>
+                                        <PopoverTrigger asChild className="w-full">
+                                            <Button
+                                            variant={"outline"}
+                                            className={cn(
+                                                "w-full justify-start text-left font-normal",
+                                                !field.state.value && "text-muted-foreground"
+                                            )}
+                                            >
+                                            {field.state.value
+                                                ? format(new Date(field.state.value), "yyyy-MM-dd HH:mm")
+                                                : t('ui.dates.placeholders.return_date')}
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-full p-0" align="start">
+                                            <Calendar
+                                            mode="single"
+                                            selected={new Date(field.state.value)}
+                                            onSelect={(date) => {
+                                                if (!date) return; // ✅ Protección contra undefined
+
+                                                const now = new Date();
+                                                date.setHours(now.getHours());
+                                                date.setMinutes(now.getMinutes());
+
+                                                field.handleChange(date.toISOString().slice(0, 19).replace('T', ' '));
+                                            }}
+                                            initialFocus
+                                            />
+                                        </PopoverContent>
+                                        </Popover>
+                                        <FieldInfo field={field} />
+                                    </>
+                                    )}
+                                </form.Field>
+                            </div>
+                            {/* Status field */}
+                            <div className='w-[45%] mb-8'>
+                                <form.Field
+                                    name="status"
+                                    // validators={{
+                                    // onChange: ({ value }) => {
+                                    //     if (!value) {
+                                    //     return t('ui.validation.required', { attribute: t('ui.loans.fields.status') });
+                                    //     }
+                                    //     return undefined;
+                                    // },
+                                    // }}
+                                >
+                                    {(field) => {
+                                    const statuses = [
+                                        { value: "pending", label: "Pending" },
+                                        { value: "returned", label: "Returned" },
+                                        { value: "overdue", label: "Overdue" },
+                                    ];
+
+                                    const selected = statuses.find((s) => s.value === field.state.value);
+
+                                    return (
+                                        <>
+                                        <Label htmlFor={field.name}>
+                                            <div className="mb-4 flex items-center gap-1">
+                                            {/* Puedes poner un icono si quieres */}
+                                            {t('ui.loans.fields.status')}
+                                            </div>
+                                        </Label>
+                                        <Popover open={open} onOpenChange={setOpen}>
+
+                                            <PopoverTrigger asChild>
+                                            <Button variant="outline" className="w-[240px] justify-start">
+                                                {selected ? selected.label : t('ui.loans.fields.select_status')}
+                                            </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="p-0 w-[240px]">
+                                            <Command>
+                                                <CommandInput placeholder={t('ui.loans.fields.select_status')} />
+                                                <CommandList>
+                                                <CommandEmpty>{t('ui.common.no_results')}</CommandEmpty>
+                                                <CommandGroup>
+                                                    {statuses.map((status) => (
+                                                    <CommandItem
+                                                        key={status.value}
+                                                        value={status.value}
+                                                        onSelect={() => field.handleChange(status.value)}
+                                                    >
+                                                        {status.label}
+                                                    </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                                </CommandList>
+                                            </Command>
+                                            </PopoverContent>
+                                        </Popover>
+                                        <FieldInfo field={field} />
+                                        </>
+                                    );
+                                    }}
                                 </form.Field>
                             </div>
                         </div>
@@ -296,6 +486,7 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                     <Button
                         type="button"
                         variant="outline"
+
                         onClick={() => {
                             let url = '/loans';
                             if (page) {

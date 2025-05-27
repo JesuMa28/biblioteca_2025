@@ -16,15 +16,14 @@ use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
+
+
 class LoanController extends Controller
 {
     public function index()
     {
 
-        return Inertia::render(
-            'loans/Index',
-
-        );
+        return Inertia::render('loans/Index',);
     }
 
 
@@ -53,9 +52,9 @@ class LoanController extends Controller
             'user_id' => ['required', 'string'],
             'loan_date' => ['required', 'string'],
             'return_date' => ['required', 'string'],
-            'status' => ['required', 'integer'],
+            'status' => ['required',  'string'],
         ]);
-
+        // dd($validator);
         if ($validator->fails()) {
             return back()->withErrors($validator);
         }
@@ -90,7 +89,7 @@ class LoanController extends Controller
             'user_id' => ['required', 'string'],
             'loan_date' => ['required', 'string'],
             'return_date' => ['required', 'string'],
-            'status' => ['required', 'integer'],
+            'status' => ['required', 'string'],
         ]);
 
         if ($validator->fails()) {
