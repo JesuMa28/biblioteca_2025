@@ -15,6 +15,7 @@ class Loan extends Model
     use HasUuids, HasFactory;
     protected $fillable = [
         'id',
+        'code',
         'book_id',
         'user_id',
         'loan_date',
@@ -33,6 +34,6 @@ class Loan extends Model
     }
 
     public function books() {
-        return $this->hasMany(Book::class);
+        return $this->belongsTo(Book::class);
     }
 }

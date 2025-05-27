@@ -11,6 +11,7 @@ class LoanResource extends Data
 {
     public function __construct(
         public readonly string $id,
+        public readonly string $code,
         public readonly string $book_id,
         public readonly string $book_title,
         public readonly string $user_id,
@@ -29,12 +30,13 @@ class LoanResource extends Data
         $user = User::where('id', $loan->user_id)->first();
         return new self(
             id: $loan->id,
+            code: $loan->code,
             book_id: $loan->book_id,
             book_title: $book->title,
             user_id: $loan->user_id,
             user_email: $user->email,
-            loan_date: $loan->loan_date->format('Y-m-d H:i:s'),
-            return_date: $loan->return_date ? $loan->return_date->format('Y-m-d H:i:s') : null,
+            loan_date: $loan->loan_date,
+            return_date: $loan->return_date?? null,
             status: $loan->status,
             created_at: $loan->created_at->format('Y-m-d H:i:s'),
             updated_at: $loan->updated_at->format('Y-m-d H:i:s'),
