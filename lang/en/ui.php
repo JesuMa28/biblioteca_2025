@@ -581,6 +581,10 @@ return [
             'user_email' => 'User Email...',
             'capacity' => 'Shelf Capacity...',
             'search' => 'Search shelves...',
+            'loan_date' => 'Loan Date...',
+            'return_date' => 'Return Date...',
+            'select_status' => 'Select Status...',
+
         ],
         'tabs' => [
             'shelfForm' => 'Basic Information',

@@ -19,6 +19,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('books', \App\Books\Controllers\BookController::class);
     Route::resource('loans', \App\Loans\Controllers\LoanController::class);
     Route::resource('reservations', \App\Reservations\Controllers\ReservationController::class);
+    Route::get('/timelines', function () {
+        return Inertia::render('timelines/Index');
+    })->name('timelines.index');
 });
 
 require __DIR__.'/settings.php';

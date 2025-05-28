@@ -5,7 +5,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { useTranslations } from '@/hooks/use-translations';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Users, Building, LandPlot, LibraryBig, Book, Handshake, Ticket } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Users, Building, LandPlot, LibraryBig, Book, Handshake, Ticket, Clock, ChartPie } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems = (t: (key: string) => string): NavItem[] => [
@@ -49,10 +49,20 @@ const mainNavItems = (t: (key: string) => string): NavItem[] => [
         url: '/reservations',
         icon: Ticket,
     },
+    {
+        title: t('ui.navigation.items.charts'),
+        url: '/charts',
+        icon: ChartPie,
+    },
 
 ];
 
 const footerNavItems = (t: (key: string) => string): NavItem[] => [
+    {
+        title: t('ui.navigation.items.timelines'),
+        url: '/timelines',
+        icon: Clock,
+    },
     {
         title: t('ui.navigation.items.repository'),
         url: 'https://github.com/laravel/react-starter-kit',

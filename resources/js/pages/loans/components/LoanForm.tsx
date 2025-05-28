@@ -11,7 +11,7 @@ import { router } from '@inertiajs/react';
 import type { AnyFieldApi } from '@tanstack/react-form';
 import { useForm } from '@tanstack/react-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { LandPlot, Save, X, LibraryBig, Drama, Handshake, Book, Mail } from 'lucide-react';
+import { LandPlot, Save, X, LibraryBig, Drama, Handshake, Book, Mail, GitPullRequestArrow } from 'lucide-react';
 import { toast } from 'sonner';
 import {
     Command,
@@ -190,25 +190,25 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                             <div className='w-[45%] mb-8'>
                                 <form.Field
                                     name="book_id"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                            // Si no hay valor, devolver error
-                                            if (!value) {
-                                                return t('ui.validation.required', { attribute: t('ui.floors.fields.floor')});
-                                            }
+                                    //         // Si no hay valor, devolver error
+                                    //         if (!value) {
+                                    //             return t('ui.validation.required', { attribute: t('ui.floors.fields.floor')});
+                                    //         }
 
-                                            const res = await fetch(`/api/books/check-isbn/${value}`);
-                                            const data = await res.json();
+                                    //         const res = await fetch(`/api/books/check-isbn/${value}`);
+                                    //         const data = await res.json();
 
-                                            if (!initialData && data.exists) {
-                                                return t('ui.validation.used_book', { attribute: t('ui.loans.fields.book_id')});
-                                            }
+                                    //         if (!initialData && data.exists) {
+                                    //             return t('ui.validation.used_book', { attribute: t('ui.loans.fields.book_id')});
+                                    //         }
 
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
@@ -345,7 +345,7 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                                             >
                                             {field.state.value
                                                 ? format(new Date(field.state.value), "yyyy-MM-dd HH:mm")
-                                                : t('ui.dates.placeholders.loan_date')}
+                                                : t('ui.loans.placeholders.loan_date')}
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-full p-0" align="start">
@@ -392,7 +392,7 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                                             >
                                             {field.state.value
                                                 ? format(new Date(field.state.value), "yyyy-MM-dd HH:mm")
-                                                : t('ui.dates.placeholders.return_date')}
+                                                : t('ui.loans.placeholders.return_date')}
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-full p-0" align="start">
@@ -443,7 +443,7 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                                         <>
                                         <Label htmlFor={field.name}>
                                             <div className="mb-4 flex items-center gap-1">
-                                            {/* Puedes poner un icono si quieres */}
+                                            <GitPullRequestArrow color="grey" size={18} />
                                             {t('ui.loans.fields.status')}
                                             </div>
                                         </Label>
@@ -451,7 +451,7 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
 
                                             <PopoverTrigger asChild>
                                             <Button variant="outline" className="w-[240px] justify-start">
-                                                {selected ? selected.label : t('ui.loans.fields.select_status')}
+                                                {selected ? selected.label : t('ui.loans.placeholders.select_status')}
                                             </Button>
                                             </PopoverTrigger>
                                             <PopoverContent className="p-0 w-[240px]">

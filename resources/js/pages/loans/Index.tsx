@@ -17,6 +17,7 @@ import { LoanLayout } from "@/layouts/loans/LoanLayout";
 import { floor } from "lodash";
 import FloorsIndex from "../floors/Index";
 
+
 export default function LoansIndex() {
   const { t } = useTranslations();
   const { url } = usePage();
@@ -208,6 +209,15 @@ export default function LoansIndex() {
                   </div>
               </div>
           </div>
+
       </LoanLayout>
+
   );
 }
+
+
+
+
+
+
+

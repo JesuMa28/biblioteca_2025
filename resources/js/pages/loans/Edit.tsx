@@ -4,7 +4,7 @@ import { useTranslations } from '@/hooks/use-translations';
 import { LoanLayout } from '@/layouts/loans/LoanLayout';
 import { LoanForm } from '@/pages/loans/components/LoanForm';
 import { PageProps } from '@inertiajs/core';
-import { Building } from 'lucide-react';
+import { Building, Handshake } from 'lucide-react';
 
 interface EditLoanProps extends PageProps {
     loan: {
@@ -38,7 +38,7 @@ export default function EditLoan({ loan, page, perPage, books, users }: EditLoan
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-1">
-                                <Building color="#2762c2" />
+                                <Handshake color="#2762c2" />
                                 {t('ui.loans.cards.title_edit')}
                             </div>
                         </CardTitle>
