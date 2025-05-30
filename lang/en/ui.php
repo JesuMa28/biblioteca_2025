@@ -12,6 +12,8 @@ return [
             'books' => 'Books',
             'loans' => 'Loans',
             'reservations' => 'Reservations',
+            'charts' => 'Charts',
+            'timelines' => 'Timelines',
             'repository' => 'Repository',
             'documentation' => 'Documentation',
         ],

@@ -22,6 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/timelines', function () {
         return Inertia::render('timelines/Index');
     })->name('timelines.index');
+    Route::get('/charts', function () {
+        return Inertia::render('charts/Index');
+    })->name('charts.index');
 });
 
 require __DIR__.'/settings.php';
