@@ -108,7 +108,13 @@ export function useCreateZone() {
 
 export function useUpdateZone(zoneId: string) {
   return useMutation({
-    mutationFn: async (data: { name: string; capacity: number; floor_id: string, floor_number: number, category_id: string, category_name: string }) => {
+    mutationFn: async (data: {
+      name: string;
+      capacity: number;
+      floor_id: string,
+      floor_number: number,
+      category_id: string,
+      category_name: string }) => {
       const response = await axios.put(`/api/zones/${zoneId}`, data, {
         headers: {
           'Accept': 'application/json',

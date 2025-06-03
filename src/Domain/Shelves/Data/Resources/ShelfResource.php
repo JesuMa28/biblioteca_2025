@@ -18,7 +18,7 @@ class ShelfResource extends Data
         public readonly string $zone_name,
         public readonly string $category_id,
         public readonly string $category_name,
-        public readonly int $books_count,
+        public readonly int $shelves_count,
         public readonly string $created_at,
         public readonly string $updated_at,
     ) {
@@ -37,7 +37,7 @@ class ShelfResource extends Data
             zone_name: $zone->name,
             category_id: $shelf->category_id,
             category_name: $category->name,
-            books_count: $shelf->books()->count(),
+            shelves_count: $shelf->books()->count(),
             created_at: $shelf->created_at->format('Y-m-d H:i:s'),
             updated_at: $shelf->updated_at->format('Y-m-d H:i:s'),
         );

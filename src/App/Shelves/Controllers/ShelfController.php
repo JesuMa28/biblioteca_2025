@@ -74,12 +74,10 @@ class ShelfController extends Controller
     public function edit(Request $request, Shelf $shelf)
     {
         $zones = Zone::orderBy('name')->get(['id', 'name']);
-        $floors = Floor::orderBy('number')->get(['id', 'number']);
         $categories = Category::orderBy('name')->get(['id', 'name']);
         return Inertia::render('shelves/Edit', [
             'shelf' => $shelf,
             'zones' => $zones,
-            'floors' => $floors,
             'categories' => $categories,
             'page' => $request->query('page'),
             'perPage' => $request->query('perPage'),

@@ -78,7 +78,7 @@ export default function ZonesIndex() {
     }),
     createTextColumn<Zone>({
       id: "floor_number",
-      header: t("ui.zones.columns.floor_number") || "Floor ID",
+      header: t("ui.zones.columns.floor_number") || "Floor Number",
       accessorKey: "floor_number",
     }),
     createTextColumn<Zone>({
