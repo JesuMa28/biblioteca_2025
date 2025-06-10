@@ -12,6 +12,9 @@ export interface Book {
   isbn: string;
   pages: number;
   shelf_id: string;
+  shelf_code: string;
+  zone_name: string;
+  floor_number: number;
   created_at: string;
 }
 
@@ -100,6 +103,9 @@ export function useCreateBook() {
         isbn: string;
         pages: number;
         shelf_id: string;
+        shelf_code: string;
+        zone_name: string;
+        floor_number: number;
       }) => {
       const response = await axios.post("/api/books", data, {
         headers: {
@@ -125,6 +131,9 @@ export function useUpdateBook(bookId: string) {
       isbn: string;
       pages: number;
       shelf_id: string;
+      shelf_code: string;
+      zone_name: string;
+      floor_number: number;
      }) => {
       const response = await axios.put(`/api/books/${bookId}`, data, {
         headers: {

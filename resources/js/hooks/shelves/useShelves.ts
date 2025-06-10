@@ -5,6 +5,7 @@ export interface Shelf {
   id: string;
   code: string;
   capacity: number;
+  floor_number: number;
   zone_id: string;
   zone_name: string;
   category_id: string;
@@ -90,6 +91,7 @@ export function useCreateShelf() {
     mutationFn: async (data: {
       code: string;
       capacity: number;
+      floor_number: number;
       zone_id: string
       zone_name: string;
       category_id: string;
@@ -110,6 +112,7 @@ export function useUpdateShelf(shelfId: string) {
     mutationFn: async (data: {
       code: string;
       capacity: number;
+      floor_number: number;
       zone_id: string
       zone_name: string;
       category_id: string;

@@ -28,6 +28,7 @@ class ShelfApiController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'code' => ['required', 'string'],
+            'floor_number' => ['required', 'integer'],
             'capacity' => ['required', 'integer'],
             'zone_id' => ['required', 'string'],
             'category_id' => ['required', 'string'],
@@ -49,6 +50,7 @@ class ShelfApiController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'code' => ['required', 'string'],
+            'floor_number' => ['required', 'integer'],
             'capacity' => ['required', 'integer'],
             'zone_id' => ['required', 'string'],
             'category_id' => ['required', 'string'],

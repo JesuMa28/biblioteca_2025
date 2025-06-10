@@ -14,6 +14,7 @@ class ShelfResource extends Data
         public readonly string $id,
         public readonly string $code,
         public readonly int $capacity,
+        public readonly int $floor_number,
         public readonly string $zone_id,
         public readonly string $zone_name,
         public readonly string $category_id,
@@ -26,13 +27,15 @@ class ShelfResource extends Data
 
     public static function fromModel(Shelf $shelf): self
     {
-        $zone = Zone::where('id', $shelf->zone_id)-> first();
+        // $zone = Zone::where('id', $shelf->zone_id)-> first();
+        $zone = Zone::with('floor')->find($shelf->zone_id);
         $category = Category::where('id', $shelf->category_id)-> first();
 
         return new self(
             id: $shelf->id,
             code: $shelf->code,
             capacity: $shelf->capacity,
+            floor_number: $zone->floor->number,
             zone_id: $shelf->zone_id,
             zone_name: $zone->name,
             category_id: $shelf->category_id,

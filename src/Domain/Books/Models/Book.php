@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Database\Factories\BookFactory;
 use Domain\Books\Models\Book;
+use Domain\Shelves\Models\Shelf;
 use Domain\Categories\Models\Category;
 
 class Book extends Model

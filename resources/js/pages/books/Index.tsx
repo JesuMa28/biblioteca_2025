@@ -101,6 +101,21 @@ export default function BooksIndex() {
       header: t("ui.books.columns.pages") || "pages",
       accessorKey: "pages",
     }),
+    createTextColumn<Book>({
+      id: "shelf_code",
+      header: t("ui.books.columns.shelf_code") || "shelf_code",
+      accessorKey: "shelf_code",
+    }),
+    createTextColumn<Book>({
+      id: "zone_name",
+      header: t("ui.books.columns.zone_name") || "zone_name",
+      accessorKey: "zone_name",
+    }),
+    createTextColumn<Book>({
+      id: "floor_number",
+      header: t("ui.books.columns.floor_number") || "floor_number",
+      accessorKey: "floor_number",
+    }),
     createDateColumn<Book>({
       id: "created_at",
       header: t("ui.books.columns.created_at") || "Created At",

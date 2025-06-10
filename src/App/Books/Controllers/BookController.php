@@ -7,6 +7,7 @@ use Domain\Books\Actions\BookDestroyAction;
 use Domain\Books\Actions\BookIndexAction;
 use Domain\Books\Actions\BookStoreAction;
 use Domain\Books\Actions\BookUpdateAction;
+use Domain\Books\Data\Resources\BookResource;
 use Domain\Books\Models\Book;
 use Domain\Shelves\Models\Shelf;
 use Illuminate\Http\Request;
@@ -20,7 +21,11 @@ class BookController extends Controller
     public function index()
     {
 
-        $books = Book::all('id', 'title');
+        $books = Book::with('shelf.zone.floor')
+            ->orderBy('id')
+            ->get()
+            ->map(fn($book) => BookResource::fromModel($book));
+        // $books = Book::all('id', 'title');
 
         return Inertia::render(
             'books/Index',

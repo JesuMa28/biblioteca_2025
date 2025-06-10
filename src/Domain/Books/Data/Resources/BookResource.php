@@ -17,6 +17,9 @@ class BookResource extends Data
         public readonly string $isbn,
         public readonly int $pages,
         public readonly string $shelf_id,
+        public readonly string $shelf_code,
+        public readonly string $zone_name,
+        public readonly int $floor_number,
         public readonly string $created_at,
         public readonly string $updated_at,
     ) {
@@ -24,6 +27,9 @@ class BookResource extends Data
 
     public static function fromModel(Book $book): self
     {
+        $shelf = $book->shelf;
+        $zone = $shelf->zone;
+        $floor = $zone->floor;
         return new self(
             id: $book->id,
             title: $book->title,
@@ -34,6 +40,9 @@ class BookResource extends Data
             isbn: $book->isbn,
             pages: $book->pages,
             shelf_id: $book->shelf_id,
+            shelf_code: $shelf->code,
+            zone_name: $zone->name,
+            floor_number: $floor->number,
             created_at: $book->created_at->format('Y-m-d H:i:s'),
             updated_at: $book->updated_at->format('Y-m-d H:i:s'),
         );

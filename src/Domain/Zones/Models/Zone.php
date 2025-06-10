@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Database\Factories\ZoneFactory;
 use Domain\Zones\Models\Zone;
+use Domain\Floors\Models\Floor;
 use Domain\Shelves\Models\Shelf;
 use Domain\Categories\Models\Category;
 

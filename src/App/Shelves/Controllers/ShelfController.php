@@ -7,6 +7,7 @@ use Domain\Shelves\Actions\ShelfDestroyAction;
 use Domain\Shelves\Actions\ShelfIndexAction;
 use Domain\Shelves\Actions\ShelfStoreAction;
 use Domain\Shelves\Actions\ShelfUpdateAction;
+use Domain\Shelves\Data\Resources\ShelfResource;
 use Domain\Shelves\Models\Shelf;
 use Domain\Zones\Models\Zone;
 use Domain\Floors\Models\Floor;
@@ -21,7 +22,10 @@ class ShelfController extends Controller
 {
     public function index()
     {
-        $shelves = Shelf::withCount('books')->orderBy('id')->get()->toArray();
+        $shelves = Shelf::with(['books', 'zone.floor']) // zone y dentro de zone, floor
+            ->orderBy('id')
+            ->get()
+            ->map(fn($shelf) => ShelfResource::fromModel($shelf));
 
         $zones = Zone::all('id', 'name');
         $categories = Category::all('id', 'name');
