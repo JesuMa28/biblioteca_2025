@@ -494,6 +494,7 @@ return [
             'published_year' => 'Published Year',
             'isbn' => 'ISBN',
             'pages' => 'Pages',
+            'copies' => 'Copies',
             'shelf_code' => 'Shelf Code',
             'zone_name' => 'Zone Name',
             'floor_number' => 'Floor Number',

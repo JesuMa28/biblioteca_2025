@@ -102,6 +102,11 @@ export default function BooksIndex() {
       accessorKey: "pages",
     }),
     createTextColumn<Book>({
+      id: "copies",
+      header: t("ui.books.columns.copies") || "copies",
+      accessorKey: "copies",
+    }),
+    createTextColumn<Book>({
       id: "shelf_code",
       header: t("ui.books.columns.shelf_code") || "shelf_code",
       accessorKey: "shelf_code",

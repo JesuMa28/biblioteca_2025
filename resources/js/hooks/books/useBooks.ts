@@ -11,6 +11,7 @@ export interface Book {
   published_year: number;
   isbn: string;
   pages: number;
+  copies: number;
   shelf_id: string;
   shelf_code: string;
   zone_name: string;
@@ -102,6 +103,7 @@ export function useCreateBook() {
         published_year: number;
         isbn: string;
         pages: number;
+        copies: number;
         shelf_id: string;
         shelf_code: string;
         zone_name: string;
@@ -130,6 +132,7 @@ export function useUpdateBook(bookId: string) {
       published_year: number;
       isbn: string;
       pages: number;
+      copies: number;
       shelf_id: string;
       shelf_code: string;
       zone_name: string;
