@@ -8,13 +8,12 @@ use Illuminate\Support\Facades\Hash;
 
 class ShelfUpdateAction
 {
-    public function __invoke(Shelf $shlef, array $data): ShelfResource
+    public function __invoke(Shelf $shelf, array $data): ShelfResource
     {
         $updateData = [
             'code' => $data['code'],
             'capacity' => $data['capacity'],
             'zone_id' => $data['zone_id'],
-            'floor_id' => $data['floor_id'],
             'category_id' => $data['category_id'],
         ];
 

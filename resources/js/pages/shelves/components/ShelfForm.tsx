@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Value } from "@radix-ui/react-select";
+import { number } from "zod";
 
 
 
@@ -265,7 +266,7 @@ export function ShelfForm({ initialData, page, perPage, zones, categories }: She
                                                 </SelectTrigger>
                                                 <SelectContent className="h-30">
                                                     {zones.map((zone) => (
-                                                        <SelectItem key={zone.id} value={zone.name} className="w-full">
+                                                        <SelectItem key={zone.id} value={zone.id} className="w-full">
                                                             <div className="text-sm">
                                                                 Zona: {zone.name}
                                                             </div>
