@@ -31,7 +31,7 @@ class LoanController extends Controller
     public function create(Request $request)
     {
 
-        $books = Book::orderBy('title')->get(['id', 'title']);
+        $books = Book::orderBy('title')->get(['id', 'title', 'status']);
         $users = User::orderBy('email')->get(['id', 'email']);
         $loan_list = Loan::all()->pluck('code');
 

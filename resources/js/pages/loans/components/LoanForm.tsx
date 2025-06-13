@@ -51,6 +51,7 @@ interface LoanFormProps {
     books: {
         id: string;
         title: string;
+        status: string;
     } [];
     users: {
         id: string;
@@ -236,7 +237,21 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                                                     <CommandInput placeholder={t('ui.loans.placeholders.book_title')} />
                                                     <CommandEmpty>{t('ui.loans.combo_no_result')}</CommandEmpty>
                                                     <CommandGroup>
-                                                        {books.map((book) => (
+
+                                                        {books
+                                                        .filter(book => book.status === 'Available')
+                                                        .map(book => (
+                                                            <CommandItem
+                                                            key={book.id}
+                                                            value={book.title}
+                                                            onSelect={() => field.handleChange(book.id)}
+                                                            >
+                                                            {book.title}
+                                                            </CommandItem>
+                                                        ))}
+
+                                                        {/* {books.map((book) => (
+
                                                         <CommandItem
                                                             key={book.id}
                                                             value={book.title}
@@ -244,7 +259,7 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                                                         >
                                                             {book.title}
                                                         </CommandItem>
-                                                        ))}
+                                                        ))} */}
                                                     </CommandGroup>
                                                     </Command>
                                                 </PopoverContent>

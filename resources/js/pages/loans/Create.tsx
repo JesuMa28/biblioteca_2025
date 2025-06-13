@@ -22,6 +22,7 @@ interface LoanFormProps {
     books: {
         id: string;
         title: string;
+        status: string;
     } [];
     users: {
         id: string;
