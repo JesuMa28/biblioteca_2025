@@ -10,6 +10,7 @@ use Domain\Loans\Actions\LoanUpdateAction;
 use Domain\Loans\Models\Loan;
 use Domain\Books\Models\Book;
 use Domain\Users\Models\User;
+use App\Notifications\BookCreatedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -40,6 +41,7 @@ class LoanController extends Controller
             'loans' => $loan_list,
             'page' => $request->query('page'),
             'perPage' => $request->query('perPage'),
+
         ]);
     }
 

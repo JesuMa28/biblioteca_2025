@@ -18,6 +18,7 @@ class BookUpdateAction
             'published_year' => $data['published_year'],
             'isbn' => $data['isbn'],
             'pages' => $data['pages'],
+            'status' => $data['status'],
             'shelf_id' => $data['shelf_id'],
         ];
 

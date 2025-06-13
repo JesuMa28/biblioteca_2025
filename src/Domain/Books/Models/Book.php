@@ -22,6 +22,7 @@ class Book extends Model
         'published_year',
         'isbn',
         'pages',
+        'status',
         'shelf_id',
     ];
 

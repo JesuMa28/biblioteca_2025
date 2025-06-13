@@ -7,10 +7,10 @@ export interface Book {
   author: string;
   editorial: string;
   language: string;
-  category_id: string;
   published_year: number;
   isbn: string;
   pages: number;
+  status: string;
   copies: number;
   shelf_id: string;
   shelf_code: string;
@@ -18,6 +18,7 @@ export interface Book {
   floor_number: number;
   created_at: string;
 }
+
 
 // Interface representing the actual API response structure
 export interface ApiPaginatedResponse<T> {
@@ -99,10 +100,10 @@ export function useCreateBook() {
         author: string;
         editorial: string;
         language: string;
-        category_id: string;
         published_year: number;
         isbn: string;
         pages: number;
+        status: string;
         copies: number;
         shelf_id: string;
         shelf_code: string;
@@ -128,10 +129,10 @@ export function useUpdateBook(bookId: string) {
       author: string;
       editorial: string;
       language: string;
-      category_id: string;
       published_year: number;
       isbn: string;
       pages: number;
+      status: string;
       copies: number;
       shelf_id: string;
       shelf_code: string;

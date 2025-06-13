@@ -36,6 +36,7 @@ class BookFactory extends Factory
             'isbn' => fake()->isbn13(),
             'pages' => fake()->numberBetween(100, 1000),
             'shelf_id' => Shelf::factory(),
+            'status' => $this->faker->randomElement(['Available']),
         ];
     }
 }

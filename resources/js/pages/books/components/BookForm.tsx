@@ -11,7 +11,7 @@ import { router } from '@inertiajs/react';
 import type { AnyFieldApi } from '@tanstack/react-form';
 import { useForm } from '@tanstack/react-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { LandPlot, Save, Building, X, LibraryBig, Drama } from 'lucide-react';
+import { LandPlot, Save, Building, X, LibraryBig, Drama, ALargeSmall, UserRoundPen, PencilLine, BookUser, Tag, Calendar, BookOpenText, BookA } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   Select,
@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Value } from "@radix-ui/react-select";
+import Languages from "@/pages/settings/languages";
 
 
 
@@ -33,7 +34,6 @@ interface BookFormProps {
         author: string;
         editorial: string;
         language: string;
-        category_id: string;
         published_year: number;
         isbn: string;
         pages: number;
@@ -49,10 +49,6 @@ interface BookFormProps {
         id: string;
         code: string;
     } [];
-    categories: {
-        id: string;
-        name: string;
-    }[];
 }
 
 // Field error display component
@@ -67,13 +63,9 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
     );
 }
 
-export function BookForm({ initialData, page, perPage, shelves, languages, categories }: BookFormProps) {
+export function BookForm({ initialData, page, perPage, shelves, languages }: BookFormProps) {
     const { t } = useTranslations();
     const queryClient = useQueryClient();
-    // const uniqueCategories = categories.filter(
-    //     (cat, index, self) => index === self.findIndex((c) => c.name === cat.name)
-    // );
-
     // TanStack Form setup
     const form = useForm({
         defaultValues: {
@@ -85,8 +77,6 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
             isbn: initialData?.isbn ?? '',
             pages: initialData?.pages ?? '',
             shelf_id: initialData?.shelf_id ?? '',
-            category_id: initialData?.category_id ?? '',
-
         },
         onSubmit: async ({ value }) => {
             const bookData = {
@@ -145,24 +135,24 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                             <div className="mb-8">
                                 <form.Field
                                     name="title"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                            return !value
-                                                ? t('ui.validation.required', { attribute: t('ui.books.fields.title')})
-                                                : value.length < 3
-                                                ? t('ui.validation.min.string', { attribute: t('ui.books.fields.title').toLowerCase(), min: '3' })
-                                                : undefined;
-                                        },
-                                    }}
+                                    //         return !value
+                                    //             ? t('ui.validation.required', { attribute: t('ui.books.fields.title')})
+                                    //             : value.length < 3
+                                    //             ? t('ui.validation.min.string', { attribute: t('ui.books.fields.title').toLowerCase(), min: '3' })
+                                    //             : undefined;
+                                    //     },
+                                    // }}
 
                                 >
                                     {(field) => (
                                         <>
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-1 flex items-center gap-1">
-                                                    <LandPlot color="grey" size={18} />
+                                                    <PencilLine color="grey" size={18} />
                                                     {t('ui.books.fields.title')}
                                                 </div>
                                             </Label>
@@ -170,7 +160,7 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                                                 id={field.name}
                                                 name={field.name}
                                                 type="text"
-                                                value={field.state.value?.toString()}
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 onBlur={field.handleBlur}
                                                 placeholder={t('ui.books.placeholders.title')}
@@ -188,34 +178,23 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                             <div className="mb-8">
                                 <form.Field
                                     name="author"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                            const stringValue = String(value);
-                                            const number = parseInt(stringValue, 10);
-
-                                            if (!stringValue) {
-                                                return t('ui.validation.required', { attribute: t('ui.books.fields.author')});
-                                            }
-
-                                            if (isNaN(number)) {
-                                                return t('ui.validation.author');
-                                            }
-
-                                            if (number > 10) {
-                                                return t('ui.validation.author');
-                                            }
-
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return !value
+                                    //             ? t('ui.validation.required', { attribute: t('ui.books.fields.title')})
+                                    //             : value.length < 3
+                                    //             ? t('ui.validation.min.string', { attribute: t('ui.books.fields.title').toLowerCase(), min: '3' })
+                                    //             : undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-1 flex items-center gap-1">
-                                                    <LibraryBig color="grey" size={18} />
+                                                    <UserRoundPen color="grey" size={18} />
                                                     {t('ui.books.fields.author')}
                                                 </div>
                                             </Label>
@@ -223,7 +202,7 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                                                 id={field.name}
                                                 name={field.name}
                                                 type="text"
-                                                value={field.state.value ? String(field.state.value) : undefined}
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 onBlur={field.handleBlur}
                                                 placeholder={t('ui.books.placeholders.author')}
@@ -241,34 +220,23 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                             <div className="mb-8">
                                 <form.Field
                                     name="editorial"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                            const stringValue = String(value);
-                                            const number = parseInt(stringValue, 10);
-
-                                            if (!stringValue) {
-                                                return t('ui.validation.required', { attribute: t('ui.books.fields.editorial')});
-                                            }
-
-                                            if (isNaN(number)) {
-                                                return t('ui.validation.editorial');
-                                            }
-
-                                            if (number > 10) {
-                                                return t('ui.validation.editorial');
-                                            }
-
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return !value
+                                    //             ? t('ui.validation.required', { attribute: t('ui.books.fields.title')})
+                                    //             : value.length < 3
+                                    //             ? t('ui.validation.min.string', { attribute: t('ui.books.fields.title').toLowerCase(), min: '3' })
+                                    //             : undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-1 flex items-center gap-1">
-                                                    <LibraryBig color="grey" size={18} />
+                                                    <BookUser color="grey" size={18} />
                                                     {t('ui.books.fields.editorial')}
                                                 </div>
                                             </Label>
@@ -276,7 +244,7 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                                                 id={field.name}
                                                 name={field.name}
                                                 type="text"
-                                                value={field.state.value ? String(field.state.value) : undefined}
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 onBlur={field.handleBlur}
                                                 placeholder={t('ui.books.placeholders.editorial')}
@@ -295,34 +263,34 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                             <div className="mb-8">
                                 <form.Field
                                     name="isbn"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                            const stringValue = String(value);
-                                            const number = parseInt(stringValue, 10);
+                                    //         const stringValue = String(value);
+                                    //         const number = parseInt(stringValue, 1000000000);
 
-                                            if (!stringValue) {
-                                                return t('ui.validation.required', { attribute: t('ui.books.fields.isbn')});
-                                            }
+                                    //         if (!stringValue) {
+                                    //             return t('ui.validation.required', { attribute: t('ui.books.fields.isbn')});
+                                    //         }
 
-                                            if (isNaN(number)) {
-                                                return t('ui.validation.isbn');
-                                            }
+                                    //         if (isNaN(number)) {
+                                    //             return t('ui.validation.isbn');
+                                    //         }
 
-                                            if (number > 10) {
-                                                return t('ui.validation.isbn');
-                                            }
+                                    //         if (number > 10) {
+                                    //             return t('ui.validation.isbn');
+                                    //         }
 
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-1 flex items-center gap-1">
-                                                    <LibraryBig color="grey" size={18} />
+                                                    <Tag color="grey" size={18} />
                                                     {t('ui.books.fields.isbn')}
                                                 </div>
                                             </Label>
@@ -330,64 +298,10 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                                                 id={field.name}
                                                 name={field.name}
                                                 type="number"
-                                                value={field.state.value ? String(field.state.value) : undefined}
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 onBlur={field.handleBlur}
                                                 placeholder={t('ui.books.placeholders.isbn')}
-                                                disabled={form.state.isSubmitting}
-                                                required={false}
-                                                autoComplete="off"
-                                                className='my-4 no-spinner border rounded px-2 py-1'
-                                            />
-                                            <FieldInfo field={field} />
-                                        </>
-                                    )}
-                                </form.Field>
-                            </div>
-
-                            {/* Published Year field */}
-                            <div className="mb-8">
-                                <form.Field
-                                    name="published_year"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
-
-                                            const stringValue = String(value);
-                                            const number = parseInt(stringValue, 10);
-
-                                            if (!stringValue) {
-                                                return t('ui.validation.required', { attribute: t('ui.books.fields.published_year')});
-                                            }
-
-                                            if (isNaN(number)) {
-                                                return t('ui.validation.published_year');
-                                            }
-
-                                            if (number > 10) {
-                                                return t('ui.validation.published_year');
-                                            }
-
-                                            return undefined;
-                                        },
-                                    }}
-                                >
-                                    {(field) => (
-                                        <>
-                                            <Label htmlFor={field.name}>
-                                                <div className="mb-1 flex items-center gap-1">
-                                                    <LibraryBig color="grey" size={18} />
-                                                    {t('ui.books.fields.published_year')}
-                                                </div>
-                                            </Label>
-                                            <Input
-                                                id={field.name}
-                                                name={field.name}
-                                                type="number"
-                                                value={field.state.value ? String(field.state.value) : undefined}
-                                                onChange={(e) => field.handleChange(e.target.value)}
-                                                onBlur={field.handleBlur}
-                                                placeholder={t('ui.books.placeholders.published_year')}
                                                 disabled={form.state.isSubmitting}
                                                 required={false}
                                                 autoComplete="off"
@@ -403,38 +317,92 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
 
                         <div className="h-full">
 
-                            {/* Pages field */}
+                            {/* Published Year field */}
                             <div className="mb-8">
                                 <form.Field
-                                    name="pages"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    name="published_year"
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
-                                            const stringValue = String(value);
-                                            const number = parseInt(stringValue, 10);
+                                    //         const stringValue = String(value);
+                                    //         const number = parseInt(stringValue, 10000);
 
-                                            if (!stringValue) {
-                                                return t('ui.validation.required', { attribute: t('ui.books.fields.pages')});
-                                            }
+                                    //         if (!stringValue) {
+                                    //             return t('ui.validation.required', { attribute: t('ui.books.fields.published_year')});
+                                    //         }
 
-                                            if (isNaN(number)) {
-                                                return t('ui.validation.pages');
-                                            }
+                                    //         if (isNaN(number)) {
+                                    //             return t('ui.validation.published_year');
+                                    //         }
 
-                                            if (number > 10) {
-                                                return t('ui.validation.pages');
-                                            }
+                                    //         if (number > 10) {
+                                    //             return t('ui.validation.published_year');
+                                    //         }
 
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-1 flex items-center gap-1">
-                                                    <LibraryBig color="grey" size={18} />
+                                                    <Calendar color="grey" size={18} />
+                                                    {t('ui.books.fields.published_year')}
+                                                </div>
+                                            </Label>
+                                            <Input
+                                                id={field.name}
+                                                name={field.name}
+                                                type="number"
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
+                                                onChange={(e) => field.handleChange(e.target.value)}
+                                                onBlur={field.handleBlur}
+                                                placeholder={t('ui.books.placeholders.published_year')}
+                                                disabled={form.state.isSubmitting}
+                                                required={false}
+                                                autoComplete="off"
+                                                className='my-4 no-spinner border rounded px-2 py-1'
+                                            />
+                                            <FieldInfo field={field} />
+                                        </>
+                                    )}
+                                </form.Field>
+                            </div>
+
+                            {/* Pages field */}
+                            <div className="mb-8">
+                                <form.Field
+                                    name="pages"
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
+
+                                    //         const stringValue = String(value);
+                                    //         const number = parseInt(stringValue, 2000);
+
+                                    //         if (!stringValue) {
+                                    //             return t('ui.validation.required', { attribute: t('ui.books.fields.pages')});
+                                    //         }
+
+                                    //         if (isNaN(number)) {
+                                    //             return t('ui.validation.pages');
+                                    //         }
+
+                                    //         if (number > 10) {
+                                    //             return t('ui.validation.pages');
+                                    //         }
+
+                                    //         return undefined;
+                                    //     },
+                                    // }}
+                                >
+                                    {(field) => (
+                                        <>
+                                            <Label htmlFor={field.name}>
+                                                <div className="mb-1 flex items-center gap-1">
+                                                    <BookOpenText color="grey" size={18} />
                                                     {t('ui.books.fields.pages')}
                                                 </div>
                                             </Label>
@@ -442,7 +410,7 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                                                 id={field.name}
                                                 name={field.name}
                                                 type="number"
-                                                value={field.state.value ? String(field.state.value) : undefined}
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
                                                 onChange={(e) => field.handleChange(e.target.value)}
                                                 onBlur={field.handleBlur}
                                                 placeholder={t('ui.books.placeholders.pages')}
@@ -457,35 +425,34 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                                 </form.Field>
                             </div>
 
-                            {/* Language field */}
+                            {/* Language field
                             <div className='w-[45%] mb-8'>
                                 <form.Field
                                     name="language"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
-
-
-                                            if (!value) {
-                                                return t('ui.validation.required', { attribute: t('ui.books.fields.languages')});
-                                            }
-
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return !value
+                                    //             ? t('ui.validation.required', { attribute: t('ui.books.fields.title')})
+                                    //             : value.length < 3
+                                    //             ? t('ui.validation.min.string', { attribute: t('ui.books.fields.title').toLowerCase(), min: '3' })
+                                    //             : undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
 
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-4 flex items-center gap-1">
-                                                    <Building color="grey" size={18} />
+                                                    <BookA color="grey" size={18} />
                                                     {t('ui.books.fields.languages')}
                                                 </div>
                                             </Label>
                                             <Select
-                                                value={field.state.value}
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
+
                                                 onValueChange={(value: string) => {
                                                     field.handleChange(value);
                                                 }}
@@ -508,37 +475,80 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                                         </>
                                     )}
                                 </form.Field>
+                            </div> */}
+
+                            {/* Editorial field */}
+                            <div className="mb-8">
+                                <form.Field
+                                    name="language"
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
+
+                                    //         return !value
+                                    //             ? t('ui.validation.required', { attribute: t('ui.books.fields.title')})
+                                    //             : value.length < 3
+                                    //             ? t('ui.validation.min.string', { attribute: t('ui.books.fields.title').toLowerCase(), min: '3' })
+                                    //             : undefined;
+                                    //     },
+                                    // }}
+                                >
+                                    {(field) => (
+                                        <>
+                                            <Label htmlFor={field.name}>
+                                                <div className="mb-1 flex items-center gap-1">
+                                                    <BookUser color="grey" size={18} />
+                                                    {t('ui.books.fields.editorial')}
+                                                </div>
+                                            </Label>
+                                            <Input
+                                                id={field.name}
+                                                name={field.name}
+                                                type="text"
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
+                                                onChange={(e) => field.handleChange(e.target.value)}
+                                                onBlur={field.handleBlur}
+                                                placeholder={t('ui.books.placeholders.editorial')}
+                                                disabled={form.state.isSubmitting}
+                                                required={false}
+                                                autoComplete="off"
+                                                className='my-4 no-spinner border rounded px-2 py-1'
+                                            />
+                                            <FieldInfo field={field} />
+                                        </>
+                                    )}
+                                </form.Field>
                             </div>
 
                             {/* Shelves field */}
                             <div className='w-[45%] mb-8'>
                                 <form.Field
                                     name="shelf_id"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
+                                    // validators={{
+                                    //     onChangeAsync: async ({ value }) => {
+                                    //         await new Promise((resolve) => setTimeout(resolve, 300));
 
 
 
-                                            if (!value) {
-                                                return t('ui.validation.required', { attribute: t('ui.books.fields.shelves')});
-                                            }
+                                    //         if (!value) {
+                                    //             return t('ui.validation.required', { attribute: t('ui.books.fields.shelves')});
+                                    //         }
 
-                                            return undefined;
-                                        },
-                                    }}
+                                    //         return undefined;
+                                    //     },
+                                    // }}
                                 >
                                     {(field) => (
                                         <>
 
                                             <Label htmlFor={field.name}>
                                                 <div className="mb-4 flex items-center gap-1">
-                                                    <Building color="grey" size={18} />
+                                                    <LibraryBig color="grey" size={18} />
                                                     {t('ui.books.fields.shelves')}
                                                 </div>
                                             </Label>
                                             <Select
-                                                value={field.state.value}
+                                                value={typeof field.state.value === 'symbol' ? '' : String(field.state.value ?? '')}
                                                 onValueChange={(value: string) => {
                                                     field.handleChange(value);
                                                 }}
@@ -551,59 +561,6 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                                                         <SelectItem key={shelf.id} value={shelf.id} className="w-full">
                                                             <div className="text-sm">
                                                                 {shelf.code}
-                                                            </div>
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-
-                                            </Select>
-                                            <FieldInfo field={field} />
-                                        </>
-                                    )}
-                                </form.Field>
-                            </div>
-
-                            {/* Categories field */}
-                            <div className='w-[45%] mb-8'>
-                                <form.Field
-                                    name="category_id"
-                                    validators={{
-                                        onChangeAsync: async ({ value }) => {
-                                            await new Promise((resolve) => setTimeout(resolve, 300));
-
-
-
-                                            if (!value) {
-                                                return t('ui.validation.required', { attribute: t('ui.books.fields.categories')});
-                                            }
-
-                                            return undefined;
-                                        },
-                                    }}
-                                >
-                                    {(field) => (
-                                        <>
-
-                                            <Label htmlFor={field.name}>
-                                                <div className="mb-4 flex items-center gap-1">
-                                                    <Building color="grey" size={18} />
-                                                    {t('ui.books.fields.categories')}
-                                                </div>
-                                            </Label>
-                                            <Select
-                                                value={field.state.value}
-                                                onValueChange={(value: string) => {
-                                                    field.handleChange(value);
-                                                }}
-                                            >
-                                                <SelectTrigger className=" w-48 rounded-md border mb-6">
-                                                    <SelectValue placeholder={t('ui.books.placeholders.categories')} />
-                                                </SelectTrigger>
-                                                <SelectContent className="h-30">
-                                                    {categories.map((category) => (
-                                                        <SelectItem key={category.id} value={category.id} className="w-full">
-                                                            <div className="text-sm">
-                                                                {category.name}
                                                             </div>
                                                         </SelectItem>
                                                     ))}
@@ -639,6 +596,7 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
                             router.visit(url);
                         }}
                         disabled={form.state.isSubmitting}
+
                     >
                         <X />
                         {t('ui.books.buttons.cancel')}
@@ -646,6 +604,7 @@ export function BookForm({ initialData, page, perPage, shelves, languages, categ
 
                     <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
                         {([canSubmit, isSubmitting]) => (
+
                             <Button type="submit" disabled={!canSubmit}>
                                 <Save />
                                 {isSubmitting

@@ -213,7 +213,7 @@ export function FiltersTable({
       acc[filter.id] = undefined;
       return acc;
     }, {} as Record<string, any>);
-    
+
     setFilterValues(emptyValues);
     form.reset(emptyValues);
   };
@@ -319,8 +319,8 @@ export function FiltersTable({
                     {clearFiltersText || t("ui.common.filters.clear")}
                   </Button>
                 )}
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   onClick={() => setOpen(false)}
                 >
                   {t("ui.common.buttons.close")}
@@ -364,12 +364,12 @@ function renderFilterInput(
           }}
         >
           <SelectTrigger>
-            <SelectValue 
-              placeholder={filter.placeholder} 
+            <SelectValue
+              placeholder={filter.placeholder}
             />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">
+            <SelectItem value="all">
               {filter.placeholder || "Todos"}
             </SelectItem>
             {(filter as SelectFilterConfig).options.map((option) => (

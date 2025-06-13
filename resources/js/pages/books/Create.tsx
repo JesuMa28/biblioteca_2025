@@ -9,10 +9,14 @@ import { number } from 'zod';
 interface BookFormProps {
     initialData?: {
         id: string;
-        name: string;
-        capacity: number;
-        floor_id: string;
-        category_id: string;
+        title: string;
+        author: string;
+        editorial: string;
+        language: string;
+        published_year: number;
+        isbn: string;
+        pages: number;
+        shelf_id: string;
     };
     page?: string;
     perPage?: string;
@@ -23,13 +27,9 @@ interface BookFormProps {
         id: string;
         code: string;
     } [];
-    categories: {
-        id: string;
-        name: string;
-    }[];
 
 }
-export default function CreateBook({shelves, languages, categories}:BookFormProps) {
+export default function CreateBook({shelves, languages}:BookFormProps) {
     const { t } = useTranslations();
 
     return (
@@ -50,7 +50,6 @@ export default function CreateBook({shelves, languages, categories}:BookFormProp
 
                         <BookForm
                             shelves={shelves}
-                            categories={categories}
                             languages={[
                                 { name: 'English' },
                                 { name: 'Spanish' },

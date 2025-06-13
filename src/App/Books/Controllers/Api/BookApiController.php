@@ -16,7 +16,14 @@ class BookApiController extends Controller
 {
     public function index(Request $request, BookIndexAction $action)
     {
-        return response()->json($action($request->search, $request->integer('per_page', 10)));
+        $search = $request->input('search');  // filtro general
+        $title = $request->input('title');    // filtro título
+        $author = $request->input('author');  // filtro autor
+        $status = $request->input('status');  // filtro autor
+        $perPage = $request->integer('per_page', 10);
+
+        return response()->json($action($search, $title, $author, $status, $perPage));
+
     }
 
     public function show(Book $book)
@@ -35,6 +42,7 @@ class BookApiController extends Controller
             'isbn' => ['required', 'string'],
             'pages' => ['required', 'integer'],
             'shelf_id' => ['required', 'string'],
+            'status' => ['required', 'in:available,loaned,reserved'],
         ]);
 
         if ($validator->fails()) {
@@ -60,6 +68,8 @@ class BookApiController extends Controller
             'isbn' => ['required', 'string'],
             'pages' => ['required', 'integer'],
             'shelf_id' => ['required', 'string'],
+            'status' => ['required', 'in:available,loaned,reserved'],
+
         ]);
 
         if ($validator->fails()) {

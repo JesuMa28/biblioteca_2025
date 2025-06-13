@@ -1,59 +1,62 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useTranslations } from '@/hooks/use-translations';
-import { ZoneLayout } from '@/layouts/zones/ZoneLayout';
-import { ZoneForm } from '@/pages/zones/components/ZoneForm';
+import { BookLayout } from '@/layouts/books/BookLayout';
+import { BookForm } from '@/pages/books/components/BookForm';
 import { PageProps } from '@inertiajs/core';
 import { Building } from 'lucide-react';
 
-interface EditZoneProps extends PageProps {
-    zone: {
+interface EditBookProps extends PageProps {
+    book: {
         id: string;
-        name: string;
-        capacity: number;
-        floor_id: string;
-        category_id: string;
+        title: string;
+        author: string;
+        editorial: string;
+        language: string;
+        published_year: number;
+        isbn: string;
+        pages: number;
+        shelf_id: string;
     };
     page?: string;
     perPage?: string;
-    floors: {
+    shelves: {
         id: string;
-        number: number;
+        code: string;
     } [];
-    categories: {
-        id: string;
+    languages: {
         name: string;
     }[];
 }
 
-export default function EditZone({ zone, page, perPage, floors, categories }: EditZoneProps) {
+export default function EditBook({ book, page, perPage, shelves, languages }: EditBookProps) {
     const { t } = useTranslations();
-    console.log("floors", floors);
+    console.log("books", book);
     return (
-        <ZoneLayout title={t('ui.zones.edit')}>
+        <BookLayout title={t('ui.books.edit')}>
             <div className="flex max-w-screen items-center self-center">
                 <Card className="w-100% m-4 p-4 shadow-lg dark:shadow-xs dark:shadow-white">
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-1">
                                 <Building color="#2762c2" />
-                                {t('ui.zones.cards.title_edit')}
+                                {t('ui.books.cards.title_edit')}
                             </div>
                         </CardTitle>
-                        <CardDescription>{t('ui.zones.cards.description_edit')}</CardDescription>
+                        <CardDescription>{t('ui.books.cards.description_edit')}</CardDescription>
                     </CardHeader>
                     <Separator />
                     <CardContent>
-                        <ZoneForm
-                            initialData={zone}
+                        <BookForm
+                            initialData={book}
                             page={page}
                             perPage={perPage}
-                            floors={floors}
-                            categories={categories}
+                            shelves={shelves}
+                            languages={languages}
                         />
                     </CardContent>
                 </Card>
             </div>
-        </ZoneLayout>
+        </BookLayout>
     );
 }

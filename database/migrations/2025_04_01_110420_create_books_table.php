@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('editorial');
             $table->string('language');
             $table->year('published_year');
-            $table->string('isbn')->unique();
+            $table->string('isbn');
             $table->integer('pages')->unsigned();
             $table->uuid('shelf_id');
             $table->foreign('shelf_id')->references('id')->on('shelves')->onDelete('cascade');
+            $table->enum('status', ['Available', 'Loaned', 'Reserved'])->default('Available');
             $table->timestamps();
         });
     }

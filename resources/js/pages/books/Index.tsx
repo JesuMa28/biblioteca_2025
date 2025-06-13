@@ -33,8 +33,9 @@ export default function BooksIndex() {
   // Combine name and email filters into a single search string if they exist
   const combinedSearch = [
     filters.search,
-    filters.name ? `${filters.name}` : null,
-    filters.capacity ? `${filters.capacity}` : null
+    filters.title ? `${filters.title}` : null,
+    filters.author ? `${filters.author}` : null,
+    filters.status ? `${filters.status}` : null
   ].filter(Boolean).join(' ');
 
   const { data: books, isLoading, isError, refetch } = useBooks({
@@ -42,6 +43,7 @@ export default function BooksIndex() {
     page: currentPage,
     perPage: perPage,
   });
+  console.log(books)
   const deleteBookMutation = useDeleteBook();
 
   const handlePageChange = (page: number) => {
@@ -86,6 +88,7 @@ export default function BooksIndex() {
       header: t("ui.books.columns.language") || "Language",
       accessorKey: "language",
     }),
+
     createTextColumn<Book>({
       id: "pubished_year",
       header: t("ui.books.columns.published_year") || "Published Year",
@@ -100,6 +103,11 @@ export default function BooksIndex() {
       id: "pages",
       header: t("ui.books.columns.pages") || "pages",
       accessorKey: "pages",
+    }),
+    createTextColumn<Book>({
+      id: "status",
+      header: t("ui.books.columns.status") || "status",
+      accessorKey: "status",
     }),
     createTextColumn<Book>({
       id: "copies",
@@ -194,6 +202,18 @@ export default function BooksIndex() {
                                       type: 'text',
                                       placeholder: t('ui.books.placeholders.author') || 'Author...',
                                   },
+                                  {
+                                      id: 'status',
+                                      label: t('ui.books.filters.status') || 'Status',
+                                      type: 'select',
+                                      options: [
+                                        { label: 'Available', value: 'Available' },
+                                        { label: 'Loaned', value: 'Loaned' },
+                                        { label: 'Reserved', value: 'Reserved' },
+                                      ],
+                                      placeholder: t('ui.books.placeholders.status') || 'Status...',
+                                  },
+
                               ] as FilterConfig[]
                           }
                           onFilterChange={setFilters}

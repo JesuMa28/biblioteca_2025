@@ -16,6 +16,7 @@ class BookResource extends Data
         public readonly int $published_year,
         public readonly string $isbn,
         public readonly int $pages,
+        public readonly string $status,
         public readonly int $copies,
         public readonly string $shelf_id,
         public readonly string $shelf_code,
@@ -23,6 +24,7 @@ class BookResource extends Data
         public readonly int $floor_number,
         public readonly string $created_at,
         public readonly string $updated_at,
+
     ) {
     }
 
@@ -40,6 +42,7 @@ class BookResource extends Data
             published_year: $book->published_year,
             isbn: $book->isbn,
             pages: $book->pages,
+            status: $book->status,
             copies: Book::where('isbn', $book->isbn)->count(),
             shelf_id: $book->shelf_id,
             shelf_code: $shelf->code,

@@ -25,7 +25,6 @@ class BookController extends Controller
             ->orderBy('id')
             ->get()
             ->map(fn($book) => BookResource::fromModel($book));
-        // $books = Book::all('id', 'title');
 
         return Inertia::render(
             'books/Index',
@@ -59,7 +58,9 @@ class BookController extends Controller
             'year' => ['required', 'integer'],
             'isbn' => ['required', 'string'],
             'pages' => ['required', 'integer'],
+            'status' => ['required', 'in:available,loaned,reserved'],
             'shelf_id' => ['required', 'string'],
+
         ]);
 
         if ($validator->fails()) {
@@ -93,6 +94,7 @@ class BookController extends Controller
             'year' => ['required', 'integer'],
             'isbn' => ['required', 'string'],
             'pages' => ['required', 'integer'],
+            'status' => ['required', 'in:available,loaned,reserved'],
             'shelf_id' => ['required', 'string'],
         ]);
 

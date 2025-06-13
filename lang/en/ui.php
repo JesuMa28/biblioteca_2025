@@ -495,6 +495,7 @@ return [
             'published_year' => 'Published Year',
             'isbn' => 'ISBN',
             'pages' => 'Pages',
+            'status' => 'Status',
             'copies' => 'Copies',
             'shelf_code' => 'Shelf Code',
             'zone_name' => 'Zone Name',
@@ -506,6 +507,7 @@ return [
             'search' => 'Search',
             'title' => 'Book Title',
             'author' => 'Book Author',
+            'status' => 'Status',
             'category' => 'Shelf Category',
         ],
         'placeholders' => [
@@ -516,6 +518,7 @@ return [
             'published_year' => 'Published Year...',
             'isbn' => 'ISBN...',
             'pages' => 'Number of Pages...',
+            'status' => 'Status...',
             'shelves' => 'Select a Shelf...',
             'capacity' => 'Shelf Capacity...',
             'search' => 'Search shelves...',
