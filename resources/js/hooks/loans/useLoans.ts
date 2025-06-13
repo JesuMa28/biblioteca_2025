@@ -12,6 +12,7 @@ export interface Loan {
   return_date: string;
   status: string;
   created_at: string;
+  delay_days: number;
 }
 
 // Interface representing the actual API response structure
@@ -120,6 +121,7 @@ export function useUpdateLoan(loanId: string) {
       loan_date: string;
       return_date: string;
       status: string;
+      delay_days: number;
      }) => {
       const response = await axios.put(`/api/loans/${loanId}`, data, {
         headers: {

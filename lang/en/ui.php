@@ -583,6 +583,7 @@ return [
             'loan_date' => 'Loan Date',
             'return_date' => 'Return Date',
             'status' => 'Status',
+            'delay_days' => 'Delay Days',
             'created_at' => 'Created at',
             'actions' => 'Actions',
         ],

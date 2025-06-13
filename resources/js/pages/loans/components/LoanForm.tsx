@@ -84,7 +84,7 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
             code: initialData?.code ?? '',
             book_id: initialData?.book_id ?? '',
             user_id: initialData?.user_id ?? '',
-            loan_date: initialData?.loan_date ?? '',
+            loan_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
             return_date: initialData?.return_date ?? '',
             status: initialData?.status ?? '',
 
@@ -250,16 +250,6 @@ export function LoanForm({ initialData, page, perPage, books, users }: LoanFormP
                                                             </CommandItem>
                                                         ))}
 
-                                                        {/* {books.map((book) => (
-
-                                                        <CommandItem
-                                                            key={book.id}
-                                                            value={book.title}
-                                                            onSelect={() => field.handleChange(book.id)}
-                                                        >
-                                                            {book.title}
-                                                        </CommandItem>
-                                                        ))} */}
                                                     </CommandGroup>
                                                     </Command>
                                                 </PopoverContent>

@@ -92,6 +92,13 @@ export default function LoansIndex() {
       header: t("ui.loans.columns.return_date") || "Return Date",
       accessorKey: "return_date",
     }),
+
+    createTextColumn<Loan>({
+      id: "delay_days",
+      header: t("ui.loans.columns.delay_days") || "Delay Days",
+      accessorKey: "delay_days",
+    }),
+
     createTextColumn<Loan>({
       id: "status",
       header: t("ui.loans.columns.status") || "Status",
